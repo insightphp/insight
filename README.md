@@ -9,6 +9,10 @@ The package is under development and currently is not meant to be used for produ
 
 Insight is Laravel package for building control panels or customer facing admin panels.
 
+## Documentation
+
+Installation guide and documentation can be found on [docs.insightphp.dev](https://insightphp-docs.netlify.app).
+
 ## License
 
 Insight is open-sourced software licensed under the [MIT license](LICENSE.md).
