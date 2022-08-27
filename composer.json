@@ -1,0 +1,35 @@
+{
+    "name": "insightphp/insight",
+    "type": "library",
+    "license": "MIT",
+    "description": "Insight is a Laravel package for building control panels.",
+    "authors": [
+        {
+            "name": "Peter Stovka",
+            "email": "peter@peterstovka.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^9.0",
+        "illuminate/database": "^9.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.21"
+    },
+    "autoload": {
+        "psr-4": {
+            "Insight\\": "src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    }
+}
