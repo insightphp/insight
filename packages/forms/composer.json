@@ -1,0 +1,31 @@
+{
+    "name": "insightphp/forms",
+    "type": "library",
+    "license": "MIT",
+    "description": "Forms component for Insight.",
+    "authors": [
+        {
+            "name": "Peter Stovka",
+            "email": "peter@peterstovka.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^9.0",
+        "insightphp/inertia-view-components": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Insight\\Forms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Insight\\Forms\\Providers\\FormsServiceProvider"
+            ]
+        }
+    }
+}
