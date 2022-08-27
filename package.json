@@ -7,7 +7,12 @@
     "url": "git+https://github.com/insightphp/insight.git"
   },
   "private": false,
-  "keywords": ["Insight", "Laravel", "admin", "adminpanel"],
+  "keywords": [
+    "Insight",
+    "Laravel",
+    "admin",
+    "adminpanel"
+  ],
   "author": "Peter Stovka <peter@peterstovka.com>",
   "license": "MIT",
   "bugs": {
@@ -19,11 +24,17 @@
     "build": "run-p types build-only",
     "types": "vue-tsc --declaration --emitDeclarationOnly",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "main": "./dist/insight.umd.js",
   "module": "./dist/insight.es.js",
-  "files": ["dist", "resources/js"],
+  "files": [
+    "dist",
+    "resources/js"
+  ],
   "types": "./dist/types/main.d.ts",
   "exports": {
     ".": {
@@ -38,6 +49,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^4.8.2",
     "vite": "^3.0.9",
+    "vitepress": "^1.0.0-alpha.12",
     "vue-tsc": "^0.40.1"
   },
   "dependencies": {
