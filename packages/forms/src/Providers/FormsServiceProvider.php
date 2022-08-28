@@ -9,11 +9,6 @@ use Insight\Inertia\ViewComponentManager;
 
 class FormsServiceProvider extends ServiceProvider
 {
-    public function register()
-    {
-
-    }
-
     public function boot()
     {
         $this->registerViewComponents(app(ViewComponentManager::class));
