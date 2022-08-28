@@ -13,15 +13,12 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.1",
-        "insightphp/inertia-view-components": "self.version",
-        "insightphp/tables": "self.version",
-        "insightphp/forms": "self.version",
-        "insightphp/panels": "self.version",
         "illuminate/support": "^9.0",
         "illuminate/database": "^9.0"
     },
     "require-dev": {
-        "pestphp/pest": "^1.21"
+        "pestphp/pest": "^1.21",
+        "symplify/monorepo-builder": "^11.1"
     },
     "autoload": {
         "psr-4": {
