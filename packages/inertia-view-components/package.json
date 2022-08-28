@@ -1,0 +1,38 @@
+{
+    "name": "@insightphp/inertia-view-components",
+    "version": "0.0.2",
+    "description": "View component middleware for Inertia.",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/insightphp/insight.git"
+    },
+    "private": false,
+    "keywords": [
+        "Insight",
+        "Laravel",
+        "admin",
+        "adminpanel"
+    ],
+    "author": "Peter Stovka <peter@peterstovka.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/insightphp/insight/issues"
+    },
+    "homepage": "https://github.com/insightphp/insight#readme",
+    "main": "./dist/InertiaViewComponents.umd.js",
+    "module": "./dist/InertiaViewComponents.es.js",
+    "files": [
+        "dist",
+        "resources/js"
+    ],
+    "types": "./dist/types/main.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/InertiaViewComponents.es.js",
+            "require": "./dist/InertiaViewComponents.umd.js"
+        }
+    },
+    "dependencies": {
+        "vue": "^3.2"
+    }
+}
