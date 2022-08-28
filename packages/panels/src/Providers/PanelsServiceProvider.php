@@ -10,7 +10,7 @@ class PanelsServiceProvider extends ServiceProvider
 {
     public function register()
     {
-
+        // TEST
     }
 
     public function boot()
