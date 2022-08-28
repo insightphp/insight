@@ -8,9 +8,7 @@ export interface PluginOptions {
 export default {
   install(app: App, options?: PluginOptions) {
     ViewComponentManager.registerComponentsInNamespace(
-      import.meta.globEager('./ViewComponents/**/*.vue'),
-      './ViewComponents',
-      'insight-forms',
+      import.meta.globEager('./ViewComponents/**/*.vue'), './ViewComponents', 'insight-forms',
     )
   }
 }
