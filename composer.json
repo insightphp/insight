@@ -9,12 +9,12 @@
             "email": "peter@peterstovka.com"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^8.1",
+        "illuminate/database": "^9.0",
         "illuminate/support": "^9.0",
-        "illuminate/database": "^9.0"
+        "inertiajs/inertia-laravel": "^0.6",
+        "symfony/finder": "^6.0"
     },
     "require-dev": {
         "pestphp/pest": "^1.21",
@@ -22,10 +22,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Insight\\": "src/"
+            "Insight\\": "src/",
+            "Insight\\Forms\\": "packages/forms/src/",
+            "Insight\\Inertia\\": "packages/inertia-view-components/src/",
+            "Insight\\Panels\\": "packages/panels/src/",
+            "Insight\\Tables\\": "packages/tables/src/"
         }
     },
     "config": {
+        "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
@@ -36,8 +41,20 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Insight\\Panels\\Providers\\PanelsServiceProvider",
+                "Insight\\Inertia\\Providers\\ViewComponentServiceProvider",
+                "Insight\\Forms\\Providers\\FormsServiceProvider",
+                "Insight\\Tables\\Providers\\TablesServiceProvider",
                 "Insight\\Providers\\InsightServiceProvider"
             ]
         }
-    }
+    },
+    "replace": {
+        "insightphp/forms": "self.version",
+        "insightphp/inertia-view-components": "self.version",
+        "insightphp/panels": "self.version",
+        "insightphp/tables": "self.version"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
