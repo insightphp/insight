@@ -5,16 +5,22 @@ namespace Insight\Forms\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
+use Insight\Inertia\ViewComponentManager;
 
 class FormsServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // TEST
+
     }
 
     public function boot()
     {
+        $this->registerViewComponents(app(ViewComponentManager::class));
+    }
 
+    protected function registerViewComponents(ViewComponentManager $componentManager)
+    {
+        $componentManager->registerComponentsIn(__DIR__ . '/../ViewComponents', 'insight-forms');
     }
 }

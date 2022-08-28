@@ -4,6 +4,8 @@ declare type Component = Promise<any> | (() => Promise<any>)
 
 class ViewComponentManager {
 
+  app: App|null = null
+
   components: Record<string, Record<string, Component>> = {}
 
   /**
@@ -27,6 +29,10 @@ class ViewComponentManager {
 
       this.components[namespace][this.resolveComponentName(relativeComponentPath)] = components[fileName]
     })
+
+    if (this.app) {
+      this.bootComponents(this.app)
+    }
   }
 
   /**
@@ -51,12 +57,18 @@ class ViewComponentManager {
     return kebabCase
   }
 
-  boot(app: App) {
+  bootComponents(app: App) {
     Object.keys(this.components).forEach(namespace => {
       Object.keys(this.components[namespace]).forEach(componentName => {
         app.component(`${namespace}-${componentName}`, (this.components[namespace][componentName] as any).default)
       })
     })
+  }
+
+  boot(app: App) {
+    this.app = app;
+
+    this.bootComponents(app)
   }
 }
 

@@ -1,7 +1,7 @@
 {
-    "name": "@insightphp/inertia-view-components",
-    "version": "0.1.1",
-    "description": "View component middleware for Inertia.",
+    "name": "@insightphp/forms",
+    "version": "0.1.0",
+    "description": "Forms component of Insight.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/insightphp/insight.git"
@@ -19,8 +19,8 @@
         "url": "https://github.com/insightphp/insight/issues"
     },
     "homepage": "https://github.com/insightphp/insight#readme",
-    "main": "./dist/InertiaViewComponents.umd.js",
-    "module": "./dist/InertiaViewComponents.es.js",
+    "main": "./dist/forms.umd.js",
+    "module": "./dist/forms.es.js",
     "files": [
         "dist",
         "resources/js"
@@ -28,11 +28,12 @@
     "types": "./dist/types/main.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/InertiaViewComponents.es.js",
-            "require": "./dist/InertiaViewComponents.umd.js"
+            "import": "./dist/forms.es.js",
+            "require": "./dist/forms.umd.js"
         }
     },
     "dependencies": {
-        "vue": "^3.2"
+        "vue": "^3.2",
+        "@insightphp/inertia-view-components": "^0.1"
     }
 }
