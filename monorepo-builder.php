@@ -11,6 +11,7 @@ use Symplify\MonorepoBuilder\Release\ReleaseWorker\SetNextMutualDependenciesRele
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\TagVersionReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateBranchAliasReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateReplaceReleaseWorker;
+use Symplify\MonorepoBuilder\ValueObject\Option;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -18,6 +19,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->parameters()->set(\Symplify\MonorepoBuilder\ValueObject\Option::PACKAGE_DIRECTORIES, [
         __DIR__ . '/packages'
     ]);
+
+    $containerConfigurator->parameters()->set(Option::DEFAULT_BRANCH_NAME, 'main');
 
     $services->set(UpdateReplaceReleaseWorker::class);
     $services->set(SetCurrentMutualDependenciesReleaseWorker::class);
