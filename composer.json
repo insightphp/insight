@@ -50,10 +50,10 @@
         }
     },
     "replace": {
-        "insightphp/forms": "0.1.1",
-        "insightphp/inertia-view-components": "0.1.1",
-        "insightphp/panels": "0.1.1",
-        "insightphp/tables": "0.1.1"
+        "insightphp/forms": "0.1.2",
+        "insightphp/inertia-view-components": "0.1.2",
+        "insightphp/panels": "0.1.2",
+        "insightphp/tables": "0.1.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
