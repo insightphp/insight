@@ -2,7 +2,7 @@ import type { App } from "vue";
 
 declare type Component = Promise<any> | (() => Promise<any>)
 
-class ViewComponentManager {
+class ViewComponents {
 
   app: App|null = null
 
@@ -69,7 +69,10 @@ class ViewComponentManager {
     this.app = app;
 
     this.bootComponents(app)
+
+    console.log('BOOTED', this)
   }
 }
 
-export default new ViewComponentManager()
+const ViewComponentManager = new ViewComponents()
+export default ViewComponentManager

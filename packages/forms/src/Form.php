@@ -68,6 +68,8 @@ class Form
     {
         $this->controls[] = $control;
 
+        $control->required($control->guessRequired());
+
         return $this;
     }
 

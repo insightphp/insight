@@ -306,4 +306,22 @@ class FormControl
 
         return $control->withField($field);
     }
+
+    /**
+     * Guesses if the field should be required.
+     *
+     * @return bool
+     */
+    public function guessRequired(): bool
+    {
+        if ($this->isRequired()) {
+            return true;
+        }
+
+        if (is_array($this->rules)) {
+            return in_array('required', $this->rules);
+        }
+
+        return false;
+    }
 }

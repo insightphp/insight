@@ -16,5 +16,7 @@ export default {
     }
 
     ViewComponentManager.boot(app)
+
+    console.log('view components manager installed', ViewComponentManager)
   }
 }

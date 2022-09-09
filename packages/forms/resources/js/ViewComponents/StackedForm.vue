@@ -1,9 +1,10 @@
 <template>
   <div class="space-y-6">
     <div v-for="item in items">
-      <label class="block text-sm font-medium text-gray-700" v-if="item.label">
+      <label :for="item.name" class="block text-sm font-medium text-gray-700" v-if="item.label">
         {{ item.label }} <span v-if="item.isRequired" class="text-danger-500">*</span>
       </label>
+      <p class="text-xs text-gray-500 mt-0.5 mb-1" v-if="item.hint">{{ item.hint }}</p>
       <div class="mt-1">
         <Portal
             :component="item.fieldView"
@@ -13,6 +14,7 @@
             :errors="errors"
             :error="errors[item.name]"
             :field-path="[]"
+            @input="emit('input', { name: item.name, value: $event })"
         />
       </div>
     </div>
@@ -21,6 +23,8 @@
 
 <script setup lang="ts">
 import { Portal } from "@insightphp/inertia-view-components";
+
+const emit = defineEmits(['input'])
 
 defineProps<{
   items: Array<{

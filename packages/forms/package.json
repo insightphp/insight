@@ -23,13 +23,17 @@
     "module": "./dist/forms.es.js",
     "files": [
         "dist",
-        "resources/js"
+        "resources/js",
+        "plugin.js"
     ],
     "types": "./dist/types/main.d.ts",
     "exports": {
         ".": {
             "import": "./dist/forms.es.js",
             "require": "./dist/forms.umd.js"
+        },
+        "./tailwind-plugin": {
+            "require": "./resources/tailwind/plugin.js"
         }
     },
     "dependencies": {
