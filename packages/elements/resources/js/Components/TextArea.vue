@@ -15,7 +15,7 @@ import { computed } from "vue";
 
 const props = defineProps<{
   name: string
-  modelValue: string|null|number
+  modelValue: string|number|undefined
   error: string|null
 }>()
 
