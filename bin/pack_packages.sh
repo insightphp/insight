@@ -3,3 +3,4 @@ set -e
 
 (cd packages/inertia-view-components && rm -f *.tgz && npm pack)
 (cd packages/forms && rm -f *.tgz && npm pack)
+(cd packages/elements && rm -f *.tgz && npm pack)

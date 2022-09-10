@@ -10,6 +10,14 @@ export default {
           { text: 'Release notes', link: '/release-notes.html' }
         ]
       },
+      {
+        text: 'Elements',
+        items: [
+          { text: 'Overview', link: './elements/overview.html' },
+          { text: 'Installation', link: './elements/installation.html' },
+          { text: 'Components', link: './elements/components.html' },
+        ]
+      }
     ]
   }
 }

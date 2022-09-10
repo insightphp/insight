@@ -178,6 +178,8 @@ class FormControl
     {
         $this->rules = $rules;
 
+        $this->required($this->guessRequired());
+
         return $this;
     }
 
@@ -319,7 +321,7 @@ class FormControl
         }
 
         if (is_array($this->rules)) {
-            return in_array('required', $this->rules);
+            return in_array('accepted', $this->rules) || in_array('required', $this->rules);
         }
 
         return false;

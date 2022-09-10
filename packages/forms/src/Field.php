@@ -101,10 +101,11 @@ class Field implements Viewable
     /**
      * Creates new instance of the field.
      *
+     * @param mixed ...$args
      * @return static
      */
-    public static function make(): static
+    public static function make(...$args): static
     {
-        return new static();
+        return new static(...$args);
     }
 }

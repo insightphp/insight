@@ -6,6 +6,12 @@ vue-tsc --noEmit -p packages/inertia-view-components/
 vite build -c packages/inertia-view-components/vite.config.ts --outDir packages/inertia-view-components/dist
 vue-tsc --declaration --emitDeclarationOnly -p packages/inertia-view-components/
 
+# Elements
+vue-tsc --noEmit -p packages/elements/
+vite build -c packages/elements/vite.config.ts --outDir packages/elements/dist
+vue-tsc --declaration --emitDeclarationOnly -p packages/elements/
+
+
 # Forms
 vue-tsc --noEmit -p packages/forms/
 vite build -c packages/forms/vite.config.ts --outDir packages/forms/dist

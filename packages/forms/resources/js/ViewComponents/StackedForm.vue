@@ -14,6 +14,7 @@
             :errors="errors"
             :error="errors[item.name]"
             :field-path="[]"
+            :required="item.isRequired"
             @input="emit('input', { name: item.name, value: $event })"
         />
       </div>

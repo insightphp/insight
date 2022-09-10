@@ -61,16 +61,20 @@ class Form
     /**
      * Add a control to the form.
      *
-     * @param \Insight\Forms\FormControl $control
-     * @return $this
+     * @param \Insight\Forms\FormControl|\Insight\Forms\Field $control
+     * @return \Insight\Forms\FormControl
      */
-    public function control(FormControl $control): static
+    public function control(FormControl|Field $control): FormControl
     {
+        if ($control instanceof Field) {
+            $control = FormControl::make($control);
+        }
+
         $this->controls[] = $control;
 
         $control->required($control->guessRequired());
 
-        return $this;
+        return $control;
     }
 
     /**
