@@ -4,8 +4,8 @@
 namespace Insight\Forms\Fields;
 
 
+use Insight\Elements\Checkbox;
 use Insight\Forms\Field;
-use Insight\Forms\ViewComponents\Checkbox;
 use Insight\Inertia\ViewComponent;
 
 class Boolean extends Field

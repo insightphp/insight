@@ -1,10 +1,9 @@
 <?php
 
 
-namespace Insight\Forms\ViewComponents;
+namespace Insight\Elements;
 
 
-use Insight\Forms\SelectOption;
 use Insight\Inertia\Support\ListOf;
 use Insight\Inertia\ViewComponent;
 
@@ -15,16 +14,16 @@ class Select extends ViewComponent
      *
      * @var array
      */
-    #[ListOf(SelectOption::class)]
+    #[ListOf(Option::class)]
     public array $options = [];
 
     /**
      * Adds option to the select.
      *
-     * @param \Insight\Forms\SelectOption $option
+     * @param \Insight\Elements\Option $option
      * @return $this
      */
-    public function option(SelectOption $option): static
+    public function option(Option $option): static
     {
         $this->options[] = $option;
 

@@ -4,8 +4,8 @@
 namespace Insight\Forms\Fields;
 
 
+use Insight\Elements\TextArea;
 use Insight\Forms\Field;
-use Insight\Forms\ViewComponents\TextArea;
 use Insight\Inertia\ViewComponent;
 
 class LongText extends Field

@@ -1,17 +1,17 @@
 <?php
 
 
-namespace Insight\Forms;
+namespace Insight\Elements;
 
 
 use Illuminate\Contracts\Support\Arrayable;
 
-class SelectOption implements Arrayable, \JsonSerializable
+class Option implements Arrayable, \JsonSerializable
 {
     public function __construct(
         public string $label,
         public mixed $value,
-        public array $options = []
+        public array $meta = []
     ) {}
 
     /**
@@ -35,13 +35,13 @@ class SelectOption implements Arrayable, \JsonSerializable
     }
 
     /**
-     * Retrieve the option settings.
+     * Retrieve the option meta.
      *
      * @return array
      */
-    public function options(): array
+    public function meta(): array
     {
-        return $this->options;
+        return $this->meta;
     }
 
     /**
@@ -67,14 +67,14 @@ class SelectOption implements Arrayable, \JsonSerializable
     }
 
     /**
-     * Set the option settings.
+     * Set the option meta.
      *
-     * @param array $options
+     * @param array $meta
      * @return void
      */
-    public function setOptions(array $options): void
+    public function setMeta(array $meta): void
     {
-        $this->options = $options;
+        $this->meta = $meta;
     }
 
     public function toArray()
@@ -82,7 +82,7 @@ class SelectOption implements Arrayable, \JsonSerializable
         return [
             'label' => $this->label(),
             'value' => $this->value(),
-            'options' => $this->options(),
+            'meta' => $this->meta(),
         ];
     }
 
@@ -96,11 +96,11 @@ class SelectOption implements Arrayable, \JsonSerializable
      *
      * @param string $label
      * @param mixed $value
-     * @param array $options
+     * @param array $meta
      * @return static
      */
-    public static function make(string $label, mixed $value, array $options = []): static
+    public static function make(string $label, mixed $value, array $meta = []): static
     {
-        return new SelectOption($label, $value, $options);
+        return new Option($label, $value, $meta);
     }
 }

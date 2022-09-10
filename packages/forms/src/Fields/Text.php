@@ -4,8 +4,8 @@
 namespace Insight\Forms\Fields;
 
 
+use Insight\Elements\TextInput;
 use Insight\Forms\Field;
-use Insight\Forms\ViewComponents\TextInput;
 use Insight\Inertia\ViewComponent;
 
 class Text extends Field

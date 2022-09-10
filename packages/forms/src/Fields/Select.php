@@ -6,9 +6,9 @@ namespace Insight\Forms\Fields;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Insight\Elements\Select as SelectView;
+use Insight\Elements\Option;
 use Insight\Forms\Field;
-use Insight\Forms\SelectOption;
-use Insight\Forms\ViewComponents\Select as SelectView;
 use Insight\Inertia\ViewComponent;
 
 class Select extends Field
@@ -16,10 +16,10 @@ class Select extends Field
     /**
      * Add option to the select.
      *
-     * @param \Insight\Forms\SelectOption $option
+     * @param \Insight\Elements\Option $option
      * @return $this
      */
-    public function option(SelectOption $option): static
+    public function option(Option $option): static
     {
         return $this->apply(fn (SelectView $select) => $select->option($option));
     }
@@ -54,7 +54,7 @@ class Select extends Field
 
             if (Arr::isAssoc($options)) {
                 foreach ($options as $key => $value) {
-                    $select->option(SelectOption::make($value, $key));
+                    $select->option(Option::make($value, $key));
                 }
             } else {
                 foreach ($options as $option) {

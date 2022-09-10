@@ -31,13 +31,11 @@
         ".": {
             "import": "./dist/forms.es.js",
             "require": "./dist/forms.umd.js"
-        },
-        "./tailwind-plugin": {
-            "require": "./resources/tailwind/plugin.js"
         }
     },
     "dependencies": {
-        "vue": "^3.2",
-        "@insightphp/inertia-view-components": "^0.1"
+        "@insightphp/elements": "^0.1",
+        "@insightphp/inertia-view-components": "^0.1",
+        "vue": "^3.2"
     }
 }
