@@ -4,8 +4,10 @@
 namespace Insight\Inertia;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Insight\Inertia\Exceptions\ViewComponentException;
+use League\Flysystem\WhitespacePathNormalizer;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -37,9 +39,9 @@ class ViewComponentManager
                 if (count($matches) == 1 && count($matches[0]) == 2) {
                     $clazz = $matches[0][1] . '\\' . $info->getFilenameWithoutExtension();
 
-                    if (class_exists($clazz)) {
-                        $relativePath = (string) Str::of($info->getPath() . '\\' . $info->getFilenameWithoutExtension())
-                            ->replaceFirst($path, "")
+                    if (class_exists($clazz) && Arr::has(class_parents($clazz), ViewComponent::class)) {
+                        $relativePath = (string) Str::of(realpath($info->getPath()) . '\\' . $info->getFilenameWithoutExtension())
+                            ->replaceFirst(realpath($path), "")
                             ->ltrim('\\/');
 
                         $this->registerComponent($clazz, $namespace, $relativePath);

@@ -24,7 +24,7 @@
     "files": [
         "dist",
         "resources/js",
-        "plugin.js"
+        "resources/tailwind"
     ],
     "types": "./dist/types/main.d.ts",
     "exports": {
@@ -37,7 +37,8 @@
         }
     },
     "dependencies": {
-        "vue": "^3.2",
-        "@insightphp/inertia-view-components": "^0.1"
+        "@insightphp/inertia-view-components": "^0.1",
+        "mini-svg-data-uri": "^1.2.3",
+        "vue": "^3.2"
     }
 }
