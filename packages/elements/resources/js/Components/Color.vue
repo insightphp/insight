@@ -2,13 +2,13 @@
   <input
       :value="modelValue"
       @input="onChange"
-      class="form-input text-gray-900 w-16 h-10 text-sm focus:ring-4 rounded-lg"
-      :class="[$attrs.class, hasError ? 'border-danger-300 focus:border-danger-300 focus:ring-danger-100' : 'border-gray-300 focus:ring-primary-100 focus:border-primary-300' ]"
+      class="h-8 p-2 bg-white border rounded-lg ring-4 ring-transparent"
+      :class="[$attrs.class, [ hasError? 'border-danger-300 focus:border-danger-300 focus:ring-danger-100' : 'border-gray-200 focus:ring-primary-100 focus:border-primary-300']]"
       :name="name"
       :id="name"
       type="color"
   >
-  <p class="mt-1 text-xs text-danger-600" v-if="error">{{ error }}</p>
+  <p class="input-error" v-if="error">{{ error }}</p>
 </template>
 
 <script setup lang="ts">
