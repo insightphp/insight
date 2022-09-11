@@ -277,11 +277,44 @@ module.exports = function (addBase, addComponents, theme) {
 
   addBase(rules.map((rule) => ({[rule.selector]: rule.styles})))
 
+  // appearance: 'none',
+  //   'background-color': '#fff',
+  //   'border-color': theme('colors.gray.300', colors.gray[300]),
+  //   'border-width': borderWidth['DEFAULT'],
+  //   'border-radius': borderRadius.lg,
+  //   'padding-top': spacing[2],
+  //   'padding-right': spacing[3],
+  //   'padding-bottom': spacing[2],
+  //   'padding-left': spacing[3],
+  //   'font-size': theme('fontSize.sm', defaultTheme.fontSize.sm),
+  //   'line-height': baseLineHeight,
+  //   '--tw-shadow': '0 0 #0000',
+  //   color: theme('colors.gray.900', colors.gray[900]),
+  //   '&:focus': {
+  //   outline: '2px solid transparent',
+  //     'outline-offset': '2px',
+  //     '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
+  //     '--tw-ring-offset-width': '0px',
+  //     '--tw-ring-offset-color': '#fff',
+  //     '--tw-ring-color': theme('colors.primary.100', colors.purple[100]),
+  //     '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
+  //     '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
+  //     'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
+  //     'border-color': theme('colors.primary.300', colors.purple[300]),
+  // },
+
   addComponents({
     '.input-error': {
       fontSize: theme('fontSize.xs', defaultTheme.fontSize.xs),
       color: theme('colors.danger.600', colors.red[600]),
       marginTop: '.2rem',
+    },
+    '.input-group-left': {
+      'background-color': '#fff',
+      'border-color': theme('colors.gray.300', colors.gray[300]),
+      borderWidth: borderWidth['DEFAULT'],
+      'border-radius-left-top': borderRadius.lg,
+      'border-radius-left-bottom': borderRadius.lg,
     }
   })
 }

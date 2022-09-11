@@ -3,7 +3,7 @@
       :value="modelValue"
       @input="onChange"
       :class="{ 'has-error': hasError }"
-      :type="type || 'text'"
+      :type="type"
       :placeholder="placeholder || undefined"
       :name="name"
       :id="id"
@@ -15,14 +15,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   id?: string
   name?: string
   modelValue?: string|null|number
   error?: string|null
   type?: string
   placeholder?: string|null
-}>()
+}>(), {
+  type: 'text'
+})
 
 const hasError = computed(() => !!props.error)
 
