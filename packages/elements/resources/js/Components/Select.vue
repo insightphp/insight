@@ -71,10 +71,11 @@ export default {
 </script>
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import type { Option } from "./contracts";
 import SelectOption from "./SelectOption.vue";
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import SelectButton from "./SelectButton.vue";
+
+type Option = { [key: string]: any }
 
 type InternalValue = Array<Option>|Option
 
@@ -89,7 +90,7 @@ const props = withDefaults(defineProps<{
   name?: string
   modelValue?: Array<Option>|Option
   error?: string|null
-  options: Array<Option>|Array<{ [key: string]: any }>
+  options: Array<Option>
   multiple?: boolean
   by?: string
   labelBy?: string
@@ -152,13 +153,14 @@ function resolveSelectedValue(availableOptions: Array<Option>, modelValue: Inter
       throw new Error("The v-model passed is array, but the Select does not have :multiple attribute set.")
     }
 
-    return availableOptions.find(it => resolveIdentifier(it) == resolveIdentifier(modelValue)) || null
+    return availableOptions.find(it => resolveIdentifier(it) == resolveIdentifier(modelValue))
   }
-  return null
+
+  return undefined
 }
 
 // Internal value of the select.
-const selectedValue = ref<InternalValue|null>(resolveSelectedValue(props.options as any, props.modelValue))
+const selectedValue = ref<InternalValue|undefined>(resolveSelectedValue(props.options as any, props.modelValue))
 
 // Watches selected value and emits model update.
 watch(selectedValue, newSelectedValue => {
@@ -198,7 +200,7 @@ const label = computed(() => {
 
 // Clears the selected value.
 const clear = () => {
-  selectedValue.value = isMultiple.value ? [] : null
+  selectedValue.value = isMultiple.value ? [] : undefined
 }
 
 // Deselects the option.

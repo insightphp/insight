@@ -16,12 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Option } from "./contracts";
-
 withDefaults(defineProps<{
   selected: boolean
   active: boolean
-  option: Option
+  option: { [key: string]: any }
   labelBy: string
   showIcon?: boolean
 }>(), {
