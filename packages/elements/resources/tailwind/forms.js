@@ -309,12 +309,64 @@ module.exports = function (addBase, addComponents, theme) {
       color: theme('colors.danger.600', colors.red[600]),
       marginTop: '.2rem',
     },
+
+    // Input Group
+    '.input-group:focus-within .input-group-widget': {
+      'border-color': theme('colors.primary.300', colors.purple[300]),
+    },
+    '.input-group:focus-within': {
+      'border-color': 'transparent',
+      'border-width': 0,
+      'border-radius': borderRadius.lg,
+      outline: '2px solid transparent',
+      'outline-offset': '2px',
+      '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
+      '--tw-ring-offset-width': '0px',
+      '--tw-ring-offset-color': '#fff',
+      '--tw-ring-color': theme('colors.primary.100', colors.purple[100]),
+      '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
+      '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
+      'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
+    },
+
+    // Input Group - Left Widget
     '.input-group-left': {
       'background-color': '#fff',
       'border-color': theme('colors.gray.300', colors.gray[300]),
-      borderWidth: borderWidth['DEFAULT'],
-      'border-radius-left-top': borderRadius.lg,
-      'border-radius-left-bottom': borderRadius.lg,
-    }
+      'border-width': borderWidth['DEFAULT'],
+      'border-top-left-radius': borderRadius.lg,
+      'border-bottom-left-radius': borderRadius.lg,
+    },
+    '.input-group-has-left [type=text]': {
+      'border-left-width': borderWidth[0],
+      'border-top-left-radius': borderRadius.none,
+      'border-bottom-left-radius': borderRadius.none,
+
+      '&:focus': {
+        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
+        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
+      }
+    },
+
+    // Input Group - Right Widget
+    '.input-group-right': {
+      'background-color': '#fff',
+      'border-color': theme('colors.gray.300', colors.gray[300]),
+      'border-width': borderWidth['DEFAULT'],
+      'border-top-right-radius': borderRadius.lg,
+      'border-bottom-right-radius': borderRadius.lg,
+    },
+    '.input-group-has-right [type=text]': {
+      'border-right-width': borderWidth[0],
+      'border-top-right-radius': borderRadius.none,
+      'border-bottom-right-radius': borderRadius.none,
+
+      '&:focus': {
+        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
+        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
+      }
+    },
   })
 }
