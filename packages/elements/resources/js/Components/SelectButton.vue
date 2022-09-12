@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2 px-3">
+  <div class="select-button-content">
     <span class="text-sm">{{ label }}</span>
     <span class="absolute top-0 bottom-0 flex items-start pt-2 right-0 pr-3 text-gray-500">
     <!-- Clear select button -->

@@ -277,33 +277,83 @@ module.exports = function (addBase, addComponents, theme) {
 
   addBase(rules.map((rule) => ({[rule.selector]: rule.styles})))
 
-  // appearance: 'none',
-  //   'background-color': '#fff',
-  //   'border-color': theme('colors.gray.300', colors.gray[300]),
-  //   'border-width': borderWidth['DEFAULT'],
-  //   'border-radius': borderRadius.lg,
-  //   'padding-top': spacing[2],
-  //   'padding-right': spacing[3],
-  //   'padding-bottom': spacing[2],
-  //   'padding-left': spacing[3],
-  //   'font-size': theme('fontSize.sm', defaultTheme.fontSize.sm),
-  //   'line-height': baseLineHeight,
-  //   '--tw-shadow': '0 0 #0000',
-  //   color: theme('colors.gray.900', colors.gray[900]),
-  //   '&:focus': {
-  //   outline: '2px solid transparent',
-  //     'outline-offset': '2px',
-  //     '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
-  //     '--tw-ring-offset-width': '0px',
-  //     '--tw-ring-offset-color': '#fff',
-  //     '--tw-ring-color': theme('colors.primary.100', colors.purple[100]),
-  //     '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
-  //     '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
-  //     'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
-  //     'border-color': theme('colors.primary.300', colors.purple[300]),
-  // },
-
   addComponents({
+    // border bg-white ring-transparent ring-4 text-sm focus:outline-none
+
+    // appearance: 'none',
+    // 'background-color': '#fff',
+    // 'border-color': theme('colors.gray.300', colors.gray[300]),
+    // 'border-width': borderWidth['DEFAULT'],
+    // 'border-radius': borderRadius.lg,
+    // 'padding-top': spacing[2],
+    // 'padding-right': spacing[3],
+    // 'padding-bottom': spacing[2],
+    // 'padding-left': spacing[3],
+    // 'font-size': theme('fontSize.sm', defaultTheme.fontSize.sm),
+    // 'line-height': baseLineHeight,
+    // '--tw-shadow': '0 0 #0000',
+    // color: theme('colors.gray.900', colors.gray[900]),
+    // '&:focus': {
+    //   outline: '2px solid transparent',
+    //   'outline-offset': '2px',
+    //   '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
+    //   '--tw-ring-offset-width': '0px',
+    //   '--tw-ring-offset-color': '#fff',
+    //   '--tw-ring-color': theme('colors.primary.100', colors.purple[100]),
+    //   '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
+    //   '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
+    //   'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
+    //   'border-color': theme('colors.primary.300', colors.purple[300]),
+    // },
+
+    // HAS ERROR
+    // borderColor: theme('colors.danger.300', colors.red[300]),
+    // '&:focus': {
+    //   '--tw-ring-color': theme('colors.danger.100', colors.red[100]),
+    //   borderColor: theme('colors.danger.300', colors.red[300]),
+    // }
+
+    '.select-button': {
+      'background-color': '#fff',
+      'border-color': theme('colors.gray.300', colors.gray[300]),
+      'border-width': borderWidth['DEFAULT'],
+      'border-radius': borderRadius.lg,
+      'font-size': theme('fontSize.sm', defaultTheme.fontSize.sm),
+      'line-height': baseLineHeight,
+      '--tw-shadow': '0 0 #0000',
+      color: theme('colors.gray.900', colors.gray[900]),
+      '&:focus': {
+        outline: '2px solid transparent',
+        'outline-offset': '2px',
+        '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
+        '--tw-ring-offset-width': '0px',
+        '--tw-ring-offset-color': '#fff',
+        '--tw-ring-color': theme('colors.primary.100', colors.purple[100]),
+        '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
+        '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
+        'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
+        'border-color': theme('colors.primary.300', colors.purple[300]),
+      }
+    },
+    '.select-button-content': {
+      'padding-top': spacing[2],
+      'padding-right': spacing[3],
+      'padding-bottom': spacing[2],
+      'padding-left': spacing[3],
+    },
+    '.select-button.has-error': {
+      borderColor: theme('colors.danger.300', colors.red[300]),
+      '&:focus': {
+        '--tw-ring-color': theme('colors.danger.100', colors.red[100]),
+        borderColor: theme('colors.danger.300', colors.red[300]),
+      }
+    },
+    '.select-button.open': {
+      'border-bottom-color': colors.transparent,
+      'border-bottom-left-radius': borderRadius.none,
+      'border-bottom-right-radius': borderRadius.none,
+    },
+
     '.input-error': {
       fontSize: theme('fontSize.xs', defaultTheme.fontSize.xs),
       color: theme('colors.danger.600', colors.red[600]),
@@ -328,6 +378,39 @@ module.exports = function (addBase, addComponents, theme) {
       '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
       'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
     },
+    '.input-group.has-error .input-group-left': {
+      borderColor: theme('colors.danger.300', colors.red[300]),
+    },
+    '.input-group.has-error .input-group-right': {
+      borderColor: theme('colors.danger.300', colors.red[300]),
+    },
+    '.input-group.has-error .form-input': {
+      borderColor: theme('colors.danger.300', colors.red[300]),
+    },
+    '.input-group.has-error:focus-within': {
+      '--tw-ring-color': theme('colors.danger.100', colors.red[100]),
+      borderColor: theme('colors.danger.300', colors.red[300]),
+    },
+    '.input-group .form-input': {
+      '&:focus': {
+        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
+        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
+      }
+    },
+    '.input-group .select-button': {
+      'border-width': 0,
+      '&:focus': {
+        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
+        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
+      }
+    },
+    '.input-group .select-option-list': {
+      'margin-top': '0.2rem',
+      'border-top-left-radius': borderRadius.lg,
+      'border-top-right-radius': borderRadius.lg,
+    },
 
     // Input Group - Left Widget
     '.input-group-left': {
@@ -337,16 +420,16 @@ module.exports = function (addBase, addComponents, theme) {
       'border-top-left-radius': borderRadius.lg,
       'border-bottom-left-radius': borderRadius.lg,
     },
-    '.input-group-has-left [type=text]': {
+    '.input-group-left .select-button': {
+      'border-bottom-left-radius': borderRadius.lg,
+      'border-top-left-radius': borderRadius.lg,
+      'border-bottom-right-radius': borderRadius.none,
+      'border-top-right-radius': borderRadius.none,
+    },
+    '.input-group-has-left .form-input': {
       'border-left-width': borderWidth[0],
       'border-top-left-radius': borderRadius.none,
       'border-bottom-left-radius': borderRadius.none,
-
-      '&:focus': {
-        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
-        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
-        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
-      }
     },
 
     // Input Group - Right Widget
@@ -357,16 +440,16 @@ module.exports = function (addBase, addComponents, theme) {
       'border-top-right-radius': borderRadius.lg,
       'border-bottom-right-radius': borderRadius.lg,
     },
-    '.input-group-has-right [type=text]': {
+    '.input-group-right .select-button': {
+      'border-bottom-left-radius': borderRadius.none,
+      'border-top-left-radius': borderRadius.none,
+      'border-bottom-right-radius': borderRadius.lg,
+      'border-top-right-radius': borderRadius.lg,
+    },
+    '.input-group-has-right .form-input': {
       'border-right-width': borderWidth[0],
       'border-top-right-radius': borderRadius.none,
       'border-bottom-right-radius': borderRadius.none,
-
-      '&:focus': {
-        '--tw-ring-offset-shadow': 'var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)',
-        '--tw-ring-shadow': 'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
-        'box-shadow': 'var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)',
-      }
     },
   })
 }

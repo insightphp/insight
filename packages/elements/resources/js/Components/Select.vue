@@ -1,7 +1,7 @@
 <template>
   <Listbox :multiple="multiple" :by="by" class="w-full" :class="$attrs.class" as="div" v-model="selectedValue" :name="name" v-slot="{ open }">
-    <div class="relative w-full">
-      <ListboxButton class="w-full relative text-left border bg-white ring-transparent ring-4 text-sm focus:outline-none" :class="[ open ? 'border-b-transparent rounded-t-lg' : 'rounded-lg', hasError ? 'border-danger-300 focus:border-danger-300 focus:ring-danger-100' : 'border-gray-300 focus:border-primary-300 focus:ring-primary-100' ]">
+    <div class="relative w-full select" :class="{ 'open': open }">
+      <ListboxButton class="w-full relative text-left select-button" :class="{ 'open': open, 'has-error': hasError }">
         <slot name="button" v-bind="{ clear, showClearButton: nullable && isSelected, label, open, value: selectedValue }">
           <SelectButton @clear="clear" :show-clear-button="nullable && isSelected" :label="label" />
         </slot>
@@ -18,7 +18,7 @@
         </slot>
       </ListboxButton>
       <Transition enter-from-class="opacity-0" enter-to-class="opacity-100" enter-active-class="transition-opacity duration-150" leave-active-class="transition-opacity duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
-        <ListboxOptions class="w-full focus:outline-none shadow-lg bg-white z-10 absolute max-h-60 overflow-x-hidden overflow-y-auto w-full border rounded-b-lg -mt-0.5" :class="[ hasError ? 'border-danger-300' : 'border-gray-300' ]">
+        <ListboxOptions class="w-full focus:outline-none shadow-lg bg-white z-10 absolute max-h-60 overflow-x-hidden overflow-y-auto w-full border rounded-b-lg -mt-0.5 select-option-list" :class="[ hasError ? 'border-danger-300' : 'border-gray-300' ]">
           <div v-if="searchable" class="w-full pl-2 pr-3 py-2 relative border-b border-gray-300 w-full">
             <div class="pointer-events-none absolute top-0 pl-4 bottom-0 left-0 flex items-center">
               <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -108,7 +108,7 @@ const props = withDefaults(defineProps<{
   multiple: false,
   nullable: false,
   noSelectionLabel: 'Select value…',
-  showOptionIcon: true,
+  showOptionIcon: false,
   noOptionsLabel: 'No options available.',
   noResultsFoundLabel: 'No results found.',
   searchPlaceholder: 'Search…',

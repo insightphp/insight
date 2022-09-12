@@ -2,6 +2,7 @@
   <input
       :value="modelValue"
       @input="onChange"
+      class="form-input"
       :class="{ 'has-error': hasError }"
       :type="type"
       :placeholder="placeholder || undefined"
