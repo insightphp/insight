@@ -1,3 +1,4 @@
+export { default as Breadcrumbs } from './Breadcrumbs.vue'
 export { default as Button } from './Button.vue'
 export { default as Checkbox } from './Checkbox.vue'
 export { default as Color} from './Color.vue'

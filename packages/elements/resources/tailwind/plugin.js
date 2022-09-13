@@ -6,6 +6,7 @@ const addForms = require('./forms')
 const addCard = require('./card')
 const addBadges = require('./badges')
 const addOutlineMenu = require('./outline-menu')
+const addBreadcrumbs = require('./breadcrumbs')
 
 module.exports = plugin(function(options) {
   addButtons(options)
@@ -13,6 +14,7 @@ module.exports = plugin(function(options) {
   addForms(options)
   addBadges(options)
   addOutlineMenu(options)
+  addBreadcrumbs(options)
 }, {
   theme: {
     extend: {
