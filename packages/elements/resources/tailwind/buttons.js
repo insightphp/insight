@@ -4,14 +4,6 @@ const colors = require("tailwindcss/colors");
 function configureButtonVariant(name, color, fallbackColor, options) {
   const { addComponents, theme } = options
 
-  //
-  // '.btn .processing-indicator': {
-  //   color: theme('colors.gray.50', colors.gray[50]),
-  // },
-  // '.btn .processing-animation-spin': {
-  //   color: theme('colors.gray.50', colors.gray[50]),
-  // }
-
   addComponents({
     [`.btn.${name}`]: {
       backgroundColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
@@ -38,28 +30,28 @@ function configureButtonVariant(name, color, fallbackColor, options) {
     },
     [`.btn.${name} .processing-animation-ping span`]: {
       backgroundColor: theme(`colors.${color}.700`, colors[fallbackColor][700]),
-    }
-  })
-}
-
-function addButtonVariant(theme, color, defaultColor) {
-  return {
-    backgroundColor: theme(`colors.${color}.200`, colors[defaultColor][200]),
-    color: theme(`colors.${color}.700`, colors[defaultColor][700]),
-    borderColor: theme(`colors.${color}.300`, colors[defaultColor][300]),
-    '&:hover': {
-      backgroundColor: theme(`colors.${color}.100`, colors[defaultColor][100]),
     },
-    '&:focus': {
-      '--tw-ring-color': theme(`colors.${color}.300`, colors[defaultColor][300]),
-      borderColor: theme(`colors.${color}.300`, colors[defaultColor][300]),
-    },
-    '&:disabled': {
+    [`.btn-link.${name}`]: {
+      color: theme(`colors.${color}.600`, colors[fallbackColor][600]),
       '&:hover': {
-        backgroundColor: theme(`colors.${color}.200`, colors[defaultColor][200]),
+        color: theme(`colors.${color}.500`, colors[fallbackColor][500]),
       }
-    }
-  }
+    },
+    [`.btn-link.${name}:disabled`]: {
+      '&:hover': {
+        color: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+      },
+    },
+    [`.btn-link.${name} .processing-indicator`]: {
+      color: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+    },
+    [`.btn-link.${name} .processing-animation-spin`]: {
+      color: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+    },
+    [`.btn-link.${name} .processing-animation-ping span`]: {
+      backgroundColor: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+    },
+  })
 }
 
 module.exports = function (options) {
@@ -121,6 +113,38 @@ module.exports = function (options) {
     },
     '.btn .processing-animation-ping span': {
       backgroundColor: theme('colors.gray.50', colors.gray[50]),
+    },
+
+    '.btn-link': {
+      display: 'inline-flex',
+      'align-items': 'center',
+      fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
+      color: theme('colors.gray.900', colors.gray[900]),
+      fontWeight: defaultTheme.fontWeight.medium,
+      '&:hover': {
+        color: theme('colors.gray.800', colors.gray[800]),
+      },
+    },
+    '.btn-link:disabled': {
+      opacity: defaultTheme.opacity[60],
+      '&:hover': {
+        color: theme('colors.gray.900', colors.gray[900]),
+      },
+    },
+    '.btn-link .processing-indicator': {
+      color: theme('colors.gray.900', colors.gray[900]),
+    },
+    '.btn-link .processing-animation-spin': {
+      color: theme('colors.gray.900', colors.gray[900]),
+    },
+    '.btn-link .processing-animation-ping span': {
+      backgroundColor: theme('colors.gray.900', colors.gray[900]),
+    },
+    '.btn-link.processing': {
+      cursor: defaultTheme.cursor["not-allowed"]
+    },
+    '.btn-link.processing:disabled': {
+      opacity: defaultTheme.opacity[100],
     },
   })
 
