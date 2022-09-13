@@ -7,10 +7,15 @@ function addItemVariant(name, color, fallbackColor, options) {
   addComponents({
     [`.outline-menu .menu-item.${name}`]: {
       color: theme(`colors.${color}.700`, colors[fallbackColor][700]),
+    },
+    [`.outline-menu .menu-item.${name}:not([data-headlessui-state])`]: {
       '&:hover': {
         backgroundColor: theme(`colors.${color}.100`, colors[fallbackColor][100]),
       }
-    }
+    },
+    [`.outline-menu .menu-item.${name}[data-headlessui-state="active"]`]: {
+      backgroundColor: theme(`colors.${color}.100`, colors[fallbackColor][100]),
+    },
   })
 }
 
@@ -27,6 +32,9 @@ module.exports = function (options) {
       borderWidth: defaultTheme.borderWidth.DEFAULT,
       borderRadius: defaultTheme.borderRadius.lg,
       padding: '.3rem 0',
+      '&:focus': {
+        outline: 'none',
+      }
     },
     '.outline-menu .menu-item': {
       display: 'flex',
@@ -34,11 +42,15 @@ module.exports = function (options) {
       'text-align': 'left',
       padding: '.4rem .8rem',
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
+    },
+    '.outline-menu .menu-item:not([data-headlessui-state])': {
       '&:hover': {
-        //color: theme('colors.gray.900', colors.gray[900]),
         backgroundColor: theme('colors.gray.100', colors.gray[100]),
       }
     },
+    '.outline-menu .menu-item[data-headlessui-state="active"]': {
+      backgroundColor: theme('colors.gray.100', colors.gray[100]),
+    }
   })
 
   addItemVariant('primary', 'primary', 'purple', options)
