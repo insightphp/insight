@@ -1,3 +1,4 @@
+export { default as Button } from './Button.vue'
 export { default as Checkbox } from './Checkbox.vue'
 export { default as Color} from './Color.vue'
 export { default as InputError} from './InputError.vue'
