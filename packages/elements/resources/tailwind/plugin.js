@@ -3,9 +3,11 @@ const colors = require('tailwindcss/colors')
 
 const addButtons = require('./buttons')
 const addForms = require('./forms')
+const addCard = require('./card')
 
 module.exports = plugin(function(options) {
   addButtons(options)
+  addCard(options)
   addForms(options)
 }, {
   theme: {
@@ -14,7 +16,7 @@ module.exports = plugin(function(options) {
         primary: colors.purple,
         danger: colors.red,
         warning: colors.amber,
-        info: colors.blue,
+        info: colors.sky,
       }
     }
   },
