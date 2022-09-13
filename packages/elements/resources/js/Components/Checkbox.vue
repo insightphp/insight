@@ -1,14 +1,13 @@
 <template>
   <label :for="name" class="inline-flex items-start">
     <input
-        class="rounded focus:ring-primary-500 text-primary-600"
         type="checkbox"
         :id="id"
         :name="name"
-        :class="[$attrs.class,  hasError ? 'border-red-600' : 'border-gray-400']"
+        :class="[$attrs.class, {  'has-error': hasError }]"
         v-model="checked"
     >
-    <span class="text-sm ml-2 -mt-[3px]" :class="{ 'text-red-600': hasError }">
+    <span class="text-sm ml-2 -mt-[2.5px]" :class="{ 'text-red-600': hasError }">
       <slot>
         <span class="text-sm mr-1" v-if="label">{{ label }}</span>
       </slot>
