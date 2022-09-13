@@ -1,21 +1,24 @@
 <template>
-<div class="inline-flex" :class="{
-  'flex-col space-y-2': placement == 'vertical',
-  'flex-row space-x-2': placement == 'horizontal',
-}">
-  <Radio
-      v-for="(option, index) in options"
-      :id="`${id}-option-${index}`"
-      :label="option[labelBy]"
-      :value="option[by]"
-      v-model="selectedValue"
-  />
-</div>
+  <div class="inline-flex" :class="{
+    'flex-col space-y-2': placement == 'vertical',
+    'flex-row space-x-2': placement == 'horizontal',
+  }">
+    <Radio
+        v-for="(option, index) in options"
+        :id="`${id}-option-${index}`"
+        :label="option[labelBy]"
+        :value="option[by]"
+        v-model="selectedValue"
+    />
+  </div>
+  
+  <InputError :error="error" />
 </template>
 
 <script setup lang="ts">
 import { Radio } from "./";
 import { ref, watch } from "vue";
+import InputError from "./InputError.vue";
 
 type Option = { [key: string]: any }
 
@@ -28,6 +31,7 @@ const props = withDefaults(defineProps<{
   by?: string
   labelBy?: string
   modelValue?: Option|null
+  error?: string|null
 }>(), {
   id: 'radio-group',
   placement: 'vertical',
