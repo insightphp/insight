@@ -57,6 +57,10 @@ module.exports = function (options) {
           'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
           'border-color': theme('colors.primary.300', colors.purple[300]),
         },
+        '&:disabled': {
+          'background-color': theme('colors.gray.50', colors.gray[50]),
+          cursor: 'not-allowed',
+        }
       },
     },
     {

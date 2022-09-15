@@ -10,6 +10,7 @@ const addBreadcrumbs = require('./breadcrumbs')
 const addBanners = require('./banners')
 const addTabs = require('./tabs')
 const addSideMenu = require('./side-menu')
+const addDate = require('./date')
 
 module.exports = plugin(function(options) {
   addButtons(options)
@@ -21,6 +22,7 @@ module.exports = plugin(function(options) {
   addBanners(options)
   addTabs(options)
   addSideMenu(options)
+  addDate(options)
 }, {
   theme: {
     extend: {
