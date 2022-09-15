@@ -8,13 +8,13 @@ function createColoredButtonVariant(name, color, fallbackColor, options) {
     [`.btn.${name}`]: {
       backgroundColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
       color: theme(`colors.${color}.700`, colors[fallbackColor][700]),
-      borderColor: theme(`colors.${color}.300`, colors[fallbackColor][300]),
+      borderColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
       '&:hover': {
         backgroundColor: theme(`colors.${color}.100`, colors[fallbackColor][100]),
       },
       '&:focus': {
         '--tw-ring-color': theme(`colors.${color}.300`, colors[fallbackColor][300]),
-        borderColor: theme(`colors.${color}.300`, colors[fallbackColor][300]),
+        borderColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
       },
       '&:disabled': {
         '&:hover': {
