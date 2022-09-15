@@ -12,7 +12,7 @@
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
   >
-  <MenuItems class="outline-menu absolute" :class="[$attrs.class, {
+  <MenuItems class="outline-menu absolute z-10" :class="[$attrs.class, {
     'left-0 mt-1': placement == 'bottom-left',
     'right-0 mt-1': placement == 'bottom-right',
   }]">

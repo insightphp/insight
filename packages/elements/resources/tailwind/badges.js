@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
-function addBadgeVariant(name, color, fallbackColor, options) {
+function addColoredVariant(name, color, fallbackColor, options) {
   const { addComponents, theme } = options
 
   addComponents({
@@ -21,18 +21,18 @@ module.exports = function (options) {
       display: 'inline-flex',
       'align-items': 'center',
       fontSize: theme('fontSize.xs', defaultTheme.fontSize.xs),
-      backgroundColor: theme('colors.gray.600', colors.gray[600]),
-      color: theme('colors.gray.50', colors.gray[50]),
-      borderColor: theme('colors.gray.600', colors.gray[600]),
+      backgroundColor: '#fff',
+      color: theme('colors.gray.700', colors.gray[700]),
+      borderColor: theme('colors.gray.300', colors.gray[300]),
       padding: '.05rem .4rem',
       borderRadius: defaultTheme.borderRadius.full,
       borderWidth: defaultTheme.borderWidth.DEFAULT,
       fontWeight: defaultTheme.fontWeight.medium,
     },
-    '.badge.light': {
-      backgroundColor: theme('colors.gray.200', colors.gray[200]),
-      color: theme('colors.gray.700', colors.gray[700]),
-      borderColor: theme('colors.gray.200', colors.gray[200]),
+    '.badge.dark': {
+      backgroundColor: theme('colors.gray.900', colors.gray[900]),
+      color: theme('colors.gray.50', colors.gray[50]),
+      borderColor: theme('colors.gray.900', colors.gray[900]),
     },
     '.badge.large': {
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
@@ -40,9 +40,9 @@ module.exports = function (options) {
     }
   })
 
-  addBadgeVariant('primary', 'primary', 'purple', options)
-  addBadgeVariant('success', 'success', 'green', options)
-  addBadgeVariant('danger', 'danger', 'red', options)
-  addBadgeVariant('warning', 'warning', 'amber', options)
-  addBadgeVariant('info', 'info', 'sky', options)
+  addColoredVariant('primary', 'primary', 'purple', options)
+  addColoredVariant('success', 'success', 'green', options)
+  addColoredVariant('danger', 'danger', 'red', options)
+  addColoredVariant('warning', 'warning', 'amber', options)
+  addColoredVariant('info', 'info', 'sky', options)
 }

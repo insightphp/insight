@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
-function configureButtonVariant(name, color, fallbackColor, options) {
+function createColoredButtonVariant(name, color, fallbackColor, options) {
   const { addComponents, theme } = options
 
   addComponents({
@@ -57,15 +57,16 @@ function configureButtonVariant(name, color, fallbackColor, options) {
 module.exports = function (options) {
   const { addComponents, theme } = options
 
+  // Regular Button
   addComponents({
     '.btn': {
       display: 'inline-flex',
       'align-items': 'center',
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
-      backgroundColor: theme('colors.gray.900', colors.gray[900]),
-      color: theme('colors.gray.50', colors.gray[50]),
-      borderColor: theme('colors.gray.900', colors.gray[900]),
-      padding: '.4rem 1rem',
+      backgroundColor: '#fff',
+      color: theme(`colors.gray.700`, colors.gray[700]),
+      borderColor: theme(`colors.gray.300`, colors.gray[300]),
+      padding: '.4rem .95rem',
       borderRadius: defaultTheme.borderRadius.lg,
       fontWeight: defaultTheme.fontWeight.medium,
       borderWidth: defaultTheme.borderWidth.DEFAULT,
@@ -73,25 +74,24 @@ module.exports = function (options) {
       transitionProperty: defaultTheme.transitionProperty.colors,
       transitionDuration: defaultTheme.transitionDuration[150],
       '&:hover': {
-        backgroundColor: theme('colors.gray.800', colors.gray[800]),
+        backgroundColor: theme('colors.gray.50', colors.gray[50]),
       },
       '&:focus': {
         outline: '2px solid transparent',
         'outline-offset': '2px',
         '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
         '--tw-ring-offset-width': '2px',
-        '--tw-ring-offset-color': '#fff',
-        '--tw-ring-color': theme('colors.gray.700', colors.gray[700]),
-
+        '--tw-ring-color': theme(`colors.gray.300`, colors.gray[300]),
         '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
         '--tw-ring-shadow': `var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)`,
         'box-shadow': `var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)`,
-        borderColor: theme('colors.gray.900', colors.gray[900]),
+        '--tw-ring-offset-color': '#fff',
+        borderColor: theme(`colors.gray.300`, colors.gray[300]),
       },
       '&:disabled': {
         opacity: defaultTheme.opacity[70],
         '&:hover': {
-          backgroundColor: theme('colors.gray.900', colors.gray[900])
+          backgroundColor: '#fff',
         }
       }
     },
@@ -106,20 +106,23 @@ module.exports = function (options) {
       padding: '.3rem .8rem',
     },
     '.btn .processing-indicator': {
-      color: theme('colors.gray.50', colors.gray[50]),
+      color: theme('colors.gray.700', colors.gray[700]),
     },
     '.btn .processing-animation-spin': {
-      color: theme('colors.gray.50', colors.gray[50]),
+      color: theme('colors.gray.700', colors.gray[700]),
     },
     '.btn .processing-animation-ping span': {
-      backgroundColor: theme('colors.gray.50', colors.gray[50]),
+      backgroundColor: theme('colors.gray.700', colors.gray[700]),
     },
+  })
 
+  // Link Button
+  addComponents({
     '.btn-link': {
       display: 'inline-flex',
       'align-items': 'center',
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
-      color: theme('colors.gray.900', colors.gray[900]),
+      color: theme('colors.gray.700', colors.gray[700]),
       fontWeight: defaultTheme.fontWeight.medium,
       '&:hover': {
         color: theme('colors.gray.800', colors.gray[800]),
@@ -148,10 +151,35 @@ module.exports = function (options) {
     },
   })
 
-  configureButtonVariant('light', 'gray', 'gray', options)
-  configureButtonVariant('primary', 'primary', 'purple', options)
-  configureButtonVariant('success', 'success', 'green', options)
-  configureButtonVariant('danger', 'danger', 'red', options)
-  configureButtonVariant('info', 'info', 'blue', options)
-  configureButtonVariant('warning', 'warning', 'amber', options)
+  // Dark Variant of Button
+  addComponents({
+    '.btn.dark': {
+      backgroundColor: theme('colors.gray.900', colors.gray[900]),
+      color: theme('colors.gray.50', colors.gray[50]),
+      borderColor: theme('colors.gray.900', colors.gray[900]),
+      '&:hover': {
+        backgroundColor: theme('colors.gray.800', colors.gray[800]),
+      },
+      '&:focus': {
+        '--tw-ring-color': theme('colors.gray.700', colors.gray[700]),
+        borderColor: theme('colors.gray.900', colors.gray[900]),
+      }
+    },
+    '.btn.dark .processing-indicator': {
+      color: theme('colors.gray.50', colors.gray[50]),
+    },
+    '.btn.dark .processing-animation-spin': {
+      color: theme('colors.gray.50', colors.gray[50]),
+    },
+    '.btn.dark .processing-animation-ping span': {
+      backgroundColor: theme('colors.gray.50', colors.gray[50]),
+    },
+  })
+
+  // Colored Variants
+  createColoredButtonVariant('primary', 'primary', 'purple', options)
+  createColoredButtonVariant('success', 'success', 'green', options)
+  createColoredButtonVariant('danger', 'danger', 'red', options)
+  createColoredButtonVariant('info', 'info', 'blue', options)
+  createColoredButtonVariant('warning', 'warning', 'amber', options)
 }
