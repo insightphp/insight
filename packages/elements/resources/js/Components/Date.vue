@@ -1,0 +1,206 @@
+<template>
+  <DatePicker
+      v-model="internalValue"
+      :time-picker="timePickerProp"
+      :enable-time-picker="enableTimePickerProp"
+      :range="rangeProp"
+      :week-picker="weekPickerProp"
+      :month-picker="monthPickerProp"
+      :year-picker="yearPickerProp"
+      :locale="locale"
+      text-input
+      :enable-seconds="enableSeconds"
+      :format="formatDateLabel"
+      :partial-range="false"
+  />
+
+  <InputError :error="error" />
+</template>
+
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
+import InputError from "./InputError.vue"
+import DatePicker from '@vuepic/vue-datepicker'
+import { format, getHours, getMinutes, getMonth, getSeconds, getYear, parse, setHours, setMinutes, setMonth, setSeconds, setYear } from "date-fns";
+
+type Mode = 'date' | 'datetime' | 'time' | 'daterange' | 'datetimerange' | 'timerange' | 'week' | 'month' | 'year' | 'monthrange' | 'yearrange'
+
+type TimeStruct = { hours: number, minutes: number, seconds: number }
+type MonthStruct = { month: number, year: number }
+
+const emit = defineEmits(['change', 'update:modelValue'])
+
+const props = withDefaults(defineProps<{
+  error?: string
+  modelValue?: string|Array<string>|number
+  locale: string
+  mode: Mode
+  enableSeconds?: boolean
+}>(), {
+  mode: 'date',
+  locale: 'sk-SK'
+})
+
+const timePickerProp = computed(() => props.mode == 'time' || props.mode == 'timerange' ? true : undefined )
+const enableTimePickerProp = computed(() => props.mode == 'date' || props.mode == 'daterange' ? false : undefined ) // mode == 'time' ? undefined : mode == 'datetime'
+const rangeProp = computed(() => props.mode == 'monthrange' || props.mode == 'yearrange' || props.mode == 'daterange' || props.mode == 'datetimerange' || props.mode == 'timerange' || undefined)
+const weekPickerProp = computed(() => props.mode == 'week' || undefined)
+const monthPickerProp = computed(() => props.mode == 'month' || props.mode == 'monthrange' || undefined)
+const yearPickerProp = computed(() => props.mode == 'year' || props.mode == 'yearrange' || undefined)
+
+const hasError = computed(() => !!props.error)
+
+const resolveFormattingLabel = (configurations: Record<Mode, string|undefined> ) => {
+  return configurations[props.mode]
+}
+
+const enableSeconds = computed(() => !!props.enableSeconds)
+
+const formatDateLabel = computed(() => resolveFormattingLabel({
+  date: 'dd.MM.yyyy',
+  datetime: enableSeconds.value ? 'dd.MM.yyyy HH:mm:ss' : 'dd.MM.yyyy HH:mm',
+  daterange: 'dd.MM.yyyy',
+  month: undefined,
+  time: undefined,
+  datetimerange: enableSeconds.value ? 'dd.MM.yyyy HH:mm:ss' : 'dd.MM.yyyy HH:mm',
+  monthrange: undefined,
+  week: 'dd.MM.yyyy',
+  year: undefined,
+  timerange: undefined,
+  yearrange: undefined,
+}))
+
+const resolveFormattingToken = () => {
+  const tokens: Record<Mode, string> = {
+    date: 'yyyy-MM-dd',
+    datetime: enableSeconds.value ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd HH:mm',
+    daterange: 'yyyy-MM-dd',
+    month: 'yyyy-MM',
+    time: enableSeconds.value ? 'HH:mm:ss' : 'HH:mm',
+    datetimerange: enableSeconds.value ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd HH:mm',
+    monthrange: 'yyyy-MM',
+    week: 'yyyy-MM-dd',
+    year: '',
+    timerange: enableSeconds.value ? 'HH:mm:ss' : 'HH:mm',
+    yearrange: '',
+  }
+
+  return tokens[props.mode]
+}
+
+const formatTime = (time: TimeStruct) => {
+  let date = new Date()
+  date = setHours(date, time.hours)
+  date = setMinutes(date, time.minutes)
+  date = setSeconds(date, time.seconds)
+  return format(date, resolveFormattingToken())
+}
+
+const resolveTimeStructFromDateObject = (date: Date) => {
+  if (props.enableSeconds) {
+    return { hours: getHours(date), minutes: getMinutes(date), seconds: getSeconds(date) }
+  } else {
+    return { hours: getHours(date), minutes: getMinutes(date), seconds: 0 }
+  }
+}
+
+const formatMonth = (month: MonthStruct) => {
+  let date = new Date()
+  date = setYear(date, month.year)
+  date = setMonth(date, month.month)
+  return format(date, resolveFormattingToken())
+}
+
+const resolveMonthStructFromDateObject = (date: Date) => {
+  return { month: getMonth(date), year: getYear(date) }
+}
+
+const resolveSelectedValue = (value: null|undefined|number|Date|Array<Date>|TimeStruct|MonthStruct) => {
+  if (value === null || value === undefined) {
+    return null
+  }
+
+  if (typeof value == 'number' || props.mode == 'year') {
+    return value
+  } else if (value instanceof Date) {
+    return format(value, resolveFormattingToken())
+  } else if (Array.isArray(value)) {
+    return value.map(it => {
+      if (typeof it == 'number' && props.mode == 'yearrange') {
+        return it
+      } else if (it instanceof Date) {
+        return format(it, resolveFormattingToken())
+      } else if (props.mode == 'timerange') {
+        return formatTime(it as any)
+      } else if (props.mode == 'monthrange') {
+        return formatMonth(it as any)
+      } else {
+        return null
+      }
+    })
+  } else if (typeof value == 'object') {
+    if (props.mode == 'time') {
+      return formatTime(value as TimeStruct)
+    }
+
+    if (props.mode == 'month') {
+      return formatMonth(value as MonthStruct)
+    }
+  }
+
+  throw new Error("The format of the value could not be resolved.")
+}
+
+const resolveInternalValue = (value: null|undefined|string|number|Array<string>) => {
+  if (value === null || value === undefined) {
+    return null
+  }
+
+  if (typeof value == 'number') {
+    if (props.mode == 'year') {
+      return value
+    }
+  } else if (typeof value == 'string') {
+    if (props.mode == 'date') {
+      return parse(value, 'yyyy-MM-dd', new Date())
+    } else if (props.mode == 'datetime') {
+      return parse(value, props.enableSeconds ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd HH:mm' , new Date())
+    } else if (props.mode == 'time') {
+      return resolveTimeStructFromDateObject(parse(value, props.enableSeconds ? 'HH:mm:ss' : 'HH:mm', new Date()))
+    } else if (props.mode == 'month') {
+      return resolveMonthStructFromDateObject(parse(value, 'yyyy-MM', new Date()))
+    }
+  } else if (Array.isArray(value) && value.length == 2) {
+    return value.map(it => {
+      if (props.mode == 'daterange') {
+        return parse(it, 'yyyy-MM-dd', new Date())
+      } else if (props.mode == 'datetimerange') {
+        return parse(it, props.enableSeconds ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd HH:mm', new Date())
+      } else if (props.mode == 'timerange') {
+        return resolveTimeStructFromDateObject(parse(it, props.enableSeconds ? 'HH:mm:ss' : 'HH:mm', new Date()))
+      } else if (props.mode == 'week') {
+        return parse(it, 'yyyy-MM-dd', new Date())
+      } else if (props.mode == 'monthrange') {
+        return resolveMonthStructFromDateObject(parse(it, 'yyyy-MM', new Date()))
+      } else if (typeof it == 'number' && props.mode == 'yearrange') {
+        return it
+      }
+    })
+  }
+
+  throw new Error("The v-model value is invalid.")
+}
+
+const internalValue = ref<Date|Array<Date>|object|null|number>(resolveInternalValue(props.modelValue))
+
+watch(internalValue, value => {
+  emit('change', resolveSelectedValue(value as any))
+  emit('update:modelValue', resolveSelectedValue(value as any))
+})
+
+watch(props, newProps => {
+  if (JSON.stringify(resolveInternalValue(newProps.modelValue)) != JSON.stringify(internalValue.value)) {
+    internalValue.value = resolveInternalValue(props.modelValue)
+  }
+})
+</script>
