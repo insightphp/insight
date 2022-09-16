@@ -1,9 +1,6 @@
-import type { App } from "vue";
-
 declare type Component = Promise<any> | (() => Promise<any>)
 
 class ViewComponents {
-  app: App|null = null
 
   registeredComponents: Record<string, Component> = {}
 

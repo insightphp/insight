@@ -14,10 +14,11 @@ export default defineConfig({
       fileName: format => `InertiaViewComponents.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', '@inertiajs/inertia-vue3'],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          '@inertiajs/inertia-vue3': 'InertiaVue',
         }
       }
     }

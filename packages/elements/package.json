@@ -1,7 +1,7 @@
 {
     "name": "@insightphp/elements",
-    "version": "0.1.10",
-    "description": "Set of UI components.",
+    "version": "0.2.1",
+    "description": "Collection of UI components for Insight.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/insightphp/insight.git"
@@ -38,7 +38,7 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.0",
-        "@insightphp/inertia-view-components": "^0.1",
+        "@insightphp/inertia-view-components": "^0.2",
         "@vuepic/vue-datepicker": "^3.4.8",
         "date-fns": "^2.29.3",
         "mini-svg-data-uri": "^1.4.4",

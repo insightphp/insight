@@ -1,8 +1,8 @@
-import Plugin from "./plugin";
-import type { PluginOptions } from "./plugin";
+import Elements from "./plugin";
+import type { PluginOptions as ElementsPluginOptions } from "./plugin";
 
 export * from './Components'
 
 export {
-  Plugin, PluginOptions
+  Elements, ElementsPluginOptions
 }
