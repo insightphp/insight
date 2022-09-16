@@ -1,8 +1,10 @@
-import Plugin from "./plugin";
+import ViewComponents from "./plugin";
 import type { PluginOptions } from "./plugin";
-import ViewComponentManager from "./view-component-manager";
-import Portal from './Components/Portal.vue'
+import ComponentManager from "./component-manager";
+import Portal from './portal'
+
+export * from './contracts'
 
 export {
-  Plugin, PluginOptions, ViewComponentManager, Portal
+  ViewComponents, PluginOptions, ComponentManager, Portal
 }

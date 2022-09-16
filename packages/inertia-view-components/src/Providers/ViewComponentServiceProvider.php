@@ -18,17 +18,23 @@ class ViewComponentServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/inertia-view-components.php', 'inertia-view-components');
 
+        $this->publishes([
+            __DIR__ . '/../../config/inertia-view-components.php' => config_path('inertia-view-components.php'),
+        ], 'inertia-view-components');
+
         /** @var ViewComponentManager $manager */
         $manager = $this->app->get(ViewComponentManager::class);
 
         foreach (config('inertia-view-components.components', []) as $namespace => $components) {
-            if (is_string($components)) {
+            if (is_string($components) && file_exists($components)) {
                 $manager->registerComponentsIn($components, $namespace);
             }
 
             if (is_iterable($components)) {
                 foreach ($components as $path) {
-                    $manager->registerComponentsIn($path, $namespace);
+                    if (file_exists($path)) {
+                        $manager->registerComponentsIn($path, $namespace);
+                    }
                 }
             }
         }

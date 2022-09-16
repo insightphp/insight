@@ -3,10 +3,9 @@ import type { App } from "vue";
 declare type Component = Promise<any> | (() => Promise<any>)
 
 class ViewComponents {
-
   app: App|null = null
 
-  components: Record<string, Record<string, Component>> = {}
+  registeredComponents: Record<string, Component> = {}
 
   /**
    * Registers view components for given namespace.
@@ -16,10 +15,6 @@ class ViewComponents {
     baseDirectory: string,
     namespace: string = 'app'
   ) {
-    if (! this.components.hasOwnProperty(namespace)) {
-      this.components[namespace] = {}
-    }
-
     Object.keys(components).forEach(fileName => {
       const relativeComponentPath = fileName
         .replace('./', '')
@@ -27,12 +22,19 @@ class ViewComponents {
         .replace('/', '')
         .replace(/\//g, '-')
 
-      this.components[namespace][this.resolveComponentName(relativeComponentPath)] = components[fileName]
+      this.registeredComponents[`${namespace}-${this.resolveComponentName(relativeComponentPath)}`] = (components[fileName] as any).default
     })
+  }
 
-    if (this.app) {
-      this.bootComponents(this.app)
+  /**
+   * Retrieve registered component with given name.
+   */
+  getComponentWithName(name: string): Component {
+    if (! Object.keys(this.registeredComponents).includes(name)) {
+      throw new Error(`The Component with name [${name}] is not registered.`)
     }
+
+    return this.registeredComponents[name]
   }
 
   /**
@@ -56,23 +58,7 @@ class ViewComponents {
 
     return kebabCase
   }
-
-  bootComponents(app: App) {
-    Object.keys(this.components).forEach(namespace => {
-      Object.keys(this.components[namespace]).forEach(componentName => {
-        app.component(`${namespace}-${componentName}`, (this.components[namespace][componentName] as any).default)
-      })
-    })
-  }
-
-  boot(app: App) {
-    this.app = app;
-
-    this.bootComponents(app)
-
-    console.log('BOOTED', this)
-  }
 }
 
-const ViewComponentManager = new ViewComponents()
-export default ViewComponentManager
+const ComponentManager = new ViewComponents()
+export default ComponentManager

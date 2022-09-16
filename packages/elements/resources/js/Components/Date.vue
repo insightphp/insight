@@ -109,7 +109,7 @@ const props = withDefaults(defineProps<{
   longMonthNames: boolean
 }>(), {
   mode: 'date',
-  locale: 'sk-SK',
+  locale: 'en-US',
   placeholder: 'Select date…',
   nullable: true,
   autoApply: true,

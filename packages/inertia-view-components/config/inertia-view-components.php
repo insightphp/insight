@@ -7,7 +7,7 @@ return [
      */
     'components' => [
         'app' => [
-            app_path('ViewComponents')
+            app_path('View/Components')
         ]
     ],
 

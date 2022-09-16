@@ -2,7 +2,7 @@
     "name": "insightphp/inertia-view-components",
     "type": "library",
     "license": "MIT",
-    "description": "View component middleware for Inertia.",
+    "description": "View Components middleware for Inertia.",
     "authors": [
         {
             "name": "Peter Stovka",
