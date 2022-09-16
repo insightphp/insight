@@ -14,6 +14,16 @@
       :partial-range="false"
       :placeholder="placeholder"
       :disabled="disabled"
+      class="date-input"
+      :class="{ 'has-error': hasError }"
+      :month-change-on-scroll="false"
+      :clearable="nullable"
+      :auto-apply="autoApply"
+      :name="name"
+      :week-numbers="weekNumbers"
+      :select-text="chooseLabel"
+      :cancel-text="cancelLabel"
+      :month-name-format="longMonthNames ? 'long' : 'short'"
   >
     <template #input-icon>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2.5 w-5 h-5">
@@ -83,6 +93,7 @@ type MonthStruct = { month: number, year: number }
 const emit = defineEmits(['change', 'update:modelValue'])
 
 const props = withDefaults(defineProps<{
+  name?: string
   error?: string
   modelValue?: string|Array<string>|number
   locale: string
@@ -90,10 +101,22 @@ const props = withDefaults(defineProps<{
   enableSeconds?: boolean
   placeholder: string
   disabled?: boolean
+  nullable: boolean
+  autoApply: boolean
+  weekNumbers: boolean
+  chooseLabel: string
+  cancelLabel: string
+  longMonthNames: boolean
 }>(), {
   mode: 'date',
   locale: 'sk-SK',
-  placeholder: 'Select date…'
+  placeholder: 'Select date…',
+  nullable: true,
+  autoApply: true,
+  weekNumbers: false,
+  chooseLabel: 'Choose',
+  cancelLabel: 'Cancel',
+  longMonthNames: true
 })
 
 const timePickerProp = computed(() => props.mode == 'time' || props.mode == 'timerange' ? true : undefined )
@@ -246,7 +269,7 @@ const resolveInternalValue = (value: null|undefined|string|number|Array<string>)
   throw new Error("The v-model value is invalid.")
 }
 
-const internalValue = ref<Date|Array<Date>|object|null|number>(resolveInternalValue(props.modelValue))
+const internalValue = ref<any>(resolveInternalValue(props.modelValue))
 
 watch(internalValue, value => {
   emit('change', resolveSelectedValue(value as any))

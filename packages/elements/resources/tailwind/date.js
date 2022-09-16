@@ -11,11 +11,9 @@ module.exports = function (options) {
     ".dp__input_wrap": {
       position: "relative",
       width: "100%",
-      // boxSizing: "unset"
     },
     ".dp__input_wrap:focus": {
       borderColor: theme('colors.primary.300', colors.purple[300]),
-      // outline: "none"
     },
     ".dp__input": {
       'background-color': '#fff',
@@ -30,31 +28,12 @@ module.exports = function (options) {
       'padding-bottom': spacing[2],
       'padding-left': spacing[3],
       width: '100%',
-
-      // backgroundColor: "var(--dp-background-color)",
-      // borderRadius: "4px",
-      // border: "1px solid var(--dp-border-color)",
-      // outline: "none",
-      // transition: "border-color .2s cubic-bezier(0.645, 0.045, 0.355, 1)",
-      // fontSize: "1rem",
-      // lineHeight: "1.5rem",
-      // padding: "6px 12px",
-      // color: "var(--dp-text-color)",
-      // boxSizing: "border-box"
     },
     ".dp__input::placeholder": {
       color: theme('colors.gray.300', colors.gray[300]),
       opacity: '1',
-      // opacity: 0.7
-    },
-    ".dp__input:hover": {
-      // borderColor: "var(--dp-border-color-hover)"
-    },
-    ".dp__input_reg": {
-      // caretColor: "rgba(0, 0, 0, 0)"
     },
     ".dp__input_focus": {
-      // borderColor: "var(--dp-border-color-hover)"
       outline: '2px solid transparent',
       'outline-offset': '2px',
       '--tw-ring-inset': 'var(--tw-empty,/*!*/ /*!*/)',
@@ -67,28 +46,18 @@ module.exports = function (options) {
       'border-color': theme('colors.primary.300', colors.purple[300]),
     },
     ".dp__disabled": {
-      // background: "var(--dp-disabled-color)"
       'background-color': theme('colors.gray.50', colors.gray[50]),
       cursor: 'not-allowed',
-    },
-    ".dp__disabled::placeholder": {
-      // color: "var(--dp-disabled-color-text)"
     },
     ".dp__input_icons": {
       display: "inline-block",
       width: "1rem",
       height: "1rem",
       strokeWidth: 0,
-      // fontSize: "1rem",
-      // lineHeight: "1.5rem",
-      // padding: "6px 12px",
-      // color: "var(--dp-icon-color)",
       boxSizing: "content-box",
-
       'font-size': theme('fontSize.sm', defaultTheme.fontSize.sm),
       'line-height': baseLineHeight,
       color: theme('colors.gray.900', colors.gray[900]),
-
       'padding-top': spacing[2],
       'padding-right': spacing[3],
       'padding-bottom': spacing[2],
@@ -100,7 +69,6 @@ module.exports = function (options) {
       top: "50%",
       left: "0",
       transform: "translateY(-50%)",
-      // color: "var(--dp-icon-color)"
       color: theme('colors.gray.900', colors.gray[900]),
     },
     ".dp__clear_icon": {
@@ -109,7 +77,6 @@ module.exports = function (options) {
       right: "0",
       transform: "translateY(-50%)",
       cursor: "pointer",
-      // color: "var(--dp-icon-color)"
       color: theme('colors.gray.900', colors.gray[900]),
     },
     ".dp__input_icon_pad": {
@@ -785,7 +752,14 @@ module.exports = function (options) {
       transform: "translateY(-22px)"
     },
     ".dp-menu-appear-enter-from": { opacity: 0 },
-    ".dp-menu-appear-leave-to": { opacity: 1 }
-  })
+    ".dp-menu-appear-leave-to": { opacity: 1 },
 
+    '.dp__main.has-error .dp__input': {
+      borderColor: theme('colors.danger.300', colors.red[300]),
+      '&:focus': {
+        '--tw-ring-color': theme('colors.danger.100', colors.red[100]),
+        borderColor: theme('colors.danger.300', colors.red[300]),
+      }
+    },
+  })
 }
