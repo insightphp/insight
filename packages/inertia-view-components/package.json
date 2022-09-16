@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/inertia-view-components",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "View Components middleware for Inertia.",
     "repository": {
         "type": "git",

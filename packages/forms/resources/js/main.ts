@@ -1,8 +1,8 @@
-import Plugin from "./plugin";
-import type { PluginOptions } from "./plugin";
+import Forms from "./plugin";
+import type { PluginOptions as FormsPluginOptions } from "./plugin";
 
 export * from './ViewComponents'
 
 export {
-  Plugin, PluginOptions
+  Forms, FormsPluginOptions
 }

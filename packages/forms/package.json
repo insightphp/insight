@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/forms",
-    "version": "0.1.2",
+    "version": "0.2.1",
     "description": "Forms component of Insight.",
     "repository": {
         "type": "git",
@@ -35,7 +35,7 @@
     },
     "dependencies": {
         "@insightphp/elements": "^0.1",
-        "@insightphp/inertia-view-components": "^0.1",
+        "@insightphp/inertia-view-components": "^0.2",
         "vue": "^3.2"
     }
 }
