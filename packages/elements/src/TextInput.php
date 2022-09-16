@@ -23,6 +23,26 @@ class TextInput extends ViewComponent
     public ?string $placeholder = null;
 
     /**
+     * The step attribute of the text input.
+     *
+     * @var string|null
+     */
+    public ?string $step = null;
+
+    /**
+     * Set the step attribute of the text input.
+     *
+     * @param string|null $step
+     * @return $this
+     */
+    public function step(?string $step): static
+    {
+        $this->step = $step;
+
+        return $this;
+    }
+
+    /**
      * Set the type of the input.
      *
      * @param string $type
@@ -56,5 +76,25 @@ class TextInput extends ViewComponent
     public function secret(): static
     {
         return $this->type('password');
+    }
+
+    /**
+     * Set the type of the text input to number.
+     *
+     * @return $this
+     */
+    public function number(): static
+    {
+        return $this->type('number');
+    }
+
+    /**
+     * Set the type of the text input to  email.
+     *
+     * @return $this
+     */
+    public function email(): static
+    {
+        return $this->type('email');
     }
 }

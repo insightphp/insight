@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Insight\Forms\ViewComponents;
+namespace Insight\Forms\View\Components;
 
 
 use Insight\Forms\Form;
@@ -16,27 +16,6 @@ class StackedForm extends ViewComponent
      * @var array
      */
     public array $items = [];
-
-    /**
-     * The initial value of the form.
-     *
-     * @var array
-     */
-    public array $initialValue = [];
-
-    /**
-     * The location where the form should be submitted.
-     *
-     * @var string|null
-     */
-    public ?string $action = null;
-
-    /**
-     * The method used to submit the form.
-     *
-     * @var string|null
-     */
-    public ?string $method = null;
 
     /**
      * Adds control to the form.
@@ -61,17 +40,13 @@ class StackedForm extends ViewComponent
      * Creates new stacked form.
      *
      * @param \Insight\Forms\Form $form
-     * @return \Insight\Forms\ViewComponents\StackedForm
+     * @return \Insight\Forms\View\Components\StackedForm
      */
     public static function for(Form $form): StackedForm
     {
         $stackedForm = static::make();
 
         $form->controls()->each(fn (FormControl $control) => $stackedForm->addControl($control));
-
-        $stackedForm->initialValue = $form->getInertiaFormValue();
-        $stackedForm->method = $form->getMethod();
-        $stackedForm->action = $form->getAction();
 
         return $stackedForm;
     }

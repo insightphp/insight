@@ -62,6 +62,7 @@ module.exports = function (options) {
     '.btn': {
       display: 'inline-flex',
       'align-items': 'center',
+      'justify-content': 'center',
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
       backgroundColor: '#fff',
       color: theme(`colors.gray.700`, colors.gray[700]),

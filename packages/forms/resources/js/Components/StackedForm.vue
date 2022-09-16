@@ -15,7 +15,8 @@
             :error="errors[item.name]"
             :field-path="[]"
             :required="item.isRequired"
-            @input="emit('input', { name: item.name, value: $event })"
+            @input="onInput(item, $event)"
+            class="w-full"
         />
       </div>
     </div>
@@ -25,7 +26,7 @@
 <script setup lang="ts">
 import { Portal } from "@insightphp/inertia-view-components";
 
-const emit = defineEmits(['input'])
+const emit = defineEmits(['input', 'clearError'])
 
 defineProps<{
   items: Array<{
@@ -38,4 +39,9 @@ defineProps<{
   modelValue: any
   errors: Record<string, string>
 }>()
+
+const onInput = (item: { name: string }, value: any) => {
+  emit('input', { name: item.name, value: value })
+  emit('clearError', item.name)
+}
 </script>

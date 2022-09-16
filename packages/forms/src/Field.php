@@ -5,11 +5,14 @@ namespace Insight\Forms;
 
 
 use Closure;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Insight\Inertia\Contracts\Viewable;
 use Insight\Inertia\ViewComponent;
 
 class Field implements Viewable
 {
+    use ForwardsCalls;
+
     /**
      * Array of pending configurations on the view.
      *
@@ -96,6 +99,17 @@ class Field implements Viewable
     public function toView(): ViewComponent
     {
         return $this->resolveViewComponent();
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        // If the method does not exist on the field
+        // we'll forward it to the view component.
+        if (! method_exists($this, $name)) {
+            return $this->apply(fn ($field) => $this->forwardCallTo($field, $name, $arguments));
+        }
+
+        return $this->forwardCallTo($this, $name, $arguments);
     }
 
     /**

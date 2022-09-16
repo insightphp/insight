@@ -4,13 +4,15 @@
 namespace Insight\Forms;
 
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Insight\Forms\Concerns\ValidatesFormValue;
 use Insight\Forms\Contracts\FormContext;
+use Insight\Forms\View\Components\StackedForm;
 
-class Form
+class Form implements Arrayable, \JsonSerializable
 {
     use ValidatesFormValue;
 
@@ -61,11 +63,16 @@ class Form
     /**
      * Add a control to the form.
      *
-     * @param \Insight\Forms\FormControl|\Insight\Forms\Field $control
+     * @param string|\Insight\Forms\FormControl|\Insight\Forms\Field $control
+     * @param \Insight\Forms\FormControl|\Insight\Forms\Field|null $field
      * @return \Insight\Forms\FormControl
      */
-    public function control(FormControl|Field $control): FormControl
+    public function control(string|FormControl|Field $control, FormControl|Field|null $field = null): FormControl
     {
+        if (is_string($control)) {
+            return $this->control($field)->label($control);
+        }
+
         if ($control instanceof Field) {
             $control = FormControl::make($control);
         }
@@ -315,6 +322,31 @@ class Form
     public function postTo(string $action): static
     {
         return $this->method('post')->action($action);
+    }
+
+    /**
+     * Retrieve data for Inertia.
+     *
+     * @return array
+     */
+    public function toInertia(): array
+    {
+        return [
+            'initialValue' => $this->getInertiaFormValue(),
+            'method' => $this->getMethod(),
+            'action' => $this->getAction(),
+            'renderAs' => StackedForm::for($this),
+        ];
+    }
+
+    public function toArray()
+    {
+        return $this->toInertia();
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->toArray();
     }
 
     /**

@@ -16,6 +16,6 @@ class FormsServiceProvider extends ServiceProvider
 
     protected function registerViewComponents(ViewComponentManager $componentManager)
     {
-        $componentManager->registerComponentsIn(__DIR__ . '/../ViewComponents', 'insight-forms');
+        $componentManager->registerComponentsIn(__DIR__ . '/../View/Components', 'insight-forms');
     }
 }
