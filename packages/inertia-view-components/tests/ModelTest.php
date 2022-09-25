@@ -148,3 +148,31 @@ test('it should serialize associative array of view models', function () {
     expect($model::make(['permissions' => $permissions])->toInertia())
         ->toMatchArray(['permissions' => [ 'peter' => ['view' => true, 'delete' => false], 'adriana' => ['view' => false, 'delete' => true] ]]);
 });
+
+test('it should serialize computed property', function () {
+    $model = Fixtures\UserName::make([
+        'firstName' => 'Peter',
+        'lastName' => 'Stovka',
+    ]);
+
+    expect($model->toInertia())
+        ->toMatchArray(['fullName' => 'Peter Stovka'])
+        ->not()->toHaveKeys(['firstName', 'lastName', 'getFullName']);
+});
+
+test('it should seriailze computed property with custom name', function () {
+    $model = new class extends Model {
+        protected string $firstName;
+        protected string $lastName;
+
+        #[\Insight\Inertia\Support\Computed(name: 'fullName')]
+        public function getFullName(): string
+        {
+            return $this->firstName . ' ' . $this->lastName;
+        }
+    };
+
+    expect($model::make(['firstName' => 'Peter', 'lastName' => 'Stovka'])->toInertia())
+        ->toMatchArray(['fullName' => 'Peter Stovka'])
+        ->not()->toHaveKeys(['firstName', 'lastName', 'getFullName']);
+});

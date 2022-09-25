@@ -9,7 +9,9 @@ use Illuminate\Support\Arr;
 use Insight\Inertia\Contracts\HasInertiaProps;
 use Insight\Inertia\Exceptions\AttributeNotSetException;
 use Insight\Inertia\Exceptions\MissingAttributeException;
+use Insight\Inertia\Support\Computed;
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionProperty;
 
 abstract class Model implements HasInertiaProps
@@ -24,12 +26,24 @@ abstract class Model implements HasInertiaProps
         $clazz = new ReflectionClass($this);
 
         // Serialize all public properties.
-        return collect($clazz->getProperties(ReflectionProperty::IS_PUBLIC))
+        $model = collect($clazz->getProperties(ReflectionProperty::IS_PUBLIC))
             ->reduce(function (array $model, ReflectionProperty $property) {
                 $model[$property->getName()] = $this->prepareForInertia($this->{$property->getName()});
 
                 return $model;
             }, []);
+
+        // Serialize all computed properties.
+        return collect($clazz->getMethods(ReflectionMethod::IS_PUBLIC))
+            ->filter(fn (ReflectionMethod $method) => ! empty($method->getAttributes(Computed::class)))
+            ->reduce(function (array $model, ReflectionMethod $method) {
+                /** @var Computed $computed */
+                $computed = Arr::first($method->getAttributes(Computed::class))->newInstance();
+
+                $model[$computed->name ?: $method->getName()] = app()->call([$this, $method->getName()]);
+
+                return $model;
+            }, $model);
     }
 
     /**
