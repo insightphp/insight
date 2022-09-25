@@ -1,12 +1,12 @@
 import { defineComponent, h } from "vue";
 import type { PropType } from "vue"
-import type { ViewComponent } from "./contracts";
-import ComponentManager from "./component-manager";
+import type { Component } from "./contracts";
+import Surface from "./surface";
 import { usePage } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
   props: {
-    component: { type: Object as PropType<ViewComponent<any>>, required: false },
+    component: { type: Object as PropType<Component<any>>, required: false },
     for: { type: String, required: false },
   },
   setup(props, { slots }) {
@@ -15,7 +15,7 @@ export default defineComponent({
       const { _component, ...componentDef } = component
 
       return () => h(
-        ComponentManager.getComponentWithName(_component.name) as any,
+        Surface.getComponentWithName(_component.name) as any,
         { ...passthroughProps, ...componentDef },
         slots
       )
@@ -23,18 +23,18 @@ export default defineComponent({
 
     if (props.for) {
       const page = usePage<{
-        [key: typeof props.for]: ViewComponent
+        [key: typeof props.for]: Component
       }>()
 
       const { _component, ...componentDef } = page.props.value[props.for]
 
       return () => h(
-        ComponentManager.getComponentWithName(_component.name) as any,
+        Surface.getComponentWithName(_component.name) as any,
         { ...props, ...componentDef },
         slots
       )
     }
 
-    throw new Error("The Portal must have either [for] or [component] props filled. Nothing was specified.")
+    throw new Error("The Portal must have either [for] or [component] props set.")
   }
 })

@@ -2,3 +2,4 @@ dist/
 *.tgz
 composer.lock
 vendor/
+node_modules/

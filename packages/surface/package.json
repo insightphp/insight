@@ -1,7 +1,7 @@
 {
-    "name": "@insightphp/inertia-view-components",
-    "version": "0.2.2",
-    "description": "View Components middleware for Inertia.",
+    "name": "@insightphp/surface",
+    "version": "0.3.0",
+    "description": "View abstraction layer for Inertia applications.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/insightphp/insight.git"
@@ -19,8 +19,8 @@
         "url": "https://github.com/insightphp/insight/issues"
     },
     "homepage": "https://github.com/insightphp/insight#readme",
-    "main": "./dist/InertiaViewComponents.umd.js",
-    "module": "./dist/InertiaViewComponents.es.js",
+    "main": "./dist/Surface.umd.js",
+    "module": "./dist/Surface.es.js",
     "files": [
         "dist",
         "resources/js"
@@ -28,12 +28,15 @@
     "types": "./dist/types/main.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/InertiaViewComponents.es.js",
-            "require": "./dist/InertiaViewComponents.umd.js"
+            "import": "./dist/Surface.es.js",
+            "require": "./dist/Surface.umd.js"
         }
     },
     "dependencies": {
         "@inertiajs/inertia-vue3": "^0.6.0",
         "vue": "^3.2"
+    },
+    "devDependencies": {
+        "vitest": "^0.23"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "insightphp/inertia-view-components",
+    "name": "insightphp/surface",
     "type": "library",
     "license": "MIT",
     "description": "View abstraction layer for Inertia applications.",
