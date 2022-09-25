@@ -160,7 +160,7 @@ test('it should serialize computed property', function () {
         ->not()->toHaveKeys(['firstName', 'lastName', 'getFullName']);
 });
 
-test('it should seriailze computed property with custom name', function () {
+test('it should serialize computed property with custom name', function () {
     $model = new class extends Model {
         protected string $firstName;
         protected string $lastName;
@@ -175,4 +175,22 @@ test('it should seriailze computed property with custom name', function () {
     expect($model::make(['firstName' => 'Peter', 'lastName' => 'Stovka'])->toInertia())
         ->toMatchArray(['fullName' => 'Peter Stovka'])
         ->not()->toHaveKeys(['firstName', 'lastName', 'getFullName']);
+});
+
+it('should serialize to Inertia response', function () {
+    $data = (new \Inertia\Response('test', []))->resolvePropertyInstances([
+        'user' => Fixtures\UserModel::make([
+            'id' => 100,
+            'name' => 'Peter Stovka',
+            'email' => 'ps@stacktrace.sk',
+        ])
+    ], request());
+
+    expect($data)->toMatchArray([
+        'user' => [
+            'id' => 100,
+            'name' => 'Peter Stovka',
+            'email' => 'ps@stacktrace.sk',
+        ]
+    ]);
 });
