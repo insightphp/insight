@@ -109,10 +109,10 @@ test('it should serialize associative array', function () {
 
 test('it should serialize view model within view model', function () {
     $model = new class extends Model {
-        public Fixtures\Permissions $permissions;
+        public Fixtures\PermissionsModel $permissions;
     };
 
-    $permissions = Fixtures\Permissions::make([
+    $permissions = Fixtures\PermissionsModel::make([
         'view' => true,
         'delete' => true,
     ]);
@@ -127,8 +127,8 @@ test('it should serialize collection of view models', function () {
     };
 
     $permissions = [
-        Fixtures\Permissions::make(['view' => true, 'delete' => false]),
-        Fixtures\Permissions::make(['view' => false, 'delete' => true]),
+        Fixtures\PermissionsModel::make(['view' => true, 'delete' => false]),
+        Fixtures\PermissionsModel::make(['view' => false, 'delete' => true]),
     ];
 
     expect($model::make(['permissions' => $permissions])->toInertia())
@@ -141,8 +141,8 @@ test('it should serialize associative array of view models', function () {
     };
 
     $permissions = [
-        'peter' => Fixtures\Permissions::make(['view' => true, 'delete' => false]),
-        'adriana' => Fixtures\Permissions::make(['view' => false, 'delete' => true]),
+        'peter' => Fixtures\PermissionsModel::make(['view' => true, 'delete' => false]),
+        'adriana' => Fixtures\PermissionsModel::make(['view' => false, 'delete' => true]),
     ];
 
     expect($model::make(['permissions' => $permissions])->toInertia())
@@ -150,7 +150,7 @@ test('it should serialize associative array of view models', function () {
 });
 
 test('it should serialize computed property', function () {
-    $model = Fixtures\UserName::make([
+    $model = Fixtures\UserNameModel::make([
         'firstName' => 'Peter',
         'lastName' => 'Stovka',
     ]);

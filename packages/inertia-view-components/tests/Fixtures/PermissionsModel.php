@@ -6,7 +6,7 @@ namespace Insight\Inertia\Tests\Fixtures;
 
 use Insight\Inertia\View\Model;
 
-class Permissions extends Model
+class PermissionsModel extends Model
 {
     public bool $view = true;
 

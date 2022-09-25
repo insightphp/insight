@@ -7,7 +7,7 @@ namespace Insight\Inertia\Tests\Fixtures;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Model;
 
-class UserName extends Model
+class UserNameModel extends Model
 {
     protected string $firstName;
 
