@@ -4,7 +4,7 @@
 namespace Insight\Inertia\Exceptions;
 
 
-class ViewComponentException extends \RuntimeException
+class ViewException extends \RuntimeException
 {
     public function __construct(string $message)
     {

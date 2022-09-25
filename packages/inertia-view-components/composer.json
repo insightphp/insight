@@ -2,7 +2,7 @@
     "name": "insightphp/inertia-view-components",
     "type": "library",
     "license": "MIT",
-    "description": "View Components middleware for Inertia.",
+    "description": "View abstraction layer for Inertia applications.",
     "authors": [
         {
             "name": "Peter Stovka",
@@ -18,11 +18,16 @@
         "symfony/finder": "^6.0"
     },
     "require-dev": {
-        "pestphp/pest": "^1.21"
+        "pestphp/pest": "^1.22"
     },
     "autoload": {
         "psr-4": {
             "Insight\\Inertia\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Insight\\Inertia\\Tests\\": "tests/"
         }
     },
     "config": {

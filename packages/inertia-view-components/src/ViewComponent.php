@@ -6,7 +6,7 @@ namespace Insight\Inertia;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
-use Insight\Inertia\Exceptions\ViewComponentException;
+use Insight\Inertia\Exceptions\ViewException;
 use ReflectionClass;
 
 abstract class ViewComponent implements Arrayable, \JsonSerializable
@@ -76,7 +76,7 @@ abstract class ViewComponent implements Arrayable, \JsonSerializable
             if ($clazz->hasProperty($name)) {
                 $component->$name = $value;
             } else {
-                throw new ViewComponentException("View component {$clazz->getName()} does not have public property $name.");
+                throw new ViewException("View component {$clazz->getName()} does not have public property $name.");
             }
         }
 

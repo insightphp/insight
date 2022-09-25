@@ -6,7 +6,7 @@ namespace Insight\Inertia;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Insight\Inertia\Exceptions\ViewComponentException;
+use Insight\Inertia\Exceptions\ViewException;
 use League\Flysystem\WhitespacePathNormalizer;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -78,7 +78,7 @@ class ViewComponentManager
             return Arr::get($this->components, "{$clazz}.relativePath");
         }
 
-        throw new ViewComponentException("The component {$clazz} is not registered in any namespace.");
+        throw new ViewException("The component {$clazz} is not registered in any namespace.");
     }
 
     public function findNamespaceForComponent(ViewComponent $component): string
@@ -89,6 +89,6 @@ class ViewComponentManager
             return Arr::get($this->components, "{$clazz}.namespace");
         }
 
-        throw new ViewComponentException("The component {$clazz} is not registered in any namespace.");
+        throw new ViewException("The component {$clazz} is not registered in any namespace.");
     }
 }

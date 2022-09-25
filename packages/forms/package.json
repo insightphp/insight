@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/forms",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "Forms component of Insight.",
     "repository": {
         "type": "git",
