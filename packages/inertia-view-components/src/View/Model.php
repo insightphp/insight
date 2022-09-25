@@ -7,6 +7,7 @@ namespace Insight\Inertia\View;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Insight\Inertia\Contracts\HasInertiaProps;
+use Insight\Inertia\Contracts\Renderable;
 use Insight\Inertia\Exceptions\AttributeNotSetException;
 use Insight\Inertia\Exceptions\MissingAttributeException;
 use Insight\Inertia\Support\Computed;
@@ -77,6 +78,10 @@ abstract class Model implements HasInertiaProps, Arrayable
 
         if (is_iterable($value)) {
             return collect($value)->map(fn ($entry) => $this->prepareForInertia($entry))->all();
+        }
+
+        if ($value instanceof Renderable) {
+            return $value->toComponent()->toInertia();
         }
 
         if ($value instanceof HasInertiaProps) {
