@@ -79,7 +79,7 @@ abstract class Model implements HasInertiaProps, Arrayable
             return collect($value)->map(fn ($entry) => $this->prepareForInertia($entry))->all();
         }
 
-        if ($value instanceof Model) {
+        if ($value instanceof HasInertiaProps) {
             return $value->toInertia();
         }
 
