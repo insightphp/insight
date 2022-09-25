@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 use Insight\Inertia\Exceptions\ViewException;
 use ReflectionClass;
 
+/**
+ * @deprecated
+ */
 abstract class ViewComponent implements Arrayable, \JsonSerializable
 {
     /**
@@ -52,7 +55,7 @@ abstract class ViewComponent implements Arrayable, \JsonSerializable
      */
     protected function resolveComponentName(): string
     {
-        $manager = app(ViewComponentManager::class);
+        $manager = app(ComponentManager::class);
 
         $namespace = (string) Str::of($manager->findNamespaceForComponent($this))->lower()->kebab();
         $name = (string) Str::of($manager->findComponentRelativeName($this))->replace('\\', '')->kebab();

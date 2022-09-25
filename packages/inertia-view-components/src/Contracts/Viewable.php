@@ -6,6 +6,9 @@ namespace Insight\Inertia\Contracts;
 
 use Insight\Inertia\ViewComponent;
 
+/**
+ * @deprecated
+ */
 interface Viewable
 {
     /**

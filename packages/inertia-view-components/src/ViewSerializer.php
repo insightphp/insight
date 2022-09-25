@@ -8,6 +8,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use ReflectionClass;
 use ReflectionProperty;
 
+/**
+ * @deprecated
+ */
 class ViewSerializer
 {
     /**

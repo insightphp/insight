@@ -42,7 +42,7 @@
         "laravel": {
             "providers": [
                 "Insight\\Panels\\Providers\\PanelsServiceProvider",
-                "Insight\\Inertia\\Providers\\ViewComponentServiceProvider",
+              "SurfaceServiceProvider",
                 "Insight\\Forms\\Providers\\FormsServiceProvider",
                 "Insight\\Tables\\Providers\\TablesServiceProvider",
                 "Insight\\Providers\\InsightServiceProvider"
