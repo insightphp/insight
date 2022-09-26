@@ -41,8 +41,8 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Insight\\Inertia\\Providers\\InertiaViewServiceProvider",
                 "Insight\\Panels\\Providers\\PanelsServiceProvider",
-              "SurfaceServiceProvider",
                 "Insight\\Forms\\Providers\\FormsServiceProvider",
                 "Insight\\Tables\\Providers\\TablesServiceProvider",
                 "Insight\\Providers\\InsightServiceProvider"
@@ -50,10 +50,10 @@
         }
     },
     "replace": {
-        "insightphp/forms": "0.1.2",
-        "insightphp/inertia-view": "0.1.2",
-        "insightphp/panels": "0.1.2",
-        "insightphp/tables": "0.1.2"
+        "insightphp/forms": "self.version",
+        "insightphp/inertia-view": "self.version",
+        "insightphp/panels": "self.version",
+        "insightphp/tables": "self.version"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

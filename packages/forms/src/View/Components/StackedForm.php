@@ -6,9 +6,9 @@ namespace Insight\Forms\View\Components;
 
 use Insight\Forms\Form;
 use Insight\Forms\FormControl;
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class StackedForm extends ViewComponent
+class StackedForm extends Component
 {
     /**
      * The form controls of the form.

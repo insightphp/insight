@@ -1,4 +1,5 @@
-import type { ComponentDef } from "./contracts";
+import type { ComponentDef, ComponentMap } from "./contracts";
+import { resolveCommonBasePath } from "./utils";
 
 export class InertiaViewComponentManager {
 
@@ -22,7 +23,7 @@ export class InertiaViewComponentManager {
       return this
     }
 
-    const base = this.resolvePathBase(paths)
+    const base = resolveCommonBasePath(paths)
 
     Object.keys(components).forEach(fileName => {
       const path = fileName.replace(base, '')
@@ -36,28 +37,6 @@ export class InertiaViewComponentManager {
 
   getResolvedComponents(): Record<string, ComponentDef> {
     return this.resolvedComponents
-  }
-
-  protected resolvePathBase(componentFiles: Array<string>): string {
-    if (componentFiles.length <= 0) {
-      throw new Error("At least one file is required for resolving base path.")
-    }
-
-    if (componentFiles.length == 1) {
-      const parts = componentFiles[0].split('/')
-
-      return `${parts.slice(0, parts.length - 1).join('/')}/`
-    }
-
-    const files = [...componentFiles]
-    files.sort((a, b) => b.length - a.length)
-    const first = files[0]
-    const last = files[files.length - 1]
-
-    let eq
-    for (eq = 0; eq < Math.min(first.length, last.length) && first[eq] == last[eq]; eq++);
-
-    return first.substring(0, eq)
   }
 
   /**
@@ -95,4 +74,17 @@ export class InertiaViewComponentManager {
 }
 
 const ComponentManager = new InertiaViewComponentManager()
-export default ComponentManager
+
+export { ComponentManager }
+
+export function registerComponents(components: ComponentMap|Array<ComponentMap>, namespace: string = 'app') {
+  if (Array.isArray(components)) {
+    components.forEach(map => ComponentManager.addComponents(map, namespace))
+  } else {
+    ComponentManager.addComponents(components, namespace)
+  }
+}
+
+export function resolveNamedComponent(name: string): ComponentDef {
+  return ComponentManager.getComponentWithName(name)
+}

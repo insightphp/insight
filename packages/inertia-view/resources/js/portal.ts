@@ -1,7 +1,7 @@
 import { defineComponent, h } from "vue";
 import type { PropType } from "vue"
 import type { Component } from "./contracts";
-import ComponentManager from "./component-manager";
+import { resolveNamedComponent } from "./component-manager";
 import { usePage } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
@@ -15,7 +15,7 @@ export default defineComponent({
       const { _component, ...componentDef } = component
 
       return () => h(
-        ComponentManager.getComponentWithName(_component.name) as any,
+        resolveNamedComponent(_component.name) as any,
         { ...passthroughProps, ...componentDef },
         slots
       )
@@ -29,7 +29,7 @@ export default defineComponent({
       const { _component, ...componentDef } = page.props.value[props.for]
 
       return () => h(
-        ComponentManager.getComponentWithName(_component.name) as any,
+        resolveNamedComponent(_component.name) as any,
         { ...props, ...componentDef },
         slots
       )

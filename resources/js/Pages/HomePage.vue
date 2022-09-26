@@ -1,5 +1,6 @@
 <template>
-<p>this is home page {{ counter }}</p>
+  <p>this is home page {{ counter }}</p>
+  <button @click.prevent="counter++">Add</button>
 </template>
 
 <script setup lang="ts">
