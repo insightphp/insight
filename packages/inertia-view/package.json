@@ -1,7 +1,7 @@
 {
-    "name": "@insightphp/surface",
+    "name": "@insightphp/inertia-view",
     "version": "0.3.0",
-    "description": "View abstraction layer for Inertia applications.",
+    "description": "View abstraction layer for building architectured Inertia applications.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/insightphp/insight.git"
@@ -28,8 +28,8 @@
     "types": "./dist/types/main.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/Surface.es.js",
-            "require": "./dist/Surface.umd.js"
+            "import": "./dist/inertia-view.es.js",
+            "require": "./dist/inertia-view.umd.js"
         }
     },
     "dependencies": {

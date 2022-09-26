@@ -28,7 +28,7 @@ it('should serialize component', function () {
         'email' => 'ps@stacktrace.sk',
         'avatarUrl' => null,
         '_component' => [
-            'name' => 'surface-user-component',
+            'name' => 'inertia-view-user-component',
         ],
     ]);
 });
@@ -39,6 +39,6 @@ it('should create component name', function ($namespace, $path, $result) {
     ['app', 'Users', 'app-users'],
     ['app', 'Customer/Profile', 'app-customer-profile'],
     ['app', 'Customer/Profile/User', 'app-customer-profile-user'],
-    ['surface', 'Customer/Profile/User', 'surface-customer-profile-user'],
+    ['inertia-view', 'Customer/Profile/User', 'inertia-view-customer-profile-user'],
     ['TEST', 'Customer', 'TEST-customer'],
 ]);

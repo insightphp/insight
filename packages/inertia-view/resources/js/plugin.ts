@@ -1,5 +1,4 @@
 import type { App } from "vue";
-import Surface from './surface';
 
 export interface PluginOptions {
   components?: Record<string, Record<string, Record<string, Promise<any> | (() => Promise<any>)>>>

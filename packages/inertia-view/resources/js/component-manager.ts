@@ -1,6 +1,6 @@
 declare type ComponentDef = Promise<any> | (() => Promise<any>)
 
-class SurfaceComponentManager {
+class InertiaViewComponentManager {
 
   /**
    * Map of resolved components.
@@ -13,7 +13,7 @@ class SurfaceComponentManager {
   addComponents<T>(
     components: Record<string, ComponentDef>,
     namespace: string = 'app'
-  ): SurfaceComponentManager {
+  ): InertiaViewComponentManager {
     const paths = Object.keys(components)
 
     if (paths.length <= 0) {
@@ -91,5 +91,5 @@ class SurfaceComponentManager {
   }
 }
 
-const ComponentManager = new SurfaceComponentManager()
+const ComponentManager = new InertiaViewComponentManager()
 export default ComponentManager

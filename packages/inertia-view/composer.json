@@ -1,8 +1,8 @@
 {
-    "name": "insightphp/surface",
+    "name": "insightphp/inertia-view",
     "type": "library",
     "license": "MIT",
-    "description": "View abstraction layer for Inertia applications.",
+    "description": "View abstraction layer for building architectured Inertia applications.",
     "authors": [
         {
             "name": "Peter Stovka",
@@ -42,7 +42,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SurfaceServiceProvider"
+                "Insight\\Inertia\\Providers\\InertiaViewServiceProvider"
             ]
         }
     }

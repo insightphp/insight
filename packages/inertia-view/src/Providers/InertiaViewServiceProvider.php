@@ -7,23 +7,23 @@ namespace Insight\Inertia\Providers;
 use Illuminate\Support\ServiceProvider;
 use Insight\Inertia\ComponentManager;
 
-class SurfaceServiceProvider extends ServiceProvider
+class InertiaViewServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('surface.components', fn () => new ComponentManager());
-        $this->app->alias('surface.components', ComponentManager::class);
+        $this->app->singleton('inertia-view.components', fn () => new ComponentManager());
+        $this->app->alias('inertia-view.components', ComponentManager::class);
     }
 
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/surface.php', 'surface');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/inertia-view.php', 'inertia-view');
 
         $this->publishes([
-            __DIR__ . '/../../config/surface.php' => config_path('surface.php'),
-        ], 'surface');
+            __DIR__ . '/../../config/inertia-view.php' => config_path('inertia-view.php'),
+        ], 'inertia-view');
 
-        $this->registerComponentsFromConfig(config('surface.components', []));
+        $this->registerComponentsFromConfig(config('inertia-view.components', []));
     }
 
     protected function registerComponentsFromConfig(array $components)

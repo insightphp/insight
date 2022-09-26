@@ -15,6 +15,6 @@ class Components extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'surface.components';
+        return 'inertia-view.components';
     }
 }

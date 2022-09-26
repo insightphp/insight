@@ -10,8 +10,8 @@ export default defineConfig({
     manifest: true,
     lib: {
       entry: path.resolve(__dirname, 'resources/js/main.ts'),
-      name: 'Surface',
-      fileName: format => `Surface.${format}.js`,
+      name: 'inertia-view',
+      fileName: format => `inertia-view.${format}.js`,
     },
     rollupOptions: {
       external: ['vue', '@inertiajs/inertia-vue3'],
