@@ -1,6 +1,6 @@
-declare type ComponentDef = Promise<any> | (() => Promise<any>)
+import type { ComponentDef } from "./contracts";
 
-class InertiaViewComponentManager {
+export class InertiaViewComponentManager {
 
   /**
    * Map of resolved components.
@@ -17,6 +17,7 @@ class InertiaViewComponentManager {
     const paths = Object.keys(components)
 
     if (paths.length <= 0) {
+      // TODO: Ignore when runnning on vitest.
       console.warn(`No components have been found when registering namespace [${namespace}].`)
       return this
     }
@@ -43,7 +44,9 @@ class InertiaViewComponentManager {
     }
 
     if (componentFiles.length == 1) {
-      throw new Error("NOT IMPLEMENTED")
+      const parts = componentFiles[0].split('/')
+
+      return `${parts.slice(0, parts.length - 1).join('/')}/`
     }
 
     const files = [...componentFiles]
