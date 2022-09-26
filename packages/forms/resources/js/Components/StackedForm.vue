@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { Portal } from "@insightphp/inertia-view-components";
+import { Portal } from "@insightphp/inertia-view";
 
 const emit = defineEmits(['input', 'clearError'])
 

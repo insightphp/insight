@@ -15,7 +15,7 @@ jobs:
       matrix:
         package:
           - forms
-          - inertia-view-components
+          - inertia-view
           - panels
           - tables
           - elements

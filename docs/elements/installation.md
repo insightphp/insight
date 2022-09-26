@@ -64,7 +64,7 @@ After you installed the PHP package, install Vue library like descirbed in the g
 
 Once installed, add plugin to your Vue application:
 ```typescript
-import { Plugin as InertiaViewComponents } from '@insightphp/inertia-view-components'
+import { Plugin as InertiaViewComponents } from '@insightphp/inertia-view'
 import { Plugin as ElementsPlugin } from '@insightphp/elements' // Add this import
 
 createInertiaApp({

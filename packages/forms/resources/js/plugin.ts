@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { ComponentManager } from "@insightphp/inertia-view-components";
+import { ComponentManager } from "@insightphp/inertia-view";
 
 export interface PluginOptions {
   //

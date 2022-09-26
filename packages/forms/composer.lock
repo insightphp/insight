@@ -636,16 +636,16 @@
             "time": "2022-06-27T23:21:15+00:00"
         },
         {
-            "name": "insightphp/inertia-view-components",
+            "name": "insightphp/inertia-view",
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/insightphp/inertia-view-components.git",
+                "url": "https://github.com/insightphp/inertia-view.git",
                 "reference": "ac48cfc306f676158639d2174ccd2ce849f08890"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/insightphp/inertia-view-components/zipball/ac48cfc306f676158639d2174ccd2ce849f08890",
+                "url": "https://api.github.com/repos/insightphp/inertia-view/zipball/ac48cfc306f676158639d2174ccd2ce849f08890",
                 "reference": "ac48cfc306f676158639d2174ccd2ce849f08890",
                 "shasum": ""
             },
@@ -684,8 +684,8 @@
             ],
             "description": "View component middleware for Inertia.",
             "support": {
-                "issues": "https://github.com/insightphp/inertia-view-components/issues",
-                "source": "https://github.com/insightphp/inertia-view-components/tree/main"
+                "issues": "https://github.com/insightphp/inertia-view/issues",
+                "source": "https://github.com/insightphp/inertia-view/tree/main"
             },
             "time": "2022-08-28T17:03:59+00:00"
         },
@@ -4524,7 +4524,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "insightphp/inertia-view-components": 20
+        "insightphp/inertia-view": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

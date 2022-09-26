@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import type { FormHandler } from "../Composables";
-import { Portal } from "@insightphp/inertia-view-components";
+import { Portal } from "@insightphp/inertia-view";
 import { computed } from "vue";
 
 const props = defineProps<{

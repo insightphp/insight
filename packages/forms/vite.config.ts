@@ -14,11 +14,11 @@ export default defineConfig({
       fileName: format => `forms.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue', '@inertiajs/inertia-vue3', '@insightphp/inertia-view-components'],
+      external: ['vue', '@inertiajs/inertia-vue3', '@insightphp/inertia-view'],
       output: {
         globals: {
           vue: 'Vue',
-          '@insightphp/inertia-view-components': 'InertiaViewComponents',
+          '@insightphp/inertia-view': 'InertiaViewComponents',
           '@inertiajs/inertia-vue3': 'InertiaVue'
         }
       }

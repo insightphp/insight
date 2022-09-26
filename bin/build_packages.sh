@@ -2,9 +2,9 @@
 set -e
 
 # Inertia View Components
-vue-tsc --noEmit -p packages/inertia-view-components/
-vite build -c packages/inertia-view-components/vite.config.ts --outDir packages/inertia-view-components/dist
-vue-tsc --declaration --emitDeclarationOnly -p packages/inertia-view-components/
+vue-tsc --noEmit -p packages/inertia-view/
+vite build -c packages/inertia-view/vite.config.ts --outDir packages/inertia-view/dist
+vue-tsc --declaration --emitDeclarationOnly -p packages/inertia-view/
 
 # Elements
 vue-tsc --noEmit -p packages/elements/

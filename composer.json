@@ -24,7 +24,7 @@
         "psr-4": {
             "Insight\\": "src/",
             "Insight\\Forms\\": "packages/forms/src/",
-            "Insight\\Inertia\\": "packages/inertia-view-components/src/",
+            "Insight\\Inertia\\": "packages/inertia-view/src/",
             "Insight\\Panels\\": "packages/panels/src/",
             "Insight\\Tables\\": "packages/tables/src/"
         }
@@ -51,7 +51,7 @@
     },
     "replace": {
         "insightphp/forms": "0.1.2",
-        "insightphp/inertia-view-components": "0.1.2",
+        "insightphp/inertia-view": "0.1.2",
         "insightphp/panels": "0.1.2",
         "insightphp/tables": "0.1.2"
     },

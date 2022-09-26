@@ -1,4 +1,4 @@
-import type { ViewComponent } from "@insightphp/inertia-view-components";
+import type { ViewComponent } from "@insightphp/inertia-view";
 
 export interface FormModel<InitialValue = { [key: string]: any }, ViewComponentProps = any> {
   initialValue: InitialValue
