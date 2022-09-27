@@ -4,6 +4,7 @@ export type Component<T = object> = T & {
   }
 }
 
-export declare type ComponentDef = Promise<any> | (() => Promise<any>)
+// TODO: This type is probably wrong.
+export declare type ComponentDef = Promise<any> | (() => Promise<any>)|any
 
 export declare type ComponentMap = Record<string, ComponentDef>

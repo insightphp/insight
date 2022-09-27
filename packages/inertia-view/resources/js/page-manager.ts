@@ -1,24 +1,26 @@
 import type { ComponentMap } from "./contracts";
 import type { DefineComponent } from "vue";
-import type { ComponentDef } from "./contracts";
 import { resolveCommonBasePath } from "./utils";
 import Portal from "./portal";
 
+export declare type ResolvedPage = { default: DefineComponent }
+export declare type DefinedPage = DefineComponent | Promise<DefineComponent> | ResolvedPage
+
 export class InertiaViewPageManager {
 
-  registeredPages: Record<string, ComponentDef> = {}
+  registeredPages: Record<string, DefinedPage> = {}
 
   /**
    * Retrieve map of registered pages.
    */
-  getRegisteredPages(): Record<string, ComponentDef> {
+  getRegisteredPages(): Record<string, DefinedPage> {
     return this.registeredPages
   }
 
   /**
    * Register pages for given namespace.
    */
-  addPages(pages: Record<string, ComponentDef>, namespace: string = 'app'): InertiaViewPageManager {
+  addPages(pages: Record<string, DefinedPage>, namespace: string = 'app'): InertiaViewPageManager {
     const paths = Object.keys(pages)
 
     if (paths.length <= 0) {
@@ -43,7 +45,7 @@ export class InertiaViewPageManager {
    *
    * @param page
    */
-  resolve(page: string): Promise<ComponentDef> {
+  resolve(page: string): DefinedPage {
     let path = page
 
     if (! path.includes(':')) {
@@ -54,18 +56,27 @@ export class InertiaViewPageManager {
       throw new Error(`The page [${page}] could not be found.`)
     }
 
-    const pageComponent = (this.registeredPages[path] as any).default
+    const registeredPage = this.registeredPages[path]
+    if (typeof registeredPage == 'function') {
+      // @ts-ignore TODO: refactor types
+      return registeredPage().then((page: any) => this.configureLayoutOnPage(page))
+    }
 
-    if (! pageComponent.layout) {
-      pageComponent.layout = (h: any, page: any) => {
+    // @ts-ignore TODO: refactor types
+    return this.configureLayoutOnPage(registeredPage)
+  }
+
+  protected configureLayoutOnPage(pageComponent: ResolvedPage): ResolvedPage {
+    if (!pageComponent.default.layout) {
+      pageComponent.default.layout = (h: any, page: any) => {
         if (Array.isArray(page.props._layouts)) {
           const nestedLayouts = [...page.props._layouts].reverse()
           const renderFunctions: Array<any> = []
           nestedLayouts.forEach((layout, index) => {
             if (index == 0) {
-              renderFunctions.push(() => h(Portal, { component: layout }, () => page))
+              renderFunctions.push(() => h(Portal, {component: layout}, () => page))
             } else {
-              renderFunctions.push(() => h(Portal, { component: layout }, renderFunctions[index - 1]))
+              renderFunctions.push(() => h(Portal, {component: layout}, renderFunctions[index - 1]))
             }
           })
 
@@ -80,6 +91,7 @@ export class InertiaViewPageManager {
   }
 }
 
+
 const PageManager = new InertiaViewPageManager()
 export { PageManager }
 
@@ -91,7 +103,6 @@ export function registerPages(pages: ComponentMap|Array<ComponentMap>, namespace
   }
 }
 
-export function resolvePage(name: string): DefineComponent | Promise<DefineComponent> | { default: DefineComponent } {
-  // TODO: Add correct types
-  return PageManager.resolve(name) as any
+export function resolvePage(name: string): DefinedPage {
+  return PageManager.resolve(name)
 }
