@@ -14,8 +14,14 @@ export default defineComponent({
       const { component, ...passthroughProps } = props
       const { _component, ...componentDef } = component
 
+      let resolvedComponent = resolveNamedComponent(_component.name) as any
+
+      if (resolvedComponent === undefined) {
+        throw new Error(`The component with name [${_component.name}] could not be resolved.`)
+      }
+
       return () => h(
-        resolveNamedComponent(_component.name) as any,
+        resolvedComponent.default,
         { ...passthroughProps, ...componentDef },
         slots
       )
@@ -28,8 +34,14 @@ export default defineComponent({
 
       const { _component, ...componentDef } = page.props.value[props.for]
 
+      let resolvedComponent = resolveNamedComponent(_component.name) as any
+
+      if (resolvedComponent === undefined) {
+        throw new Error(`The component with name [${_component.name}] could not be resolved.`)
+      }
+
       return () => h(
-        resolveNamedComponent(_component.name) as any,
+        resolvedComponent.default,
         { ...props, ...componentDef },
         slots
       )

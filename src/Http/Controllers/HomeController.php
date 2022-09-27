@@ -4,15 +4,15 @@
 namespace Insight\Http\Controllers;
 
 
-use Inertia\Inertia;
+use Insight\Inertia\View\Page;
+use Insight\View\Components\Layouts\DashboardLayout;
 
 class HomeController
 {
     public function __invoke()
     {
-        // return Inertia::render('WelcomePage', [
-        return Inertia::render('insight:HomePage', [
-
-        ]);
+        return Page::render('insight:HomePage', [
+            //
+        ])->layout(DashboardLayout::make());
     }
 }

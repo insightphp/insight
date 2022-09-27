@@ -2,6 +2,7 @@ import type { ComponentMap } from "./contracts";
 import type { DefineComponent } from "vue";
 import type { ComponentDef } from "./contracts";
 import { resolveCommonBasePath } from "./utils";
+import Portal from "./portal";
 
 export class InertiaViewPageManager {
 
@@ -42,7 +43,7 @@ export class InertiaViewPageManager {
    *
    * @param page
    */
-  resolve(page: string): ComponentDef {
+  resolve(page: string): Promise<ComponentDef> {
     let path = page
 
     if (! path.includes(':')) {
@@ -53,9 +54,29 @@ export class InertiaViewPageManager {
       throw new Error(`The page [${page}] could not be found.`)
     }
 
-    const pageComponent = this.registeredPages[path]
+    const pageComponent = (this.registeredPages[path] as any).default
 
-    return (typeof pageComponent === 'function' ? pageComponent() : page) as any
+    if (! pageComponent.layout) {
+      pageComponent.layout = (h: any, page: any) => {
+        if (Array.isArray(page.props._layouts)) {
+          const nestedLayouts = [...page.props._layouts].reverse()
+          const renderFunctions: Array<any> = []
+          nestedLayouts.forEach((layout, index) => {
+            if (index == 0) {
+              renderFunctions.push(() => h(Portal, { component: layout }, () => page))
+            } else {
+              renderFunctions.push(() => h(Portal, { component: layout }, renderFunctions[index - 1]))
+            }
+          })
+
+          return renderFunctions[renderFunctions.length - 1]()
+        }
+
+        return h(page)
+      }
+    }
+
+    return pageComponent
   }
 }
 

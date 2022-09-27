@@ -29,7 +29,7 @@ export class InertiaViewComponentManager {
       const path = fileName.replace(base, '')
       const name = this.resolveComponentName(path.replace(/\//g, '-'), namespace)
 
-      this.resolvedComponents[name] = (components[fileName] as any).default
+      this.resolvedComponents[name] = components[fileName] as any
     })
 
     return this

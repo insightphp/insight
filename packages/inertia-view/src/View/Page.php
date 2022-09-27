@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Arr;
 use Inertia\ResponseFactory;
 use Insight\Inertia\Exceptions\ViewException;
+use Insight\Inertia\Support\Computed;
 
 class Page extends Model implements Responsable
 {
@@ -25,6 +26,13 @@ class Page extends Model implements Responsable
      * @var array
      */
     protected array $attributes = [];
+
+    /**
+     * The layout component for the page.
+     *
+     * @var array<\Insight\Inertia\View\Component>
+     */
+    protected array $layouts = [];
 
     /**
      * Add attribute to the page.
@@ -57,6 +65,34 @@ class Page extends Model implements Responsable
         $this->page = $component;
 
         return $this;
+    }
+
+    /**
+     * Set the layout component for the page.
+     *
+     * @param \Insight\Inertia\View\Component ...$layout
+     * @return $this
+     */
+    public function layout(Component ...$layout): static
+    {
+        $this->layouts = $layout;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve layout for the page.
+     *
+     * @return array|null
+     */
+    #[Computed(name: '_layouts')]
+    public function getLayouts(): ?array
+    {
+        if (empty($this->layouts)) {
+            return null;
+        }
+
+        return $this->layouts;
     }
 
     /**
@@ -115,6 +151,6 @@ class Page extends Model implements Responsable
      */
     public static function make(array $attributes = []): static
     {
-        return parent::make(Arr::except($attributes, ['page', 'attributes']));
+        return parent::make(Arr::except($attributes, ['page', 'attributes', 'layout']));
     }
 }

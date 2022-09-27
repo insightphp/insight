@@ -6,6 +6,7 @@ namespace Insight\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Insight\Inertia\ComponentManager;
 
 class InsightServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,17 @@ class InsightServiceProvider extends ServiceProvider
         ], 'insight-config');
 
         $this->registerRoutes();
+        $this->registerInertiaViews();
+    }
+
+    /**
+     * Register all Inertia Components.
+     *
+     * @return void
+     */
+    protected function registerInertiaViews(): void
+    {
+        app(ComponentManager::class)->addComponentsFromPath(__DIR__.'/../View/Components', 'insight');
     }
 
     /**
