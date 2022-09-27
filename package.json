@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/insight",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Laravel package for building control panels.",
     "repository": {
         "type": "git",
