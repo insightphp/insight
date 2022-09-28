@@ -4,7 +4,7 @@
 namespace Insight\Forms\Fields;
 
 
-use Insight\Elements\TextArea;
+use Insight\Elements\View\Components\TextArea;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 

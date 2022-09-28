@@ -10,7 +10,8 @@ export interface ConfigureInsight {
  * Creates new Insight application.
  */
 export function bootInsight(config: Partial<ConfigureInsight> = {}): InsightApp {
-  registerPages(import.meta.glob('./Pages/**/*Page.vue'), 'insight')
-  registerComponents(import.meta.glob('./Components/**/*.vue', { eager: true }), 'insight')
+  registerPages(import.meta.glob('./Pages/**/*.vue'), 'insight')
+  registerComponents(import.meta.glob('./View/Components/**/*.vue', { eager: true }), 'insight')
+  registerComponents(import.meta.glob('./View/Layouts/**/*.vue', { eager: true }), 'insight')
   return Insight
 }

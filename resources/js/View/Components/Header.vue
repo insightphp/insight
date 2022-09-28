@@ -1,9 +1,7 @@
 <template>
-<p>this is app layout</p>
+<p>this is header</p>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  id?: string
-}>()
+
 </script>

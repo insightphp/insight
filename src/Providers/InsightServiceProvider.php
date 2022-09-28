@@ -33,6 +33,7 @@ class InsightServiceProvider extends ServiceProvider
     protected function registerInertiaViews(): void
     {
         app(ComponentManager::class)->addComponentsFromPath(__DIR__.'/../View/Components', 'insight');
+        app(ComponentManager::class)->addComponentsFromPath(__DIR__.'/../View/Layouts', 'insight');
     }
 
     /**

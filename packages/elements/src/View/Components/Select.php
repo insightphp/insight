@@ -1,9 +1,10 @@
 <?php
 
 
-namespace Insight\Elements;
+namespace Insight\Elements\View\Components;
 
 
+use Insight\Elements\View\Option;
 use Insight\Inertia\Support\ListOf;
 use Insight\Inertia\ViewComponent;
 
@@ -20,7 +21,7 @@ class Select extends ViewComponent
     /**
      * Adds option to the select.
      *
-     * @param \Insight\Elements\Option $option
+     * @param \Insight\Elements\View\Option $option
      * @return $this
      */
     public function option(Option $option): static

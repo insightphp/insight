@@ -18,7 +18,7 @@ export default defineConfig({
       output: {
         globals: {
           vue: 'Vue',
-          '@insightphp/inertia-view': 'InertiaViewComponents',
+          '@insightphp/inertia-view': 'InertiaView',
         }
       }
     }

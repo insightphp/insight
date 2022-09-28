@@ -16,6 +16,6 @@ class ElementsServiceProvider extends ServiceProvider
 
     protected function registerViewComponents(ComponentManager $componentManager)
     {
-        $componentManager->registerComponentsIn(__DIR__ . '/../', 'insight-elements');
+        $componentManager->addComponentsFromPath(__DIR__.'/../View/Components', 'insight-elements');
     }
 }

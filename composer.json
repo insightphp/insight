@@ -23,8 +23,9 @@
     "autoload": {
         "psr-4": {
             "Insight\\": "src/",
-            "Insight\\Forms\\": "packages/forms/src/",
             "Insight\\Inertia\\": "packages/inertia-view/src/",
+            "Insight\\Elements\\": "packages/elements/src/",
+            "Insight\\Forms\\": "packages/forms/src/",
             "Insight\\Panels\\": "packages/panels/src/",
             "Insight\\Tables\\": "packages/tables/src/"
         }
@@ -42,6 +43,7 @@
         "laravel": {
             "providers": [
                 "Insight\\Inertia\\Providers\\InertiaViewServiceProvider",
+                "Insight\\Elements\\Providers\\ElementsServiceProvider",
                 "Insight\\Panels\\Providers\\PanelsServiceProvider",
                 "Insight\\Forms\\Providers\\FormsServiceProvider",
                 "Insight\\Tables\\Providers\\TablesServiceProvider",
@@ -50,8 +52,9 @@
         }
     },
     "replace": {
-        "insightphp/forms": "self.version",
         "insightphp/inertia-view": "self.version",
+        "insightphp/elements": "self.version",
+        "insightphp/forms": "self.version",
         "insightphp/panels": "self.version",
         "insightphp/tables": "self.version"
     },

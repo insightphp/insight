@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Insight\Elements;
+namespace Insight\Elements\View;
 
 
 use Illuminate\Contracts\Support\Arrayable;

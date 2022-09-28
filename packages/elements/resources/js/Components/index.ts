@@ -17,7 +17,6 @@ export { default as SelectButton} from './SelectButton.vue'
 export { default as Swatch} from './Swatch.vue'
 export { default as Switch} from './Switch.vue'
 export { default as Text } from './Text.vue'
-export { default as TextInput } from './TextInput.vue'
 export { default as TextArea } from './TextArea.vue'
 
 export * from './contracts'

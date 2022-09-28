@@ -1,9 +1,9 @@
 <template>
-  <input type="text">
+<ul>
+  <li>navigacia</li>
+</ul>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  id?: string
-}>()
+
 </script>

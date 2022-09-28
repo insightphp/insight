@@ -6,7 +6,7 @@ namespace Insight\View\Components;
 
 use Insight\Inertia\View\Component;
 
-class TestComponent extends Component
+class Header extends Component
 {
 
 }

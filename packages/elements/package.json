@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/elements",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "Collection of UI components for Insight.",
     "repository": {
         "type": "git",
@@ -19,6 +19,13 @@
         "url": "https://github.com/insightphp/insight/issues"
     },
     "homepage": "https://github.com/insightphp/insight#readme",
+    "scripts": {
+        "dev": "vite build --watch",
+        "build": "run-p types build-only",
+        "types": "vue-tsc --declaration --emitDeclarationOnly",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --noEmit"
+    },
     "main": "./dist/elements.umd.js",
     "module": "./dist/elements.es.js",
     "files": [
@@ -38,10 +45,20 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.0",
-        "@insightphp/inertia-view": "^0.2",
+        "@insightphp/inertia-view": "^0.4",
         "@vuepic/vue-datepicker": "^3.4.8",
         "date-fns": "^2.29.3",
         "mini-svg-data-uri": "^1.4.4",
         "vue": "^3.2"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.47",
+        "@vitejs/plugin-vue": "^3.0.3",
+        "@vue/tsconfig": "^0.1.3",
+        "npm-run-all": "^4.1.5",
+        "typescript": "^4.8.2",
+        "vite": "^3.0.9",
+        "vitest": "^0.23",
+        "vue-tsc": "^0.40.1"
     }
 }

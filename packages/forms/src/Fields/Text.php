@@ -4,12 +4,12 @@
 namespace Insight\Forms\Fields;
 
 
-use Insight\Elements\TextInput;
+use Insight\Elements\View\Components\TextInput;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 
 /**
- * @mixin \Insight\Elements\TextInput
+ * @mixin \Insight\Elements\View\Components\TextInput
  */
 class Text extends Field
 {

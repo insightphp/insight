@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { ComponentManager } from "@insightphp/inertia-view";
+import { registerComponents } from "@insightphp/inertia-view";
 
 export interface PluginOptions {
   //
@@ -7,8 +7,6 @@ export interface PluginOptions {
 
 export default {
   install(app: App, options?: PluginOptions) {
-    ComponentManager.registerComponentsInNamespace(
-      import.meta.globEager('./Components/**/*.vue'), './Components', 'insight-elements',
-    )
+    registerComponents(import.meta.glob('./View/Components/**/*.vue', { eager: true }), 'insight-elements')
   }
 }

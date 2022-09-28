@@ -11,6 +11,6 @@ class Color extends Field
 {
     public function resolveViewComponent(): ViewComponent
     {
-        return $this->withConfigurationsOn(\Insight\Elements\Color::make());
+        return $this->withConfigurationsOn(\Insight\Elements\View\Components\Color::make());
     }
 }

@@ -6,8 +6,8 @@ namespace Insight\Forms\Fields;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Insight\Elements\Select as SelectView;
-use Insight\Elements\Option;
+use Insight\Elements\View\Components\Select as SelectView;
+use Insight\Elements\View\Option;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 
@@ -16,7 +16,7 @@ class Select extends Field
     /**
      * Add option to the select.
      *
-     * @param \Insight\Elements\Option $option
+     * @param \Insight\Elements\View\Option $option
      * @return $this
      */
     public function option(Option $option): static

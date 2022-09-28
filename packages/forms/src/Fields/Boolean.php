@@ -4,7 +4,7 @@
 namespace Insight\Forms\Fields;
 
 
-use Insight\Elements\Checkbox;
+use Insight\Elements\View\Components\Checkbox;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Insight\Elements;
+namespace Insight\Elements\View\Components;
 
 
 use Insight\Inertia\ViewComponent;

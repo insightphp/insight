@@ -5,7 +5,9 @@ namespace Insight\Http\Controllers;
 
 
 use Insight\Inertia\View\Page;
-use Insight\View\Components\Layouts\DashboardLayout;
+use Insight\View\Components\Header;
+use Insight\View\Layouts\DrawerLayout;
+use Insight\View\Layouts\InsightLayout;
 
 class HomeController
 {
@@ -13,6 +15,8 @@ class HomeController
     {
         return Page::render('insight:HomePage', [
             //
-        ])->layout(DashboardLayout::make());
+        ])->layout(InsightLayout::make(), DrawerLayout::make([
+            'header' => Header::make()
+        ]));
     }
 }

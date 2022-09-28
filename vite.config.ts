@@ -14,13 +14,20 @@ export default defineConfig({
       fileName: format => `insight.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue', '@inertiajs/inertia', '@inertiajs/inertia-vue3', '@insightphp/inertia-view'],
+      external: [
+        'vue',
+        '@inertiajs/inertia',
+        '@inertiajs/inertia-vue3',
+        '@insightphp/inertia-view',
+        '@insightphp/elements',
+      ],
       output: {
         globals: {
           vue: 'Vue',
           '@inertiajs/inertia': 'Inertia',
           '@inertiajs/inertia-vue3': 'InertiaVue',
           '@insightphp/inertia-view': 'InertiaView',
+          '@insightphp/elements': 'Elements',
         }
       }
     }
