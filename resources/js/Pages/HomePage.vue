@@ -1,7 +1,7 @@
 <template>
   <div class="p-8">
     <p>this is home page {{ counter }}</p>
-    <button @click.prevent="counter++">Add</button>
+    <button class="btn" @click.prevent="counter++">Add</button>
   </div>
 </template>
 <script setup lang="ts">

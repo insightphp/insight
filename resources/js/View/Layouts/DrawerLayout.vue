@@ -2,21 +2,11 @@
   <div class="bg-white min-h-full">
     <slot name="header">
       <div class="fixed z-20 w-full">
-        <!--<Portal for="header" />-->
-
-        <Header @toggle-drawer="mobileOpen = !mobileOpen" :mobile-open="mobileOpen">
-          <template #left-navigation>
-            <ul>
-              <li>Navigacia vľavo</li>
-            </ul>
-          </template>
-
-          <template #right-navigation>
-            <ul>
-              <li>Navigacia vpravo</li>
-            </ul>
-          </template>
-        </Header>
+        <Portal
+            :component="header"
+            :mobile-open="mobileOpen"
+            @toggle-drawer="mobileOpen = !mobileOpen"
+        />
       </div>
     </slot>
 
@@ -29,16 +19,15 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { Portal } from "@insightphp/inertia-view";
-import { Drawer, Header } from "../../Components";
+import type { Component } from "@insightphp/inertia-view";
+import { Drawer, } from "../../Components";
 import { ref } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
 
 const mobileOpen = ref(false)
 
-const page = usePage()
-
-console.log(page.props.value)
+defineProps<{
+  header: Component
+}>()
 </script>
