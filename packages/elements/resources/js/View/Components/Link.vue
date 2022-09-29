@@ -9,9 +9,6 @@
 
 <script setup lang="ts">
 import { Link } from "@inertiajs/inertia-vue3";
-import type { Models } from "../../models";
-import { useActivatedLink } from "../../Composables";
-import { computed, watch } from "vue";
 
 const props = withDefaults(defineProps<{
   title: string
@@ -19,12 +16,9 @@ const props = withDefaults(defineProps<{
   method?: string|null
   as?: string|null
   external?: boolean
-  isActive?: Models.LinkActivation|null
+  isActive?: boolean
 }>(), {
-  external: false
+  external: false,
+  isActive: false
 })
-
-const { active, updateActivation } = useActivatedLink(props.isActive || null)
-const activation = computed(() => props.isActive)
-watch(activation, newActivation => updateActivation(newActivation || null))
 </script>

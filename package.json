@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/insight",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "Laravel package for building control panels.",
     "repository": {
         "type": "git",
@@ -57,8 +57,8 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-vue3": "^0.6.0",
-        "@insightphp/elements": "^0.3",
-        "@insightphp/inertia-view": "^0.4",
+        "@insightphp/elements": "^0.3.5",
+        "@insightphp/inertia-view": "^0.4.5",
         "vue": "^3.2",
         "ziggy-js": "^1.4.6"
     }

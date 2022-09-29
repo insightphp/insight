@@ -1,9 +1,6 @@
 import type { Models } from "../models";
-import type { Ref } from 'vue'
-import { onBeforeUnmount, onMounted, ref } from "vue";
-import type { Models as ElementsModels } from "@insightphp/elements";
-import route from "ziggy-js";
-import { Inertia } from "@inertiajs/inertia";
+import type { ComputedRef, Ref } from 'vue'
+import { ref, watch } from "vue";
 
 export interface StatefulNavigation {
   items: Array<StatefulNavigationItem>
@@ -17,40 +14,16 @@ export interface StatefulNavigationItem {
   isExpanded: Ref<boolean>
 }
 
-export function isActivated(activation: ElementsModels.LinkActivation) {
-  if (activation.activatedOnRoutes.some(it => route().current(it.route, it.params))) {
-    return true
-  }
-
-  // TODO: Check for locations
-
-  return false
-}
-
-export function useStatefulNavigation(navigation: Models.Navigation) {
-  const isItemActivated = (item: Models.NavigationItem) => {
-    const activation = item.link.isActive
-
-    if (activation) {
-      return isActivated(activation)
-    }
-
-    return false
-  }
-
-  const createItem: (item: Models.NavigationItem) => StatefulNavigationItem = (item) => ({
-    item,
-    isActive: ref(isItemActivated(item)),
-    childNavigation: item.childNavigation ? createNavigation(item.childNavigation) : null,
-    isExpanded: ref(false),
-  })
-
+export function useStatefulNavigation(navigation: ComputedRef<Models.Navigation>) {
   const createNavigation: (navigation: Models.Navigation) => StatefulNavigation = (navigation) => ({
-    items: navigation.items.map(it => createItem(it)),
+    items: navigation.items.map(it => ({
+      item: it,
+      isActive: ref(it.link.isActive),
+      childNavigation: it.childNavigation ? createNavigation(it.childNavigation) : null,
+      isExpanded: ref(false),
+    })),
     childActive: ref(false)
   })
-
-  const statefulNavigation = createNavigation(navigation)
 
   const isAnyChildActive: (navigation: StatefulNavigation) => boolean = (navigation) => {
     return navigation.items.some(it => {
@@ -64,18 +37,6 @@ export function useStatefulNavigation(navigation: Models.Navigation) {
 
       return false
     })
-  }
-
-  const refreshStateOfNavigation = (navigation: StatefulNavigation) => {
-    navigation.items.forEach(it => {
-      it.isActive.value = isItemActivated(it.item)
-
-      if (it.childNavigation) {
-        refreshStateOfNavigation(it.childNavigation)
-      }
-    })
-
-    navigation.childActive.value = navigation.items.some(it => it.isActive.value)
   }
 
   const refreshStateOfExpansions = (navigation: StatefulNavigation, keepOpenStates: boolean = false) => {
@@ -98,21 +59,28 @@ export function useStatefulNavigation(navigation: Models.Navigation) {
     })
   }
 
-  let activeInertiaListener: VoidFunction
+  const updateNavigation = (existingNavigation: StatefulNavigation, updatedNavigation: Models.Navigation) => {
+    existingNavigation.items.forEach((item) => {
+      const updatedItem = updatedNavigation.items.find(it => it.link.location === item.item.link.location)
 
-  onMounted(() => {
-    activeInertiaListener = Inertia.on('finish', () => {
-      refreshStateOfNavigation(statefulNavigation)
-      refreshStateOfExpansions(statefulNavigation, true)
+      if (updatedItem) {
+        item.isActive.value = updatedItem.link.isActive
+
+        if (item.childNavigation && updatedItem.childNavigation) {
+          updateNavigation(item.childNavigation, updatedItem.childNavigation)
+        }
+      }
     })
+  }
 
-    refreshStateOfNavigation(statefulNavigation)
-    refreshStateOfExpansions(statefulNavigation)
+  const statefulNavigation = createNavigation(navigation.value)
+
+  watch(navigation, newNavigation => {
+    updateNavigation(statefulNavigation, newNavigation)
+    refreshStateOfExpansions(statefulNavigation, true)
   })
 
-  onBeforeUnmount(() => {
-    activeInertiaListener()
-  })
+  refreshStateOfExpansions(statefulNavigation)
 
   return {
     navigation: statefulNavigation,

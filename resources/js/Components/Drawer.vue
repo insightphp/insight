@@ -25,7 +25,7 @@ import { Portal } from "@insightphp/inertia-view";
 
 const emit = defineEmits(['mobileClose'])
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   mobileOpen: boolean
   navigation: Models.Navigation
 }>(), {

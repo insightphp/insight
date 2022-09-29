@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, defineComponent, withModifiers, mergeProps } from "vue";
+import { h, defineComponent, withModifiers, mergeProps, computed } from "vue";
 import type { PropType, VNode, Slot } from 'vue';
 import type { Models } from "../models";
 import { useStatefulNavigation } from "../Composables";
@@ -66,10 +66,12 @@ export default defineComponent({
     const caretSlot = slots.caret
 
     if (! itemSlot) {
-      throw new Error("The #item slot is missing in NavigationTree.")
+      throw new Error("The #item slot is missing from NavigationTree component.")
     }
 
-    const statefulNavigation = useStatefulNavigation(props.navigation)
+    const navigation = computed(() => props.navigation)
+
+    const statefulNavigation = useStatefulNavigation(navigation)
 
     return () => renderNavigation(itemSlot, caretSlot, statefulNavigation.navigation, { class: ['side-menu'] })
   }

@@ -5,7 +5,8 @@ namespace Insight\Elements\View\Components;
 
 
 use Closure;
-use Insight\Elements\View\Models\LinkActivation;
+use Illuminate\Http\Request;
+use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
 
 class Link extends Component
@@ -50,11 +51,11 @@ class Link extends Component
     public bool $external = false;
 
     /**
-     * Determine when the Link is in active state.
+     * List of callbacks which should determine if the link is considered active.
      *
-     * @var \Insight\Elements\View\Models\LinkActivation|null
+     * @var array<Closure>
      */
-    public ?LinkActivation $isActive = null;
+    protected array $activatedWhen = [];
 
     /**
      * Set the link title.
@@ -122,26 +123,56 @@ class Link extends Component
     }
 
     /**
-     * Set when the link is in active state.
+     * Add custom callback which should determine if link is active.
      *
-     * @param \Insight\Elements\View\Models\LinkActivation $isActive
+     * @param \Closure $when
      * @return $this
      */
-    public function isActiveWhen(LinkActivation $isActive): static
+    public function activatedWhen(Closure $when): static
     {
-        $this->isActive = $isActive;
+        $this->activatedWhen[] = $when;
 
         return $this;
     }
 
     /**
-     * Retrieve when the link is in active state.
+     * Mark link as active on given route.
      *
-     * @return \Insight\Elements\View\Models\LinkActivation|null
+     * @param string $route
+     * @param array $params
+     * @return $this
      */
-    public function getActiveWhen(): ?LinkActivation
+    public function activatedOnRoute(string $route, array $params = []): static
     {
-        return $this->isActive;
+        return $this->activatedWhen(function (Request $request) use ($route, $params) {
+            return empty($params) ? $request->routeIs($route) : $request->routeIs(route($route, $params, false));
+        });
+    }
+
+    /**
+     * Mark link as active on given location.
+     *
+     * @param string $location
+     * @return $this
+     */
+    public function activatedOnLocation(string $location): static
+    {
+        return $this->activatedWhen(function (Request $request) use ($location) {
+            return $request->path() === $location;
+        });
+    }
+
+    /**
+     * Determine if the link is active for current request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return bool
+     */
+    #[Computed]
+    public function isActive(Request $request): bool
+    {
+        return collect($this->activatedWhen)
+            ->some(fn (Closure $activated) => call_user_func($activated, $request));
     }
 
     /**
@@ -150,19 +181,13 @@ class Link extends Component
      * @param string $title
      * @param string $route
      * @param array $params
-     * @param \Closure|null $configureActivation
      * @param bool $absolute
      * @return static
      */
-    public static function toRoute(string $title, string $route, array $params = [], ?Closure $configureActivation = null, bool $absolute = true): static
+    public static function toRoute(string $title, string $route, array $params = [], bool $absolute = true): static
     {
-        $activated = LinkActivation::make()->onRoute($route, $params);
-        if ($configureActivation instanceof Closure) {
-            call_user_func($configureActivation, $activated);
-        }
-
         return static::make(['title' => $title, 'location' => route($route, $params, $absolute)])
-            ->isActiveWhen($activated);
+            ->activatedOnRoute($route, $params);
     }
 
     /**
@@ -170,19 +195,13 @@ class Link extends Component
      *
      * @param string $title
      * @param string $location
-     * @param \Closure|null $configureActivation
      * @param bool $external
      * @return \Insight\Elements\View\Components\Link
      */
-    public function toLocation(string $title, string $location, ?Closure $configureActivation = null, bool $external = false): static
+    public function toLocation(string $title, string $location, bool $external = false): static
     {
-        $activated = LinkActivation::make()->onLocation($location);
-        if ($configureActivation instanceof Closure) {
-            call_user_func($configureActivation, $activated);
-        }
-
-        return static::make(['title' => $title, 'location' => $location])
-            ->isActiveWhen($activated);
+        return static::make(['title' => $title, 'location' => $location, 'external' => $external])
+            ->activatedOnLocation($location);
     }
 
     /**

@@ -33,22 +33,22 @@ class HomeController
     protected function createHeaderNavigation()
     {
         return Navigation::make()
-            ->add(NavigationItem::for(Link::toRoute('Dashboard', 'dashboard', [], function (LinkActivation $activation) {
-                $activation->onRoute('dashboard.overview')
-                    ->onRoute('dashboard.notifications')
-                    ->onRoute('dashboard.analytics')
-                    ->onRoute('dashboard.saved-reports')
-                    ->onRoute('dashboard.scheduled-reports')
-                    ->onRoute('dashboard.user-reports');
-            })))
-            ->add(NavigationItem::for(Link::toRoute('Projects', 'projects', [], function (LinkActivation $activation) {
-                $activation->onRoute('projects.pending')
-                    ->onRoute('projects.published')
-                    ->onRoute('projects.completed')
-                    ->onRoute('projects.archived')
-                    ->onRoute('projects.archived.last')
-                    ->onRoute('projects.archived.all');
-            })))
+            ->add(NavigationItem::for(Link::toRoute('Dashboard', 'dashboard', [])
+                ->activatedOnRoute('dashboard.overview')
+                ->activatedOnRoute('dashboard.notifications')
+                ->activatedOnRoute('dashboard.analytics')
+                ->activatedOnRoute('dashboard.saved-reports')
+                ->activatedOnRoute('dashboard.scheduled-reports')
+                ->activatedOnRoute('dashboard.user-reports')
+            ))
+            ->add(NavigationItem::for(Link::toRoute('Projects', 'projects', [])
+                ->activatedOnRoute('projects.pending')
+                ->activatedOnRoute('projects.published')
+                ->activatedOnRoute('projects.completed')
+                ->activatedOnRoute('projects.archived')
+                ->activatedOnRoute('projects.archived.last')
+                ->activatedOnRoute('projects.archived.all')
+            ))
             ->add(NavigationItem::for(Link::toRoute('Tasks', 'tasks')))
             ->add(NavigationItem::for(Link::toRoute('Reporting', 'reporting')))
             ->add(NavigationItem::for(Link::toRoute('Users', 'users')));

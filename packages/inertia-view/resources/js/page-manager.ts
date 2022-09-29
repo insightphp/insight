@@ -69,6 +69,7 @@ export class InertiaViewPageManager {
   protected configureLayoutOnPage(pageComponent: ResolvedPage): ResolvedPage {
     if (!pageComponent.default.layout) {
       pageComponent.default.layout = (h: any, page: any) => {
+
         if (Array.isArray(page.props._layouts)) {
           const nestedLayouts = [...page.props._layouts].reverse()
           const renderFunctions: Array<any> = []

@@ -32,10 +32,13 @@ import type { Models } from "../../models";
 import { Portal } from "@insightphp/inertia-view";
 import { useStatefulNavigation } from "../../Composables";
 import { Menu, MenuItem } from "@insightphp/elements";
+import { computed } from "vue";
 
 const props = defineProps<{
   navigation: Models.Navigation
 }>()
 
-const { navigation: statefulNavigation } = useStatefulNavigation(props.navigation)
+const computedNavigation = computed(() => props.navigation)
+
+const { navigation: statefulNavigation } = useStatefulNavigation(computedNavigation)
 </script>

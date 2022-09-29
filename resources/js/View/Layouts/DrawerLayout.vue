@@ -24,7 +24,7 @@ import type { Models } from "../../models";
 
 const mobileOpen = ref(false)
 
-defineProps<{
+const props = defineProps<{
   header: Component
   navigation: Models.Navigation
 }>()
