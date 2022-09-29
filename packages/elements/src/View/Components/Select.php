@@ -6,9 +6,9 @@ namespace Insight\Elements\View\Components;
 
 use Insight\Elements\View\Option;
 use Insight\Inertia\Support\ListOf;
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class Select extends ViewComponent
+class Select extends Component
 {
     /**
      * Select options.

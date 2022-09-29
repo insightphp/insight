@@ -14,7 +14,7 @@ export default defineComponent({
     let inertiaComponent: Component<any>|undefined = undefined
 
     if (props.component) {
-      const { component, ...passthroughProps } = props
+      const { component, for: rm, ...passthroughProps } = props
       const { _component, ...componentDef } = component
       inertiaComponent = _component
       componentProps = mergeProps(passthroughProps, componentDef)

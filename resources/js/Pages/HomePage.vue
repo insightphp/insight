@@ -1,11 +1,22 @@
 <template>
   <div class="p-8">
-    <p>this is home page {{ counter }}</p>
-    <button class="btn" @click.prevent="counter++">Add</button>
+    <h4 class="text-2xl font-medium">Welcome Back, Peter</h4>
+
+    <div class="bg-white mt-6 border border-gray-200 shadow-sm drop-shadow-sm p-4 rounded-lg">
+      <p>{{ location }}</p>
+    </div>
+    <div class="mt-4">
+      <p>Counter: {{ counter }}</p>
+      <button class="btn small mt-2" @click.prevent="counter++">Add</button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
 
 const counter = ref(1)
+
+defineProps<{
+  location: string
+}>()
 </script>

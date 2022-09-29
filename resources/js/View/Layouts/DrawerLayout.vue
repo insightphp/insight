@@ -20,8 +20,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Portal } from "@insightphp/inertia-view";
 import type { Component } from "@insightphp/inertia-view";
+import { Portal } from "@insightphp/inertia-view";
 import { Drawer, } from "../../Components";
 import { ref } from "vue";
 

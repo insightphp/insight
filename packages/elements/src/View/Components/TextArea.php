@@ -4,9 +4,9 @@
 namespace Insight\Elements\View\Components;
 
 
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class TextArea extends ViewComponent
+class TextArea extends Component
 {
     /**
      * The row count of the text area.

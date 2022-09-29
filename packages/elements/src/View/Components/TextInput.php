@@ -4,9 +4,9 @@
 namespace Insight\Elements\View\Components;
 
 
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class TextInput extends ViewComponent
+class TextInput extends Component
 {
     /**
      * The type of the text input.

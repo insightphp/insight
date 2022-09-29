@@ -4,9 +4,9 @@
 namespace Insight\Elements\View\Components;
 
 
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class Color extends ViewComponent
+class Color extends Component
 {
 
 }

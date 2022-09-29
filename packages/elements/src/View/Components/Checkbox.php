@@ -4,9 +4,9 @@
 namespace Insight\Elements\View\Components;
 
 
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class Checkbox extends ViewComponent
+class Checkbox extends Component
 {
     /**
      * The label of the checkbox.
