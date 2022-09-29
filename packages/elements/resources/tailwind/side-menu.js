@@ -29,6 +29,7 @@ module.exports = function (options) {
     'ul.side-menu li': {
       color: theme('colors.gray.700', colors.gray[700]),
       fontSize: theme('fontSize.sm', defaultTheme.fontSize.sm),
+      fontWeight: defaultTheme.fontWeight.medium,
       position: 'relative',
     },
 
@@ -44,7 +45,7 @@ module.exports = function (options) {
       transitionTimingFunction: defaultTheme.transitionTimingFunction.DEFAULT,
       transitionProperty: defaultTheme.transitionProperty.transform,
       transitionDuration: defaultTheme.transitionDuration[150],
-      pointerEvents: 'none'
+      cursor: 'pointer'
     },
 
     'ul.side-menu li > button, ul.side-menu li > a': {
@@ -65,9 +66,8 @@ module.exports = function (options) {
     },
 
     'ul.side-menu li.active > button, ul.side-menu li.active > a': {
-      color: theme('colors.primary.800', colors.purple[800]),
-      borderColor: theme('colors.primary.800', colors.purple[800]),
-      fontWeight: defaultTheme.fontWeight.medium,
+      color: theme('colors.primary.700', colors.purple[700]),
+      borderColor: theme('colors.primary.700', colors.purple[700]),
     },
 
     'ul.side-menu li > ul': {

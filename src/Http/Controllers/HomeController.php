@@ -25,7 +25,8 @@ class HomeController
             'header' => Header::make([
                 'leftNavigation' => HeaderNavigation::make()->withNavigation($this->createHeaderNavigation()),
                 'rightNavigation' => HeaderNavigation::make()->withNavigation($this->createHeaderNavigation()),
-            ])
+            ]),
+            'navigation' => $this->createDrawerNavigation(),
         ]));
     }
 
@@ -44,7 +45,9 @@ class HomeController
                 $activation->onRoute('projects.pending')
                     ->onRoute('projects.published')
                     ->onRoute('projects.completed')
-                    ->onRoute('projects.archived');
+                    ->onRoute('projects.archived')
+                    ->onRoute('projects.archived.last')
+                    ->onRoute('projects.archived.all');
             })))
             ->add(NavigationItem::for(Link::toRoute('Tasks', 'tasks')))
             ->add(NavigationItem::for(Link::toRoute('Reporting', 'reporting')))
@@ -68,7 +71,11 @@ class HomeController
                     ->add(NavigationItem::for(Link::toRoute('Pending', 'projects.pending')))
                     ->add(NavigationItem::for(Link::toRoute('Published', 'projects.published')))
                     ->add(NavigationItem::for(Link::toRoute('Completed', 'projects.completed')))
-                    ->add(NavigationItem::for(Link::toRoute('Archived', 'projects.archived')))
+                    ->add(NavigationItem::for(Link::toRoute('Archived', 'projects.archived'))->setChildNavigation(
+                        Navigation::make()
+                            ->add(NavigationItem::for(Link::toRoute('Last 30 Days', 'projects.archived.last')))
+                            ->add(NavigationItem::for(Link::toRoute('All time', 'projects.archived.all')))
+                    ))
             ))
             ->add(NavigationItem::for(Link::toRoute('Tasks', 'tasks')))
             ->add(NavigationItem::for(Link::toRoute('Reporting', 'reporting')))

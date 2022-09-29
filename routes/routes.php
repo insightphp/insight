@@ -14,6 +14,8 @@ Route::get('/projects/pending', \Insight\Http\Controllers\HomeController::class)
 Route::get('/projects/published', \Insight\Http\Controllers\HomeController::class)->name('projects.published');
 Route::get('/projects/completed', \Insight\Http\Controllers\HomeController::class)->name('projects.completed');
 Route::get('/projects/archived', \Insight\Http\Controllers\HomeController::class)->name('projects.archived');
+Route::get('/projects/archived/last-30-days', \Insight\Http\Controllers\HomeController::class)->name('projects.archived.last');
+Route::get('/projects/archived/all-the-time', \Insight\Http\Controllers\HomeController::class)->name('projects.archived.all');
 Route::get('/tasks', \Insight\Http\Controllers\HomeController::class)->name('tasks');
 Route::get('/reporting', \Insight\Http\Controllers\HomeController::class)->name('reporting');
 Route::get('/users', \Insight\Http\Controllers\HomeController::class)->name('users');
