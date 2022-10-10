@@ -57,42 +57,60 @@
       </div>
 
       <!-- Right Menu -->
-      <div>
+      <div v-if="shouldShowUser">
         <Menu class="w-48" placement="bottom-right">
           <template #toggle>
-            <button class="inline-flex items-center hover:bg-primary-50 text-sm text-gray-900 hover:text-primary-700 font-medium py-1 px-2 rounded-lg transition-colors duration-300">
-              <img class="w-8 h-8 rounded-full" src="https://ui-avatars.com/api/?name=Peter+Stovka&color=9333ea&background=f3e8ff">
+            <button class="gap-2 inline-flex items-center hover:bg-primary-50 text-sm text-gray-900 hover:text-primary-700 font-medium py-1 px-2 rounded-lg transition-colors duration-300">
+              <img v-if="user?.profilePhotoUrl" class="w-8 h-8 rounded-full" :src="user.profilePhotoUrl">
+              <div v-else class="w-8 h-8 flex items-center justify-center bg-primary-100 rounded-full text-primary-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <span v-if="user?.name && user?.shouldShowName">{{ user.name }}</span>
             </button>
           </template>
 
-          <MenuItem class="menu-item">Repositories</MenuItem>
-          <MenuItem class="menu-item">Issues <span class="badge warning ml-2">2 New</span></MenuItem>
-          <MenuItem class="menu-item">Profile</MenuItem>
-          <MenuItem class="menu-item">Settings</MenuItem>
-          <MenuItem as="a" href="#" class="menu-item danger">Log Out</MenuItem>
+          <template v-if="userNavigation">
+            <template v-for="item in userNavigation.items">
+              <MenuItem as="template" v-slot="{ active, close }">
+                <Link @click="close" class="menu-item flex w-full" v-bind="item.link" :is-active="item.link.isActive || active" />
+              </MenuItem>
+            </template>
+          </template>
         </Menu>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Menu, MenuItem } from "@insightphp/elements";
+import { Menu, MenuItem, Link } from "@insightphp/elements";
 import { computed, defineProps } from "vue";
 import type { Component } from "@insightphp/inertia-view";
 import { Portal } from "@insightphp/inertia-view";
+import type { Models } from "../../models";
 
 const emit = defineEmits(['toggleDrawer', 'toggleSearch'])
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   mobileOpen: boolean
   leftNavigation?: Component | null
   rightNavigation?: Component | null
+  userNavigation?: Models.Navigation | null
+  user?: Models.User | null
   showSearch?: boolean
 }>(), {
   mobileOpen: false,
   showSearch: false
+})
+
+const shouldShowUser = computed(() => {
+  if (props.userNavigation && props.userNavigation.items.length > 0) {
+    return true
+  }
+
+  return false
 })
 
 const isMac = computed(() => navigator.platform.toUpperCase().indexOf('MAC') >= 0)

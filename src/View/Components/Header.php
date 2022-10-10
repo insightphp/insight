@@ -6,6 +6,8 @@ namespace Insight\View\Components;
 
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
+use Insight\View\Models\Navigation;
+use Insight\View\Models\User;
 
 class Header extends Component
 {
@@ -23,9 +25,25 @@ class Header extends Component
      */
     public ?HeaderNavigation $rightNavigation;
 
+    /**
+     * The navigation displayed under name.
+     *
+     * @var \Insight\View\Models\Navigation|null
+     */
+    public ?Navigation $userNavigation;
+
+    /**
+     * The Insight user.
+     *
+     * @var \Insight\View\Models\User|null
+     */
+    public ?User $user;
+
     #[Computed(name: 'showSearch')]
     public function shouldShowSearch(): bool
     {
-        return true;
+        // TODO: Spotlight feature
+
+        return false;
     }
 }

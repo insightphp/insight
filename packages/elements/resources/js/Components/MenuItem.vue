@@ -1,6 +1,6 @@
 <template>
-  <MenuItem :as="as" v-slot="{ active }">
-    <slot />
+  <MenuItem :as="as" v-slot="attributes">
+    <slot v-bind="attributes" />
   </MenuItem>
 </template>
 <script setup lang="ts">

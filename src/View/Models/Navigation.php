@@ -6,6 +6,7 @@ namespace Insight\View\Models;
 
 use Closure;
 use Illuminate\Support\Collection;
+use Insight\Elements\View\Components\Link;
 use Insight\Inertia\View\Model;
 
 class Navigation extends Model
@@ -28,6 +29,17 @@ class Navigation extends Model
         $this->items[] = value($item);
 
         return $this;
+    }
+
+    /**
+     * Add link to the navigation.
+     *
+     * @param \Insight\Elements\View\Components\Link $link
+     * @return $this
+     */
+    public function link(Link $link): static
+    {
+        return $this->add(NavigationItem::for($link));
     }
 
     /**

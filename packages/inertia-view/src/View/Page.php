@@ -28,11 +28,11 @@ class Page extends Model implements Responsable
     protected array $attributes = [];
 
     /**
-     * The layout component for the page.
+     * Page layouts.
      *
-     * @var array<\Insight\Inertia\View\Component>
+     * @var \Insight\Inertia\View\LayoutStack|null
      */
-    protected array $layouts = [];
+    protected ?LayoutStack $layouts = null;
 
     /**
      * Add attribute to the page.
@@ -75,9 +75,25 @@ class Page extends Model implements Responsable
      */
     public function layout(Component ...$layout): static
     {
-        $this->layouts = $layout;
+        foreach ($layout as $component) {
+            $this->getLayoutStack()->add($component);
+        }
 
         return $this;
+    }
+
+    /**
+     * Retrieve the layout stack for the page.
+     *
+     * @return \Insight\Inertia\View\LayoutStack
+     */
+    public function getLayoutStack(): LayoutStack
+    {
+        if ($this->layouts === null) {
+            $this->layouts = new LayoutStack();
+        }
+
+        return $this->layouts;
     }
 
     /**
@@ -88,11 +104,13 @@ class Page extends Model implements Responsable
     #[Computed(name: '_layouts')]
     public function getLayouts(): ?array
     {
-        if (empty($this->layouts)) {
+        $stack = $this->getLayoutStack();
+
+        if ($stack->isEmpty()) {
             return null;
         }
 
-        return $this->layouts;
+        return $stack->getLayouts();
     }
 
     /**

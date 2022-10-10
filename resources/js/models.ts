@@ -12,4 +12,10 @@ export namespace Models {
     childNavigation: Navigation|null
   }
 
+  export interface User {
+    name: string|null
+    profilePhotoUrl: string|null
+    shouldShowName: boolean
+  }
+
 }

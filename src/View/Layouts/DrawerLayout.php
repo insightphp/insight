@@ -5,16 +5,17 @@ namespace Insight\View\Layouts;
 
 
 use Insight\Inertia\View\Component;
+use Insight\View\Components\Header;
 use Insight\View\Models\Navigation;
 
 class DrawerLayout extends Component
 {
     /**
-     * The header component for the layout.
+     * The header of the layout.
      *
-     * @var \Insight\Inertia\View\Component
+     * @var \Insight\View\Components\Header
      */
-    public Component $header;
+    public Header $header;
 
     /**
      * The main navigation in the drawer.

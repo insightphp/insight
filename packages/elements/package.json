@@ -44,7 +44,7 @@
         }
     },
     "dependencies": {
-        "@headlessui/vue": "^1.7.0",
+        "@headlessui/vue": "^0.0.0-insiders.0e147a0",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@insightphp/inertia-view": "^0.4",
