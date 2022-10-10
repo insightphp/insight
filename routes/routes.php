@@ -19,3 +19,5 @@ Route::get('/projects/archived/all-the-time', \Insight\Http\Controllers\HomeCont
 Route::get('/tasks', \Insight\Http\Controllers\HomeController::class)->name('tasks');
 Route::get('/reporting', \Insight\Http\Controllers\HomeController::class)->name('reporting');
 Route::get('/users', \Insight\Http\Controllers\HomeController::class)->name('users');
+
+Route::get('/resources/{resource}', [\Insight\Http\Controllers\ResourceController::class, 'index'])->name('insight.resources.index');

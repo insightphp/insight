@@ -6,6 +6,7 @@ namespace Insight\Elements\View\Components;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
 
@@ -145,7 +146,7 @@ class Link extends Component
     public function activatedOnRoute(string $route, array $params = []): static
     {
         return $this->activatedWhen(function (Request $request) use ($route, $params) {
-            return empty($params) ? $request->routeIs($route) : $request->routeIs(route($route, $params, false));
+            return empty($params) ? $request->routeIs($route) : Str::startsWith($request->path(), ltrim(route($route, $params, false), '/'));
         });
     }
 
@@ -158,7 +159,11 @@ class Link extends Component
     public function activatedOnLocation(string $location): static
     {
         return $this->activatedWhen(function (Request $request) use ($location) {
-            return $request->path() === $location;
+            if (Str::startsWith($location, 'http')) {
+                return $request->url() === $location;
+            }
+
+            return $request->path() === ltrim($location, '/');
         });
     }
 
@@ -198,7 +203,7 @@ class Link extends Component
      * @param bool $external
      * @return \Insight\Elements\View\Components\Link
      */
-    public function toLocation(string $title, string $location, bool $external = false): static
+    public static function toLocation(string $title, string $location, bool $external = false): static
     {
         return static::make(['title' => $title, 'location' => $location, 'external' => $external])
             ->activatedOnLocation($location);
@@ -210,7 +215,7 @@ class Link extends Component
      * @param string $title
      * @return $this
      */
-    public function toNowhere(string $title): static
+    public static function toNowhere(string $title): static
     {
         return static::make(['title' => $title, 'location' => '#']);
     }

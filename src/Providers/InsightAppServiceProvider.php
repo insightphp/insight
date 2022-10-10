@@ -5,12 +5,15 @@ namespace Insight\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
+use Insight\Elements\View\Components\Link;
 use Insight\Insight;
+use Insight\Resources\Resource;
 use Insight\View\Components\Header;
 use Insight\View\Components\HeaderNavigation;
 use Insight\View\Layouts\DrawerLayout;
 use Insight\View\Layouts\InsightLayout;
 use Insight\View\Models\Navigation;
+use Insight\View\Models\NavigationItem;
 use Insight\View\Models\User;
 
 class InsightAppServiceProvider extends ServiceProvider
@@ -29,6 +32,22 @@ class InsightAppServiceProvider extends ServiceProvider
 
             $this->configureGlobalLayouts($insight);
         });
+
+        $this->registerResources();
+    }
+
+    /**
+     * Register Resources within known directory.
+     *
+     * @return void
+     */
+    public function registerResources(): void
+    {
+        $directory = app_path('Insight/Resources');
+
+        if (file_exists($directory)) {
+            \Insight\Facades\Insight::registerResourcesIn($directory);
+        }
     }
 
     /**
@@ -120,7 +139,31 @@ class InsightAppServiceProvider extends ServiceProvider
      */
     public function configureDrawerNavigation(Navigation $navigation): void
     {
-        //
+        $this->appendResourcesToNavigation($navigation);
+    }
+
+    /**
+     * Append resource links to the navigation.
+     *
+     * @param \Insight\View\Models\Navigation $navigation
+     * @return void
+     */
+    protected function appendResourcesToNavigation(Navigation $navigation): void
+    {
+        $resourcesNavigation = Navigation::make();
+
+        \Insight\Facades\Insight::getResources(true)->each(function (Resource $resource) use ($resourcesNavigation) {
+            if ($resource->shouldShowInNavigation()) {
+                $resourcesNavigation->add($resource->createNavigationItem());
+            }
+        });
+
+        // TODO: Translate
+        if (! $resourcesNavigation->isEmpty()) {
+            $navigation->add(
+                NavigationItem::for(Link::toNowhere('Resources'))->setChildNavigation($resourcesNavigation)
+            );
+        }
     }
 
     /**
