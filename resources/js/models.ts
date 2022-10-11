@@ -1,5 +1,6 @@
 import type { Component } from '@insightphp/inertia-view'
-import type { Components } from '@insightphp/elements'
+import type { Components as ElementComponents } from '@insightphp/elements'
+import type { Components as TableComponents } from '@insightphp/tables'
 
 export namespace Models {
 
@@ -8,7 +9,7 @@ export namespace Models {
   }
 
   export interface NavigationItem {
-    link: Component<Components.Link>
+    link: Component<ElementComponents.Link>
     childNavigation: Navigation|null
   }
 
@@ -16,6 +17,14 @@ export namespace Models {
     name: string|null
     profilePhotoUrl: string|null
     shouldShowName: boolean
+  }
+
+}
+
+export namespace Pages {
+
+  export interface ListResourcesPage {
+    resources: Component<TableComponents.Table>|null
   }
 
 }

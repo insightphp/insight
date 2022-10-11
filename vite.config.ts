@@ -20,6 +20,7 @@ export default defineConfig({
         '@inertiajs/inertia-vue3',
         '@insightphp/inertia-view',
         '@insightphp/elements',
+        '@insightphp/tables',
       ],
       output: {
         globals: {
@@ -28,6 +29,7 @@ export default defineConfig({
           '@inertiajs/inertia-vue3': 'InertiaVue',
           '@insightphp/inertia-view': 'InertiaView',
           '@insightphp/elements': 'Elements',
+          '@insightphp/tables': 'Tables',
         }
       }
     }
