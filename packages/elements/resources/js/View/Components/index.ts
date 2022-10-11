@@ -1,6 +1,7 @@
 export { default as Link } from './Link.vue'
 export { default as Text } from './Text.vue'
 export { default as TextInput } from './TextInput.vue'
+export { default as Swatch} from './Swatch.vue'
 
 export namespace Components {
   export interface Link {

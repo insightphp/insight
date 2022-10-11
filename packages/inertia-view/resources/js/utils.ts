@@ -18,13 +18,19 @@ export function resolveCommonBasePath(paths: Array<string>): string {
     return `${parts.slice(0, parts.length - 1).join('/')}/`
   }
 
+
   const files = [...paths]
   files.sort((a, b) => b.length - a.length)
   const first = files[0]
   const last = files[files.length - 1]
 
+  let lastSeparator = -1
   let eq
-  for (eq = 0; eq < Math.min(first.length, last.length) && first[eq] == last[eq]; eq++);
+  for (eq = 0; eq < Math.min(first.length, last.length) && first[eq] == last[eq]; eq++) {
+    if (first[eq] === '/') {
+      lastSeparator = eq + 1
+    }
+  }
 
-  return first.substring(0, eq)
+  return first.substring(0, lastSeparator >= 0 ? lastSeparator : eq)
 }

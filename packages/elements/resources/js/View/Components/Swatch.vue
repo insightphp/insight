@@ -26,7 +26,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import InputError from "./InputError.vue";
+import InputError from "../../Components/InputError.vue";
 
 import {
   Listbox,

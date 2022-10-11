@@ -73,3 +73,6 @@ test('it should register single component', () => {
   expect(Object.keys(manager.getResolvedComponents())).toHaveLength(1)
   expect(manager.getResolvedComponents()).toHaveProperty('app-user')
 })
+
+// TODO: Add test when in folder are two components two files with same prefix e.g. Text.vue and TextInput.vue
+//       and resolveCommonBasePath should not return path with Text suffix

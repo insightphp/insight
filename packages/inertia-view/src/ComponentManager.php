@@ -149,9 +149,15 @@ class ComponentManager
         $first = Arr::first($classes);
         $last = Arr::last($classes);
 
-        for ($eq = 0; $eq < min(strlen($first), strlen($last)) && $first[$eq] == $last[$eq]; $eq++);
+        $lastSeparator = -1;
 
-        return rtrim(substr($first, 0, $eq), "\\");
+        for ($eq = 0; $eq < min(strlen($first), strlen($last)) && $first[$eq] == $last[$eq]; $eq++) {
+            if ($first[$eq] == '\\') {
+                $lastSeparator = $eq + 1;
+            }
+        }
+
+        return rtrim(substr($first, 0, $lastSeparator >= 0 ? $lastSeparator : $eq), "\\");
     }
 
     /**

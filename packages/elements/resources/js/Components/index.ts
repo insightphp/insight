@@ -14,7 +14,6 @@ export { default as RadioGroup} from './RadioGroup.vue'
 export { default as Select} from './Select.vue'
 export { default as SelectOption} from './SelectOption.vue'
 export { default as SelectButton} from './SelectButton.vue'
-export { default as Swatch} from './Swatch.vue'
 export { default as Switch} from './Switch.vue'
 export { default as TextArea } from './TextArea.vue'
 
