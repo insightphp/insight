@@ -6,6 +6,15 @@ export { default as Header } from './Header.vue'
 export { default as Row } from './Row.vue'
 export { default as Table } from './Table.vue'
 
+export namespace Models {
+  export interface PaginationLink {
+    title: string
+    url: string|null
+    type: 'prev' | 'page' | 'next'
+    active: boolean
+  }
+}
+
 export namespace Components {
   export interface Table {
     header: Component<Components.Header>|null

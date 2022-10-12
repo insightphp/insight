@@ -24,6 +24,7 @@ module.exports = function (options) {
       padding: '1rem 1rem',
       borderBottomWidth: defaultTheme.borderWidth.DEFAULT,
       borderColor: theme(`colors.gray.200`, colors.gray[200]),
+      backgroundColor: theme('colors.white', colors.white),
     },
     'table.table thead tr th.header-row-select': {
       textAlign: 'left',
@@ -42,13 +43,19 @@ module.exports = function (options) {
       width: '100%',
     },
     '.data-table table.table th': {
-      borderTopWidth: 0,
+      // borderTopWidth: 0,
       '&:first-child': {
-        borderTopLeftRadius: '0.33rem',
+        // borderTopLeftRadius: '0.33rem',
       },
       '&:last-child': {
-        borderTopRightRadius: '0.33rem',
+        // borderTopRightRadius: '0.33rem',
       },
+    },
+    '.data-table table.table tbody tr:last-child td:first-child': {
+      borderBottomLeftRadius: '0.33rem'
+    },
+    '.data-table table.table tbody tr:last-child td:last-child': {
+      borderBottomRightRadius: '0.33rem'
     },
     '.data-table table.table tbody tr:last-child td': {
       borderBottomWidth: 0,

@@ -4,7 +4,7 @@
 namespace Insight\View\Pages;
 
 
-use Insight\Tables\View\Components\Table;
+use Insight\Tables\View\Components\DataTable;
 
 class ListResourcesPage extends InsightPage
 {
@@ -13,7 +13,7 @@ class ListResourcesPage extends InsightPage
     /**
      * Table of resources.
      *
-     * @var \Insight\Tables\View\Components\Table|null
+     * @var \Insight\Tables\View\Components\DataTable|null
      */
-    public ?Table $resources = null;
+    public ?DataTable $resources = null;
 }

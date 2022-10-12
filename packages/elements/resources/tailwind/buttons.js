@@ -6,19 +6,23 @@ function createColoredButtonVariant(name, color, fallbackColor, options) {
 
   addComponents({
     [`.btn.${name}`]: {
-      backgroundColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
-      color: theme(`colors.${color}.700`, colors[fallbackColor][700]),
-      borderColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
+      backgroundColor: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+      color: theme(`colors.white`, colors.white),
+      borderColor: theme(`colors.${color}.600`, colors[fallbackColor][600]),
       '&:hover': {
-        backgroundColor: theme(`colors.${color}.100`, colors[fallbackColor][100]),
+        backgroundColor: theme(`colors.${color}.500`, colors[fallbackColor][500]),
+        borderColor: theme(`colors.${color}.500`, colors[fallbackColor][500]),
       },
       '&:focus': {
         '--tw-ring-color': theme(`colors.${color}.300`, colors[fallbackColor][300]),
-        borderColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
+        borderColor: theme(`colors.${color}.600`, colors[fallbackColor][600]),
+        '&:hover': {
+          borderColor: theme(`colors.${color}.500`, colors[fallbackColor][500]),
+        }
       },
       '&:disabled': {
         '&:hover': {
-          backgroundColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
+          backgroundColor: theme(`colors.${color}.600`, colors[fallbackColor][600]),
         }
       }
     },
@@ -69,7 +73,7 @@ module.exports = function (options) {
       borderColor: theme(`colors.gray.300`, colors.gray[300]),
       padding: '.4rem .95rem',
       borderRadius: defaultTheme.borderRadius.lg,
-      fontWeight: defaultTheme.fontWeight.medium,
+      fontWeight: defaultTheme.fontWeight.semibold,
       borderWidth: defaultTheme.borderWidth.DEFAULT,
       transitionTimingFunction: defaultTheme.transitionTimingFunction.DEFAULT,
       transitionProperty: defaultTheme.transitionProperty.colors,

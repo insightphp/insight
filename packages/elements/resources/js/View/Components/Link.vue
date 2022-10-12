@@ -1,5 +1,5 @@
 <template>
-  <a v-if="external" :href="location">
+  <a v-if="external" :href="location" :class="{ 'btn': asButton, [buttonType]: asButton }">
     <slot>
       <template v-if="content">
         <Portal :component="content" />
@@ -9,7 +9,7 @@
       </template>
     </slot>
   </a>
-  <Link v-else :href="location">
+  <Link v-else :href="location" :class="{ 'btn': asButton, [buttonType]: asButton }">
     <template v-if="content">
       <Portal :component="content" />
     </template>
@@ -32,8 +32,11 @@ const props = withDefaults(defineProps<{
   external?: boolean
   isActive?: boolean
   content?: Component
+  asButton?: boolean
+  buttonType?: string
 }>(), {
   external: false,
-  isActive: false
+  isActive: false,
+  buttonType: 'primary'
 })
 </script>

@@ -38,12 +38,7 @@ export default defineComponent({
       return h(Portal, { component: row, selection: selections[index] })
     }
 
-    // const testClick = () => {
-      //console.log(selections)
-    // }
-
     return () => h('table', {}, [
-        // h('button', { onClick: testClick }, 'Peter'),
         props.header ? renderHeader(props.header) : undefined,
         h('tbody', rows.map((it, idx) => renderRow(it, idx))),
         props.footer ? h(Portal, { component: props.footer }) : undefined,

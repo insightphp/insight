@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
+use Insight\View\Components\Heroicon;
 
 class Link extends Component
 {
@@ -64,6 +65,44 @@ class Link extends Component
      * @var \Insight\Inertia\View\Component|null
      */
     public ?Component $content = null;
+
+    /**
+     * Display link as button.
+     *
+     * @var bool
+     */
+    public bool $asButton = false;
+
+    /**
+     * The button look.
+     *
+     * @var string
+     */
+    public string $buttonType = 'primary';
+
+    /**
+     * Display link as button.
+     *
+     * @param string $type
+     * @param string|null $icon
+     * @param int $iconSize
+     * @param string $iconStyle
+     * @return $this
+     */
+    public function asButton(string $type = 'primary', ?string $icon = null, int $iconSize = 24, string $iconStyle = 'outline'): static
+    {
+        $this->asButton = true;
+        $this->buttonType = $type;
+
+        $content = [];
+        if ($icon) {
+            $content[] = Heroicon::for($icon, $iconSize, $iconStyle);
+        }
+
+        $content[] = Text::of($this->title);
+
+        return $this->withContent(Stack::of($content)->gap(2));
+    }
 
     /**
      * Set custom content for the link.

@@ -5,11 +5,13 @@ namespace Insight\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Insight\Elements\View\Components\Button;
 use Insight\Elements\View\Components\Link;
 use Insight\Elements\View\Components\Pressable;
 use Insight\Elements\View\Components\Stack;
 use Insight\Elements\View\Components\Text;
 use Insight\Tables\View\Components\Cell;
+use Insight\Tables\View\Components\DataTable;
 use Insight\Tables\View\Components\Header;
 use Insight\Tables\View\Components\Row;
 use Insight\Tables\View\Components\Table;
@@ -54,11 +56,25 @@ class ResourceController
             ]
         ]);
 
-        $users = \App\Models\User::query()->limit(10)->get();
+        /** @var \Illuminate\Pagination\LengthAwarePaginator $users */
+        $users = \App\Models\User::query()
+            ->paginate(25)
+            ->onEachSide(1);
 
-        $table = Table::make([
+        $table = DataTable::make([
+            'headerActions' => Stack::of([
+                Menu::withNavigation(
+                    Navigation::make()
+                        ->link(Link::toNowhere('Active Users'))
+                        ->link(Link::toNowhere('Disabled Users'))
+                )->withToggle(Button::withText('Insights', 'document-magnifying-glass')),
+                Link::toNowhere('Add User')
+                    ->asButton('primary', 'plus'),
+            ])->gap(3),
+            'title' => 'Users',
+            'totalItems' => $users->total(),
             'header' => $header,
-            'rows' => $users->map(function ($user) {
+            'rows' => collect($users->items())->map(function ($user) {
                 $actions = Stack::of([
                     Menu::withNavigation(
                         Navigation::make()
@@ -83,14 +99,14 @@ class ResourceController
                 return Row::make([
                     'cells' => [
                         Cell::make(['value' => Text::make(['value' => $user->id])]),
-                        Cell::make(['value' => Text::make(['value' => $user->name])]),
+                        Cell::make(['value' => Text::make(['value' => $user->name])->primary()]),
                         Cell::make(['value' => Text::make(['value' => $user->email])->secondary()]),
                         Cell::make(['value' => Text::make(['value' => $user->created_at->format('d.m.Y H:i')])]),
                         Cell::make(['value' => $actions])->right()
                     ]
                 ])->id($user->id);
             })->all(),
-        ]);
+        ])->addPaginationLinks($users->linkCollection());
 
         return $table;
     }

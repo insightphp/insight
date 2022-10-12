@@ -6,9 +6,9 @@ function addColoredVariant(name, color, fallbackColor, options) {
 
   addComponents({
     [`.badge.${name}`]: {
-      backgroundColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
+      backgroundColor: theme(`colors.${color}.50`, colors[fallbackColor][50]),
       color: theme(`colors.${color}.700`, colors[fallbackColor][700]),
-      borderColor: theme(`colors.${color}.200`, colors[fallbackColor][200]),
+      borderColor: theme(`colors.${color}.50`, colors[fallbackColor][50]),
     }
   })
 }

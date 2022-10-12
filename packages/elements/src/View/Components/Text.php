@@ -32,9 +32,9 @@ class Text extends Component
     /**
      * The color of the text.
      *
-     * @var string
+     * @var string|null
      */
-    public string $color = 'primary';
+    public ?string $color = null;
 
     /**
      * The color of the text.

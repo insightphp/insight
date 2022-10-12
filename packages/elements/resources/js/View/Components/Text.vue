@@ -1,4 +1,3 @@
-<!-- text-gray-600 text-gray-900 -->
 <script lang="ts">
 import { defineComponent, h, mergeProps } from "vue";
 import type { PropType } from "vue";
@@ -8,7 +7,7 @@ export default defineComponent({
     as: { type: String, default: 'span'},
     value: { type: String, required: false },
     asHtml: { type: Boolean, required: false, default: false },
-    color: { type: String as PropType<'primary' | 'secondary'>, default: 'primary' }
+    color: { type: String as PropType<'primary' | 'secondary'>,  required: false }
   },
   setup(props, { slots }) {
     return () => {
@@ -17,9 +16,11 @@ export default defineComponent({
       const resolveColorClass = () => {
         if (color == 'primary') {
           return 'text-gray-900'
+        } else if (color == 'secondary') {
+          return 'text-gray-600'
         }
 
-        return 'text-gray-600'
+        return {}
       }
 
       const finalProps = mergeProps(otherProps, {

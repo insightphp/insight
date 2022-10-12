@@ -92,7 +92,7 @@ module.exports = function (options) {
     {
       selector: ['input::placeholder', 'textarea::placeholder'],
       styles: {
-        color: theme('colors.gray.300', colors.gray[300]),
+        color: theme('colors.gray.500', colors.gray[500]),
         opacity: '1',
       },
     },
