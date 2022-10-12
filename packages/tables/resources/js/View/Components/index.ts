@@ -22,6 +22,7 @@ export namespace Components {
   }
 
   export interface Row {
+    id: string|number|null
     cells: Array<Component<Components.Cell>>
   }
 

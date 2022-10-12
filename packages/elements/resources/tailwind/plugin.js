@@ -12,6 +12,7 @@ const addBanners = require('./banners')
 const addTabs = require('./tabs')
 const addSideMenu = require('./side-menu')
 const addDate = require('./date')
+const addTables = require('./tables')
 
 module.exports = plugin(function(options) {
   addButtons(options)
@@ -24,6 +25,7 @@ module.exports = plugin(function(options) {
   addTabs(options)
   addSideMenu(options)
   addDate(options)
+  addTables(options)
 }, {
   theme: {
     extend: {
@@ -35,6 +37,19 @@ module.exports = plugin(function(options) {
         danger: colors.red,
         warning: colors.amber,
         info: colors.sky,
+        gray: {
+          25: '#fcfdfd',
+          50: '#f9fafb',
+          100: '#f2f4f7',
+          200: '#eaecf0',
+          300: '#d0d5dd',
+          400: '#98a2b3',
+          500: '#667085',
+          600: '#465467',
+          700: '#334054',
+          800: '#1c2939',
+          900: '#101828',
+        }
       }
     }
   },

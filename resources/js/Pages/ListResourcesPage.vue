@@ -1,8 +1,8 @@
 <template>
 <div class="p-16">
-  <p>toto je resource index</p>
-
-  <Portal v-if="resourcesTable" :component="resourcesTable" />
+  <div class="data-table border border-gray-200 rounded-md">
+    <Portal class="table" v-if="resourcesTable" :component="resourcesTable" />
+  </div>
 </div>
 </template>
 

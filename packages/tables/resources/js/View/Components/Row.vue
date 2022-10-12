@@ -4,13 +4,22 @@ import type { Components } from "./index";
 import { defineComponent, h } from "vue";
 import type { PropType } from "vue";
 import { Portal } from "@insightphp/inertia-view";
+import { RowSelect } from "../../Components";
+import type { RowSelection } from "../../Composables";
 
 export default defineComponent({
   props: {
-    cells: { type: Object as PropType<Array<Component<Components.Cell>>>, required: true }
+    cells: { type: Object as PropType<Array<Component<Components.Cell>>>, required: true },
+    selection: { type: Object as PropType<RowSelection>, required: false}
   },
   setup(props) {
-    return () => h('tr', props.cells.map(it => h(Portal, { component: it })))
+    return () => {
+      const rowSelect = h(RowSelect, {
+        selection: props.selection
+      })
+
+      return h('tr', [rowSelect, ...props.cells.map(it => h(Portal, { component: it }))])
+    }
   }
 })
 </script>

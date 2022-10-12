@@ -12,12 +12,6 @@ use Insight\Tables\View\Components\Row;
 use Insight\Tables\View\Components\Table;
 use Insight\View\Pages\ListResourcesPage;
 
-function cell()
-{
-    return Cell::make([
-        'value' => Text::of('Cell'),
-    ]);
-}
 
 class ResourceController
 {
@@ -34,22 +28,27 @@ class ResourceController
     {
         $header = Header::make([
             'cells' => [
-                cell()->displayAsHeader(),
-                cell()->displayAsHeader(),
-                cell()->displayAsHeader(),
-                cell()->displayAsHeader(),
+                Cell::make(['value' => Text::make(['value' => 'ID'])])->displayAsHeader(),
+                Cell::make(['value' => Text::make(['value' => 'Name'])])->displayAsHeader(),
+                Cell::make(['value' => Text::make(['value' => 'E-Mail'])])->displayAsHeader(),
+                Cell::make(['value' => Text::make(['value' => 'Created At'])])->displayAsHeader(),
             ]
         ]);
 
+        $users = \App\Models\User::query()->limit(10)->get();
+
         $table = Table::make([
             'header' => $header,
-            'rows' => [
-                Row::make(['cells' => [cell(), cell(), cell(), cell()]]),
-                Row::make(['cells' => [cell(), cell(), cell(), cell()]]),
-                Row::make(['cells' => [cell(), cell(), cell(), cell()]]),
-                Row::make(['cells' => [cell(), cell(), cell(), cell()]]),
-                Row::make(['cells' => [cell(), cell(), cell(), cell()]]),
-            ],
+            'rows' => $users->map(function ($user) {
+                return Row::make([
+                    'cells' => [
+                        Cell::make(['value' => Text::make(['value' => $user->id])]),
+                        Cell::make(['value' => Text::make(['value' => $user->name])]),
+                        Cell::make(['value' => Text::make(['value' => $user->email])->secondary()]),
+                        Cell::make(['value' => Text::make(['value' => $user->created_at->format('d.m.Y H:i')])]),
+                    ]
+                ])->id($user->id);
+            })->all(),
         ]);
 
         return $table;

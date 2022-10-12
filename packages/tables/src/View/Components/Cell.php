@@ -23,6 +23,56 @@ class Cell extends Component
     public ?Component $value = null;
 
     /**
+     * Alignment of the value.
+     *
+     * @var string
+     */
+    public string $align = 'left';
+
+    /**
+     * Set the value alignment.
+     *
+     * @param string $align
+     * @return $this
+     */
+    public function align(string $align): static
+    {
+        $this->align = $align;
+
+        return $this;
+    }
+
+    /**
+     * Set the cell alignment to the left.
+     *
+     * @return $this
+     */
+    public function left(): static
+    {
+        return $this->align('left');
+    }
+
+    /**
+     * Set the cell alignment to the right.
+     *
+     * @return $this
+     */
+    public function right(): static
+    {
+        return $this->align('right');
+    }
+
+    /**
+     * Set the cell alignment to center.
+     *
+     * @return $this
+     */
+    public function center(): static
+    {
+        return $this->align('center');
+    }
+
+    /**
      * Set cell to be rendered as <th>
      *
      * @return $this

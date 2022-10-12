@@ -30,6 +30,46 @@ class Text extends Component
     public bool $asHtml = false;
 
     /**
+     * The color of the text.
+     *
+     * @var string
+     */
+    public string $color = 'primary';
+
+    /**
+     * The color of the text.
+     *
+     * @param string $color
+     * @return $this
+     */
+    public function color(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Set the primary color.
+     *
+     * @return $this
+     */
+    public function primary(): static
+    {
+        return $this->color('primary');
+    }
+
+    /**
+     * Set the secondary color.
+     *
+     * @return $this
+     */
+    public function secondary(): static
+    {
+        return $this->color('secondary');
+    }
+
+    /**
      * Render the text as HTML.
      *
      * @param bool $asHtml
