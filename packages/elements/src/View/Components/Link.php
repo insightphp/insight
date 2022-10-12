@@ -59,6 +59,39 @@ class Link extends Component
     protected array $activatedWhen = [];
 
     /**
+     * The content of the link.
+     *
+     * @var \Insight\Inertia\View\Component|null
+     */
+    public ?Component $content = null;
+
+    /**
+     * Set custom content for the link.
+     *
+     * @param \Insight\Inertia\View\Component $component
+     * @return $this
+     */
+    public function withContent(Component $component): static
+    {
+        $this->content = $component;
+
+        return $this;
+    }
+
+    /**
+     * Set custom content wrapped in Pressable.
+     *
+     * @param \Insight\Inertia\View\Component $component
+     * @return $this
+     */
+    public function withPressableContent(Component $component): static
+    {
+        $this->content = Pressable::for($component);
+
+        return $this;
+    }
+
+    /**
      * Set the link title.
      *
      * @param string $title

@@ -7,12 +7,15 @@ namespace Insight\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Insight\Inertia\ComponentManager;
+use Insight\Support\Heroicons;
 
 class InsightServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/insight.php', 'insight');
+
+        $this->app->singleton(Heroicons::class, fn () => new Heroicons());
     }
 
     public function boot()

@@ -9,6 +9,7 @@ import type { RowSelection } from "../../Composables";
 
 export default defineComponent({
   props: {
+    id: { type: undefined as unknown as PropType<string|number>, required: false },
     cells: { type: Object as PropType<Array<Component<Components.Cell>>>, required: true },
     selection: { type: Object as PropType<RowSelection>, required: false}
   },

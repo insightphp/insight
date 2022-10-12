@@ -1,4 +1,3 @@
-<!-- text-left text-right text-center -->
 <script lang="ts">
 import { defineComponent, h } from "vue";
 import type { PropType } from "vue";

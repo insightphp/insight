@@ -35,6 +35,7 @@ module.exports = plugin(function(options) {
       colors: {
         primary: colors.purple,
         danger: colors.red,
+        success: colors.green,
         warning: colors.amber,
         info: colors.sky,
         gray: {

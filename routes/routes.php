@@ -21,3 +21,5 @@ Route::get('/reporting', \Insight\Http\Controllers\HomeController::class)->name(
 Route::get('/users', \Insight\Http\Controllers\HomeController::class)->name('users');
 
 Route::get('/resources/{resource}', [\Insight\Http\Controllers\ResourceController::class, 'index'])->name('insight.resources.index');
+Route::get('/resources/{resource}/{id}/edit', [\Insight\Http\Controllers\ResourceController::class, 'edit'])->name('insight.resources.edit');
+Route::get('/resources/{resource}/{id}', [\Insight\Http\Controllers\ResourceController::class, 'show'])->name('insight.resources.show');
