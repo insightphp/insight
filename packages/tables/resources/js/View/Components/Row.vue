@@ -15,11 +15,16 @@ export default defineComponent({
   },
   setup(props) {
     return () => {
-      const rowSelect = h(RowSelect, {
-        selection: props.selection
-      })
+      let cells = props.cells.map(it => h(Portal, { component: it }))
 
-      return h('tr', [rowSelect, ...props.cells.map(it => h(Portal, { component: it }))])
+      // If the bulk selection is enabled, we will also add Row Select component as first cell of the row.
+      if (props.selection) {
+        cells.unshift(h(RowSelect, {
+          selection: props.selection
+        }))
+      }
+
+      return h('tr', cells)
     }
   }
 })

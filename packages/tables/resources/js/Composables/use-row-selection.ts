@@ -7,7 +7,7 @@ export interface RowSelection {
 
 export declare type RowSelectionSummary = 'everything' | 'something' | 'nothing'
 
-export function useRowSelection(identifiers: Array<string|number>) {
+export function useRowSelection(identifiers: Array<string|number> = []) {
   const selections = reactive<Array<RowSelection>>([])
 
   const resetSelections = (identifiers: Array<string|number>) => {
@@ -40,5 +40,7 @@ export function useRowSelection(identifiers: Array<string|number>) {
     selections.forEach(it => it.selected = false)
   }
 
-  return { selections, resetSelections, selectionSummary, selectEverything, selectNothing }
+  const selectedRows = computed(() => selections.filter(it => it.selected).map(it => it.id))
+
+  return { selections, resetSelections, selectionSummary, selectEverything, selectNothing, selectedRows }
 }

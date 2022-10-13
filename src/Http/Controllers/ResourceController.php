@@ -106,7 +106,7 @@ class ResourceController
                     ]
                 ])->id($user->id);
             })->all(),
-        ])->addPaginationLinks($users->linkCollection());
+        ])->addPaginationLinks($users->linkCollection())->withBulkSelection();
 
         return $table;
     }

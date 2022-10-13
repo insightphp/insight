@@ -36,6 +36,10 @@ module.exports = function (options) {
       paddingRight: 0,
       width: '1rem',
     },
+
+    'table.table.compact tbody tr td': {
+      padding: '0.25rem 1rem',
+    }
   })
 
   addComponents({

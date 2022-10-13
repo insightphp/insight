@@ -4,38 +4,41 @@ import type { PropType } from "vue";
 import type { Components } from "./index";
 import type { Component } from "@insightphp/inertia-view";
 import { Portal } from "@insightphp/inertia-view";
-import { useRowSelection } from "../../Composables";
+import type { RowSelectionSummary, RowSelection } from "../../Composables";
 
 export default defineComponent({
+  emits: ['selectEverything', 'selectNothing'],
   props: {
     header: { type: Object as PropType<Component<Components.Header>|null>, required: false },
     footer: { type: Object as PropType<Component<Components.Footer>|null>, required: false },
-    rows: { type: Object as PropType<Array<Component<Components.Row>>>, required: false }
+    rows: { type: Object as PropType<Array<Component<Components.Row>>>, required: false },
+    selections: { type: Object as PropType<Array<RowSelection>>, required: false },
+    selectionSummary: { type: String as PropType<RowSelectionSummary>, required: false },
+    enableBulkSelection: { type: Boolean, default: false, required: false },
   },
-  setup(props) {
+  setup(props, { emit, attrs }) {
     const rows = props.rows || []
-
-    const identifiers: Array<string|number> = rows.map((row, index) => {
-      if (row.id === null) {
-        throw new Error(`Bulk selection is enabled but the row at index [${index}] does not have valid identifier.`)
-      }
-
-      return row.id
-    })
-
-    const { selections, selectionSummary, selectEverything, selectNothing } = useRowSelection(identifiers)
 
     const renderHeader = (header: Component<Components.Header>) => {
       return h(Portal, {
         component: header,
-        selectionSummary: selectionSummary.value,
-        onSelectEverything: () => selectEverything(),
-        onSelectNothing: () => selectNothing()
+        selectionSummary: props.enableBulkSelection ? props.selectionSummary : undefined,
+        onSelectEverything: () => emit('selectEverything'),
+        onSelectNothing: () => emit('selectNothing')
       })
     }
 
     const renderRow = (row: Component<Components.Row>, index: number) => {
-      return h(Portal, { component: row, selection: selections[index] })
+      if (props.enableBulkSelection) {
+        if (!props.selections || props.selections.length != rows.length) {
+          throw new Error("The bulk selection is enabled, however no selections have been passed to the table.")
+        }
+      }
+
+      return h(Portal, {
+        component: row,
+        selection: props.enableBulkSelection ? props.selections![index] : undefined
+      })
     }
 
     return () => h('table', {}, [

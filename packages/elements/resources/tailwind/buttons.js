@@ -71,7 +71,7 @@ module.exports = function (options) {
       backgroundColor: '#fff',
       color: theme(`colors.gray.700`, colors.gray[700]),
       borderColor: theme(`colors.gray.300`, colors.gray[300]),
-      padding: '.4rem .95rem',
+      padding: '.5rem .95rem',
       borderRadius: defaultTheme.borderRadius.lg,
       fontWeight: defaultTheme.fontWeight.semibold,
       borderWidth: defaultTheme.borderWidth.DEFAULT,

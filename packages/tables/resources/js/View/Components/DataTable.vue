@@ -1,5 +1,13 @@
 <template>
   <div class="data-table border border-gray-200 rounded-md">
+    <div class="border-b border-gray-200 flex flex-col bg-white p-4">
+      <span>Debug</span>
+
+      <code>
+        {{ selectedRows }}
+      </code>
+    </div>
+
     <div class="bg-white rounded-t-md flex flex-row items-center justify-between py-3 px-4">
       <div class="inline-flex flex-col">
         <div class="inline-flex items-center gap-2">
@@ -15,11 +23,26 @@
       </slot>
     </div>
 
-    <div class="bg-white w-full py-3 px-4 border-t border-gray-200" v-if="$slots.actions">
+    <div class="bg-white w-full py-3 px-4 border-t border-gray-200" v-if="$slots.actions && selectedRows.length <= 0">
       <slot name="actions" />
     </div>
 
-    <Table class="table" :header="header" :rows="rows" :footer="footer" />
+    <div class="bg-white w-full py-3 px-4 border-t border-gray-200" v-if="$slots.bulkActions && selectedRows.length > 0">
+      <slot name="bulkActions" v-bind="{ selection: selectedRows, total: rows.length }" />
+    </div>
+
+    <Table
+        class="table"
+        :class="{ 'compact': settings.compact }"
+        :header="header"
+        :rows="rows"
+        :footer="footer"
+        :selections="selections"
+        :selection-summary="selectionSummary"
+        :enable-bulk-selection="enableBulkSelection"
+        @select-everything="selectEverything"
+        @select-nothing="selectNothing"
+    />
 
     <!--<div class="bg-white flex items-center flex-col border-t border-gray-200 py-10">-->
     <!--  <div class="inline-flex relative items-center justify-center w-14 h-14">-->
@@ -42,6 +65,10 @@
 
     <div class="bg-white flex items-center border-t border-gray-200 px-4 py-3 rounded-b-md justify-between">
       <div class="inline-flex items-center gap-3">
+        <template v-if="enableSettings">
+          <DataTableSettings :settings="settings" />
+          <span class="block h-4 border-r border-gray-300"></span>
+        </template>
         <span class="font-medium text-gray-700 text-sm">Page 1 of 10</span>
         <span class="block h-4 border-r border-gray-300"></span>
         <div class="inline-flex items-center gap-2">
@@ -61,16 +88,17 @@
 </template>
 
 <script setup lang="ts">
-import { MagnifyingGlassIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Table from "./Table.vue";
 import type { Component } from "@insightphp/inertia-view";
 import type { Components } from "./index";
 import { Portal } from "@insightphp/inertia-view";
 import type { Models } from "./index";
-import { Link } from "@inertiajs/inertia-vue3";
 import DataTablePagination from "../../Components/DataTablePagination.vue";
+import { useRowSelection } from "../../Composables";
+import DataTableSettings from "../../Components/DataTableSettings.vue";
+import { useSettings } from "../../Composables/use-settings";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   title?: string|null
   subtitle?: string|null
   totalItems?: number|null
@@ -79,5 +107,27 @@ const props = defineProps<{
   footer: Component<Components.Footer>
   rows: Array<Component<Components.Row>>
   paginationLinks: Array<Models.PaginationLink>
-}>()
+  enableBulkSelection?: boolean
+  enableSettings?: boolean
+  settingsKey?: string
+}>(), {
+  enableBulkSelection: true,
+  enableSettings: true,
+  settingsKey: 'insight-data-table'
+})
+
+const makeRowIds = () => {
+  return (props.rows || [])
+      .map((it, index) => {
+        if (! it.id) {
+          throw new Error(`Bulk selection is enabled but the row at index [${index}] does not have valid identifier.`)
+        }
+
+        return it.id
+      })
+}
+
+const { selections, selectionSummary, selectEverything, selectNothing, selectedRows } = useRowSelection(props.enableBulkSelection ? makeRowIds() : [])
+
+const { settings } = useSettings(props.settingsKey)
 </script>

@@ -15,16 +15,19 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     return () => {
-      const rowSelect = h(HeaderRowSelect, {
-        selectionSummary: props.selectionSummary,
-        onSelectNothing: () => emit('selectNothing'),
-        onSelectEverything: () => emit('selectEverything')
-      })
+      let cells = props.cells.map(it => h(Portal, { component: it }))
 
-      return h('thead', {}, h('tr', {}, [
-          rowSelect,
-          ...props.cells.map(it => h(Portal, { component: it }))
-      ]))
+      // If the bulk selection is enabled, we will also prepend Header Row selector
+      // to easily select or unselect all rows within the table.
+      if (props.selectionSummary) {
+        cells.unshift(h(HeaderRowSelect, {
+          selectionSummary: props.selectionSummary,
+          onSelectNothing: () => emit('selectNothing'),
+          onSelectEverything: () => emit('selectEverything')
+        }))
+      }
+
+      return h('thead', {}, h('tr', {}, cells))
     }
   }
 })

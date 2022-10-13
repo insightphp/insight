@@ -48,6 +48,27 @@ class DataTable extends Table
     public array $paginationLinks = [];
 
     /**
+     * Determine if the bulk selection is enabled. To use bulk selection,
+     * every row must have valid identifier or DataTable will throw error.
+     *
+     * @var bool
+     */
+    public bool $enableBulkSelection = false;
+
+    /**
+     * Enable or disable bulk selection of rows.
+     *
+     * @param bool $enableBulkSelection
+     * @return $this
+     */
+    public function withBulkSelection(bool $enableBulkSelection = true): static
+    {
+        $this->enableBulkSelection = $enableBulkSelection;
+
+        return $this;
+    }
+
+    /**
      * Add links from pagination links.
      *
      * @param \Illuminate\Support\Collection $links
