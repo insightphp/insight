@@ -30,6 +30,26 @@ class Cell extends Component
     public string $align = 'left';
 
     /**
+     * If the cell is used as header, it can toggle sorting of given column.
+     *
+     * @var string|null
+     */
+    public ?string $sortableAs = null;
+
+    /**
+     * Allow sorting of the column.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function sortableAs(string $name): static
+    {
+        $this->sortableAs = $name;
+
+        return $this;
+    }
+
+    /**
      * Set the value alignment.
      *
      * @param string $align

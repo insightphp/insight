@@ -43,6 +43,8 @@
     "dependencies": {
         "@insightphp/elements": "^0.3",
         "@insightphp/inertia-view": "^0.4",
+        "@types/qs": "^6.9.7",
+        "qs": "^6.11.0",
         "vue": "^3.2"
     }
 }

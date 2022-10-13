@@ -1,7 +1,7 @@
 <template>
 <div class="w-full max-w-7xl mx-auto px-4 pt-12 pb-16">
-  <Portal class="w-full" v-if="resourcesTable" :component="resourcesTable">
-    <template #actions>
+  <Portal class="w-full" v-if="resourcesTable" :component="resourcesTable" :handler="dataTable">
+    <template #actions="{ handler }">
       <div class="w-full flex flex-row items-center justify-between">
         <div class="inline-flex">
           <!-- Left content  -->
@@ -9,7 +9,7 @@
 
         <div class="inline-flex flex-row gap-3">
           <div class="block relative">
-            <input type="text" placeholder="Search…" class="pl-7">
+            <input v-model="handler.searchTerm.value" type="text" placeholder="Search…" class="pl-7">
             <MagnifyingGlassIcon class="text-gray-500 absolute top-1/2 -mt-2 left-2 w-4 h-4" />
           </div>
 
@@ -21,9 +21,12 @@
       </div>
     </template>
 
-    <template #bulkActions="{ selection, total }">
+    <template #bulkActions="{ selection, total, clear }">
       <div class="w-full flex flex-row items-center justify-between">
         <div class="inline-flex items-center gap-3">
+          <button class="btn-link danger" @click.prevent="clear">
+            Clear
+          </button>
           <span class="font-medium text-primary-700 text-sm">Selected {{ selection.length }} of {{ total }}</span>
         </div>
 
@@ -46,8 +49,11 @@ import { usePage } from "@inertiajs/inertia-vue3";
 import type { Pages } from "../models";
 import { Portal } from "@insightphp/inertia-view";
 import { computed } from "vue";
+import { useDataTable } from "../../../packages/tables/resources/js/Composables/use-data-table";
 
 const page = usePage<Pages.ListResourcesPage>()
 
 const resourcesTable = computed(() => page.props.value.resources)
+
+const dataTable = useDataTable()
 </script>

@@ -14,12 +14,13 @@ export default defineConfig({
       fileName: format => `tables.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue', '@inertiajs/inertia-vue3', '@insightphp/inertia-view'],
+      external: ['vue', '@inertiajs/inertia', '@inertiajs/inertia-vue3', '@insightphp/inertia-view'],
       output: {
         globals: {
           vue: 'Vue',
           '@insightphp/inertia-view': 'InertiaViewComponents',
-          '@inertiajs/inertia-vue3': 'InertiaVue'
+          '@inertiajs/inertia': 'Inertia',
+          '@inertiajs/inertia-vue3': 'InertiaVue',
         }
       }
     }

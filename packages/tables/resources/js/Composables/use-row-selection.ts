@@ -21,6 +21,10 @@ export function useRowSelection(identifiers: Array<string|number> = []) {
   resetSelections(identifiers)
 
   const selectionSummary = computed<RowSelectionSummary>(() => {
+    if (selections.length == 0) {
+      return 'nothing'
+    }
+
     if (selections.every(it => it.selected)) {
       return 'everything'
     }

@@ -4,14 +4,15 @@
 namespace Insight\Http\Controllers;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Insight\Elements\View\Components\Button;
 use Insight\Elements\View\Components\Link;
 use Insight\Elements\View\Components\Pressable;
 use Insight\Elements\View\Components\Stack;
 use Insight\Elements\View\Components\Text;
+use Insight\Tables\EloquentDataTable;
 use Insight\Tables\View\Components\Cell;
-use Insight\Tables\View\Components\DataTable;
 use Insight\Tables\View\Components\Header;
 use Insight\Tables\View\Components\Row;
 use Insight\Tables\View\Components\Table;
@@ -27,10 +28,8 @@ class ResourceController
 {
     public function index(Request $request)
     {
-
-
         return ListResourcesPage::make([
-            'resources' => $this->createDemoTable(),
+            'resources' => $this->createDemoTable($request),
         ]);
     }
 
@@ -44,37 +43,29 @@ class ResourceController
         return EditResourcePage::make();
     }
 
-    protected function createDemoTable(): Table
+    protected function createDemoTable(Request $request): Table
     {
-        $header = Header::make([
-            'cells' => [
-                Cell::make(['value' => Text::make(['value' => 'ID'])])->displayAsHeader(),
-                Cell::make(['value' => Text::make(['value' => 'Name'])])->displayAsHeader(),
-                Cell::make(['value' => Text::make(['value' => 'E-Mail'])])->displayAsHeader(),
-                Cell::make(['value' => Text::make(['value' => 'Created At'])])->displayAsHeader(),
-                Cell::make()->displayAsHeader()->right()
-            ]
-        ]);
-
-        /** @var \Illuminate\Pagination\LengthAwarePaginator $users */
-        $users = \App\Models\User::query()
-            ->paginate(25)
-            ->onEachSide(1);
-
-        $table = DataTable::make([
-            'headerActions' => Stack::of([
-                Menu::withNavigation(
-                    Navigation::make()
-                        ->link(Link::toNowhere('Active Users'))
-                        ->link(Link::toNowhere('Disabled Users'))
-                )->withToggle(Button::withText('Insights', 'document-magnifying-glass')),
-                Link::toNowhere('Add User')
-                    ->asButton('primary', 'plus'),
-            ])->gap(3),
-            'title' => 'Users',
-            'totalItems' => $users->total(),
-            'header' => $header,
-            'rows' => collect($users->items())->map(function ($user) {
+        return (new EloquentDataTable(\App\Models\User::query(), $request, 'Users'))
+            ->defaultSortAs('id')
+            ->withHeader(
+                Header::make([
+                    'cells' => [
+                        Cell::make(['value' => Text::make(['value' => 'ID'])])
+                            ->displayAsHeader()
+                            ->sortableAs('id'),
+                        Cell::make(['value' => Text::make(['value' => 'Name'])])
+                            ->displayAsHeader()
+                            ->sortableAs('name'),
+                        Cell::make(['value' => Text::make(['value' => 'E-Mail'])])
+                            ->displayAsHeader(),
+                        Cell::make(['value' => Text::make(['value' => 'Created At'])])
+                            ->displayAsHeader()
+                            ->sortableAs('created_at'),
+                        Cell::make()->displayAsHeader()->right()
+                    ]
+                ])
+            )
+            ->createRowUsing(function ($user) {
                 $actions = Stack::of([
                     Menu::withNavigation(
                         Navigation::make()
@@ -105,9 +96,26 @@ class ResourceController
                         Cell::make(['value' => $actions])->right()
                     ]
                 ])->id($user->id);
-            })->all(),
-        ])->addPaginationLinks($users->linkCollection())->withBulkSelection();
-
-        return $table;
+            })
+            ->searchUsing(function (Builder $query, string $term) {
+                $query->where(function (Builder $q) use ($term) {
+                    $q->where('name', 'like', '%' . $term . '%')
+                        ->orWhere('email', 'like', '%' . $term . '%');
+                });
+            })
+            ->withHeaderActions(
+                Stack::of([
+                    Menu::withNavigation(
+                        Navigation::make()
+                            ->link(Link::toNowhere('Active Users'))
+                            ->link(Link::toNowhere('Disabled Users'))
+                    )->withToggle(Button::withText('Insights', 'document-magnifying-glass')),
+                    Link::toNowhere('Add User')
+                        ->asButton('primary', 'plus'),
+                ])->gap(3)
+            )
+            ->allowedSorts(['id', 'name', 'created_at'])
+            ->toDataTable()
+        ;
     }
 }
