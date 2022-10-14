@@ -1,14 +1,14 @@
 <template>
 <div class="w-full max-w-7xl mx-auto px-4 pt-12 pb-16">
   <Portal class="w-full" v-if="resourcesTable" :component="resourcesTable" :handler="dataTable">
-    <template #actions="{ handler }">
+    <template v-if="shouldShowActions" #actions="{ handler }">
       <div class="w-full flex flex-row items-center justify-between">
         <div class="inline-flex">
           <!-- Left content  -->
         </div>
 
         <div class="inline-flex flex-row gap-3">
-          <div class="block relative">
+          <div class="block relative" v-if="page.props.value.isSearchable">
             <input v-model="handler.searchTerm.value" type="text" placeholder="Search…" class="pl-7">
             <MagnifyingGlassIcon class="text-gray-500 absolute top-1/2 -mt-2 left-2 w-4 h-4" />
           </div>
@@ -52,4 +52,6 @@ const page = usePage<Pages.ListResourcesPage>()
 const resourcesTable = computed(() => page.props.value.resources)
 
 const dataTable = useDataTable()
+
+const shouldShowActions = computed(() => page.props.value.isSearchable || !!page.props.value.filter)
 </script>

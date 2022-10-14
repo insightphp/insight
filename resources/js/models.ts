@@ -27,6 +27,7 @@ export namespace Pages {
   export interface ListResourcesPage {
     resources: Component<TableComponents.Table>|null
     filter: Component<Components.Filter>|null
+    isSearchable: boolean
   }
 
 }

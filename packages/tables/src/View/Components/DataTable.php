@@ -33,6 +33,20 @@ class DataTable extends Table
     public ?int $totalItems = null;
 
     /**
+     * The last page of the table.
+     *
+     * @var int
+     */
+    public int $lastPage = 1;
+
+    /**
+     * The current page of the table.
+     *
+     * @var int
+     */
+    public int $currentPage = 1;
+
+    /**
      * Actions in the header.
      *
      * @var \Insight\Inertia\View\Component|null

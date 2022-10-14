@@ -194,6 +194,8 @@ class EloquentDataTable
         $table = DataTable::make([
             'title' => $this->title,
             'totalItems' => $models->total(),
+            'lastPage' => $models->lastPage(),
+            'currentPage' => $models->currentPage(),
             'header' => $this->header,
             'headerActions' => $this->headerActions,
             'rows' => $this->createRows($models->items()),

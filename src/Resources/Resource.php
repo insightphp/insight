@@ -6,12 +6,18 @@ namespace Insight\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Insight\Elements\View\Components\Link;
+use Insight\Resources\Concerns\Searchable;
 use Insight\View\Models\NavigationItem;
+use Insight\View\Pages\ListResourcesPage;
 
 class Resource
 {
+    use Searchable;
+
     /**
      * The underlying Eloquent model for the resource.
      *
@@ -135,6 +141,16 @@ class Resource
     }
 
     /**
+     * Create new Eloquent query for index.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newIndexQuery(): Builder
+    {
+        return $this->newQuery();
+    }
+
+    /**
      * Determine if the resource should be displayed in navigation.
      *
      * @return bool
@@ -176,4 +192,99 @@ class Resource
         return NavigationItem::for($link);
     }
 
+    /**
+     * Creates new table factory for the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Insight\Resources\TableFactory
+     */
+    public function newTable(Request $request): TableFactory
+    {
+        return new TableFactory($request, $this);
+    }
+
+    /**
+     * Retrieve the table name.
+     *
+     * @return string
+     */
+    public function getTitleForTable(): string
+    {
+        return $this->getDisplayPluralName();
+    }
+
+    /**
+     * The default sorting for the resource.
+     *
+     * @return \Insight\Resources\Sorting|null
+     */
+    public function getDefaultSorting(): ?Sorting
+    {
+        return Sorting::desc('id');
+    }
+
+    /**
+     * Retrieve collection of resource fields.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getFields(): Collection
+    {
+        if (! method_exists($this, 'fields')) {
+            return collect();
+        }
+
+        $fields = $this->fields();
+
+        if (is_array($fields)) {
+            return collect($fields);
+        }
+
+        return collect();
+    }
+
+    /**
+     * Retrieve list of fields which can be displayed on the table.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getTableFields(): Collection
+    {
+        return $this->getFields()->filter(function (Field $field) {
+            return $field->hasTableField();
+        });
+    }
+
+    /**
+     * Retrieve the model identifier.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return mixed
+     */
+    public function getIdentifier(Model $model): mixed
+    {
+        return $model->getKey();
+    }
+
+    /**
+     * Retrieve the routing identifier for the model.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return mixed
+     */
+    public function getRoutingIdentifier(Model $model): mixed
+    {
+        return $model->getRouteKey();
+    }
+
+    /**
+     * Create new index page for the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Insight\View\Pages\ListResourcesPage
+     */
+    public function toIndexPage(Request $request): ListResourcesPage
+    {
+        return new ListResourcesPage($request, $this);
+    }
 }

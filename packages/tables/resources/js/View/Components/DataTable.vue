@@ -66,7 +66,7 @@
           <DataTableSettings :settings="settings" />
           <span class="block h-4 border-r border-gray-300"></span>
         </template>
-        <span class="font-medium text-gray-700 text-sm">Page 1 of 10</span>
+        <span class="font-medium text-gray-700 text-sm">Page {{ currentPage }} of {{ lastPage }}</span>
         <span class="block h-4 border-r border-gray-300"></span>
         <div class="inline-flex items-center gap-2">
           <span class="font-medium text-gray-700 text-sm">Per page</span>
@@ -102,6 +102,8 @@ const props = withDefaults(defineProps<{
   title?: string|null
   subtitle?: string|null
   totalItems?: number|null
+  lastPage?: number|null
+  currentPage?: number|null
   headerActions?: Component|null
   header: Component<Components.Header>
   footer: Component<Components.Footer>
