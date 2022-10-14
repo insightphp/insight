@@ -25,6 +25,7 @@ export default defineComponent({
 
     if (props.value) {
       if (props.sortableAs) {
+        // @ts-ignore TODO: There is some ts error...
         return () => h(tag, cellProps, h(SortableHeader, {
           sortableAs: props.sortableAs,
           sortedAs: props.sortedAs,

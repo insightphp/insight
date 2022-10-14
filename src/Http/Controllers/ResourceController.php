@@ -16,6 +16,9 @@ use Insight\Tables\View\Components\Cell;
 use Insight\Tables\View\Components\Header;
 use Insight\Tables\View\Components\Row;
 use Insight\Tables\View\Components\Table;
+use Insight\View\Components\Dialogs\DeleteResourceDialog;
+use Insight\View\Components\Filter;
+use Insight\View\Components\Filterables\SelectFilterable;
 use Insight\View\Components\Heroicon;
 use Insight\View\Components\Menu;
 use Insight\View\Models\Navigation;
@@ -28,9 +31,36 @@ class ResourceController
 {
     public function index(Request $request)
     {
+        $filter = Filter::make()
+            ->filterable(
+                SelectFilterable::make(['id' => 'account-type', 'title' => 'Account type'])
+                    ->option('premium', 'Premium')
+                    ->option('regular', 'Regular')
+            )
+            ->filterable(
+                SelectFilterable::make(['id' => 'status', 'title' => 'Status'])
+                    ->option('active', 'Active')
+                    ->option('inactive', 'Inactive')
+            )
+            ->fillValueFromRequest($request)
+        ;
+
         return ListResourcesPage::make([
             'resources' => $this->createDemoTable($request),
-        ]);
+            'filter' => $filter,
+        ])->dialog('delete-resource', function (Request $request) {
+            $user = $request->input('user');
+
+            if (is_numeric($user)) {
+                $user = \App\Models\User::findOrFail($user);
+
+                return DeleteResourceDialog::make([
+                    'name' => $user->name
+                ]);
+            }
+
+            return null;
+        });
     }
 
     public function show(Request $request)
@@ -74,7 +104,9 @@ class ResourceController
                             ->link(Link::toNowhere('Reset password'))
                     ),
 
-                    Pressable::for(Heroicon::solid('trash'))->danger(),
+                    Link::toDialog('Delete', 'delete-resource', [
+                        'user' => $user->id,
+                    ])->withContent(Pressable::for(Heroicon::solid('trash'))->danger()),
 
                     Link::toRoute('Edit', 'insight.resources.edit', [
                         'resource' => 'users',
@@ -110,8 +142,7 @@ class ResourceController
                             ->link(Link::toNowhere('Active Users'))
                             ->link(Link::toNowhere('Disabled Users'))
                     )->withToggle(Button::withText('Insights', 'document-magnifying-glass')),
-                    Link::toNowhere('Add User')
-                        ->asButton('primary', 'plus'),
+                    Link::toNowhere('Add User')->asButton('primary', 'plus'),
                 ])->gap(3)
             )
             ->allowedSorts(['id', 'name', 'created_at'])

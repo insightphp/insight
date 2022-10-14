@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
   sortableAs: string
   sortedAs: string
   firstSort?: 'asc' | 'desc'
-  defaultSortAs?: string|null
+  defaultSortAs?: string
   defaultSortDirection?: 'asc' | 'desc'
 }>(), {
   firstSort: 'desc',
@@ -32,8 +32,6 @@ const props = withDefaults(defineProps<{
 })
 
 const secondSort = computed(() => props.firstSort === 'asc' ? 'desc' : 'asc')
-
-const sorted = unpackSortAs(props.sortedAs)
 
 const isCurrentlySorted = () => {
   const current = unpackSortAs(props.sortedAs)

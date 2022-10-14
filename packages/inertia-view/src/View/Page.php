@@ -6,6 +6,7 @@ namespace Insight\Inertia\View;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Inertia\ResponseFactory;
 use Insight\Inertia\Exceptions\ViewException;
@@ -33,6 +34,27 @@ class Page extends Model implements Responsable
      * @var \Insight\Inertia\View\LayoutStack|null
      */
     protected ?LayoutStack $layouts = null;
+
+    /**
+     * The dialogs available on the page.
+     *
+     * @var array
+     */
+    protected array $dialogs = [];
+
+    /**
+     * Add dialog to the page.
+     *
+     * @param string $id
+     * @param \Closure $dialogFactory
+     * @return $this
+     */
+    public function dialog(string $id, \Closure $dialogFactory): static
+    {
+        $this->dialogs[$id] = $dialogFactory;
+
+        return $this;
+    }
 
     /**
      * Add attribute to the page.
@@ -113,6 +135,20 @@ class Page extends Model implements Responsable
         return $stack->getLayouts();
     }
 
+    #[Computed(name: '_dialog')]
+    public function getDialog(Request $request): ?Component
+    {
+        $dialog = $this->resolveDialogFromRequest($request);
+
+        if (is_string($dialog)) {
+            $factory = $this->dialogs[$dialog];
+
+            return app()->call($factory);
+        }
+
+        return null;
+    }
+
     /**
      * Resolve the page component.
      *
@@ -125,6 +161,23 @@ class Page extends Model implements Responsable
         }
 
         return $this->page;
+    }
+
+    /**
+     * Resolve dialog from the request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return string|null
+     */
+    protected function resolveDialogFromRequest(Request $request): ?string
+    {
+        $dialog = $request->input('dialog');
+
+        if (is_string($dialog) && Arr::has($this->dialogs, $dialog)) {
+            return $dialog;
+        }
+
+        return null;
     }
 
     /**

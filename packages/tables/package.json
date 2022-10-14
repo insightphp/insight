@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/tables",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Tables component of Insight.",
     "repository": {
         "type": "git",

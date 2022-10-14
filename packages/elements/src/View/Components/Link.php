@@ -44,6 +44,13 @@ class Link extends Component
     public ?string $as = null;
 
     /**
+     * The data for the link.
+     *
+     * @var array|null
+     */
+    public ?array $data = null;
+
+    /**
      * Marks link as external, which means it will always be rendered
      * with <a> tag and all Inertia features will be disabled.
      * The link will be submitted in standard way and not intercepted by Inertia.
@@ -81,6 +88,20 @@ class Link extends Component
     public string $buttonType = 'primary';
 
     /**
+     * Determine if the scroll position should be preserved.
+     *
+     * @var bool
+     */
+    public bool $preserveScroll = false;
+
+    public function preserveScroll(bool $preserve = true): static
+    {
+        $this->preserveScroll = $preserve;
+
+        return $this;
+    }
+
+    /**
      * Display link as button.
      *
      * @param string $type
@@ -102,6 +123,13 @@ class Link extends Component
         $content[] = Text::of($this->title);
 
         return $this->withContent(Stack::of($content)->gap(2));
+    }
+
+    public function withData(array $data): static
+    {
+        $this->data = $data;
+
+        return $this;
     }
 
     /**
@@ -165,6 +193,10 @@ class Link extends Component
     public function method(?string $method): static
     {
         $this->method = $method;
+
+        if (is_string($this->method)) {
+            $this->method = strtoupper($this->method);
+        }
 
         return $this;
     }
@@ -279,6 +311,23 @@ class Link extends Component
     {
         return static::make(['title' => $title, 'location' => $location, 'external' => $external])
             ->activatedOnLocation($location);
+    }
+
+    /**
+     * Creates link to dialog.
+     *
+     * @param string $title
+     * @param string $dialog
+     * @param array $data
+     * @return static
+     */
+    public static function toDialog(string $title, string $dialog, array $data = []): static
+    {
+        return static::toLocation($title, request()->fullUrl())
+            ->withData(array_merge(['dialog' => $dialog], $data))
+            ->method('POST')
+            ->as('button')
+            ->preserveScroll();
     }
 
     /**

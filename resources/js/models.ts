@@ -1,6 +1,7 @@
 import type { Component } from '@insightphp/inertia-view'
 import type { Components as ElementComponents } from '@insightphp/elements'
 import type { Components as TableComponents } from '@insightphp/tables'
+import type { Components } from './View/Components'
 
 export namespace Models {
 
@@ -25,6 +26,7 @@ export namespace Pages {
 
   export interface ListResourcesPage {
     resources: Component<TableComponents.Table>|null
+    filter: Component<Components.Filter>|null
   }
 
 }

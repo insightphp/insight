@@ -1,1 +1,5 @@
+export { default as Dialog } from './Dialog.vue'
+export { default as DialogPortal } from './DialogPortal.vue'
+export { default as DialogScreen } from './DialogScreen.vue'
 export { default as Drawer } from './Drawer.vue'
+export { default as CollapsibleFilterable } from './CollapsibleFilterable.vue'

@@ -8,6 +8,6 @@
 import type { RowSelection } from "../Composables";
 
 const props = defineProps<{
-  selection?: RowSelection
+  selection: RowSelection
 }>()
 </script>

@@ -111,7 +111,7 @@ const props = withDefaults(defineProps<{
   enableSettings?: boolean
   settingsKey?: string
   handler: DataTableHandler
-  defaultSortAs?: string|null
+  defaultSortAs?: string
   defaultSortDirection?: 'asc' | 'desc'
 }>(), {
   enableBulkSelection: true,

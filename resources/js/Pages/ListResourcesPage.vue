@@ -13,10 +13,7 @@
             <MagnifyingGlassIcon class="text-gray-500 absolute top-1/2 -mt-2 left-2 w-4 h-4" />
           </div>
 
-          <button class="btn gap-2">
-            <FunnelIcon class="w-4 h-4" />
-            Filter
-          </button>
+          <Portal v-if="page.props.value.filter" :component="page.props.value.filter" />
         </div>
       </div>
     </template>
@@ -39,12 +36,11 @@
       </div>
     </template>
   </Portal>
-
 </div>
 </template>
 
 <script setup lang="ts">
-import { MagnifyingGlassIcon, FunnelIcon, PlayIcon } from '@heroicons/vue/24/outline'
+import { MagnifyingGlassIcon, PlayIcon } from '@heroicons/vue/24/outline'
 import { usePage } from "@inertiajs/inertia-vue3";
 import type { Pages } from "../models";
 import { Portal } from "@insightphp/inertia-view";

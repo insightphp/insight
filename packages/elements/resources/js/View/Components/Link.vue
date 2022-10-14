@@ -9,7 +9,15 @@
       </template>
     </slot>
   </a>
-  <Link v-else :href="location" :class="{ 'btn': asButton, [buttonType]: asButton }">
+  <Link
+      v-else
+      :href="location"
+      :as="props.as || undefined"
+      :method="method || undefined"
+      :data="data || undefined"
+      :preserve-scroll="preserveScroll"
+      :class="{ 'btn': asButton, [buttonType]: asButton }"
+  >
     <template v-if="content">
       <Portal :component="content" />
     </template>
@@ -34,6 +42,8 @@ const props = withDefaults(defineProps<{
   content?: Component
   asButton?: boolean
   buttonType?: string
+  data?: Record<string, any>|null
+  preserveScroll: boolean
 }>(), {
   external: false,
   isActive: false,
