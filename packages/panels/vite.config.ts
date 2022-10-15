@@ -10,8 +10,8 @@ export default defineConfig({
     manifest: true,
     lib: {
       entry: path.resolve(__dirname, 'resources/js/main.ts'),
-      name: 'Tables',
-      fileName: format => `tables.${format}.js`,
+      name: 'Panels',
+      fileName: format => `panels.${format}.js`,
     },
     rollupOptions: {
       external: ['vue', '@inertiajs/inertia', '@inertiajs/inertia-vue3', '@insightphp/inertia-view'],
