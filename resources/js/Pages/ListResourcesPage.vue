@@ -32,7 +32,7 @@
             <template #toggle>
               <button class="btn primary gap-2">
                 <PlayIcon class="w-4 h-4" />
-                Run Action
+                Actions
               </button>
             </template>
 

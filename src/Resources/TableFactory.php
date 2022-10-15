@@ -19,6 +19,7 @@ use Insight\Tables\View\Components\Cell;
 use Insight\Tables\View\Components\DataTable;
 use Insight\Tables\View\Components\Header;
 use Insight\Tables\View\Components\Row;
+use Insight\View\Components\Filter;
 use Insight\View\Components\Heroicon;
 
 class TableFactory
@@ -75,6 +76,23 @@ class TableFactory
         }
 
         return $actions;
+    }
+
+    /**
+     * Builds new Filter instance.
+     *
+     * @return \Insight\View\Components\Filter
+     */
+    public function buildFilter(): Filter
+    {
+        $filter = Filter::make();
+
+        // Soft deletes
+        if ($this->resource->supportsSoftDeletes() && $this->resource->canFilterTrashed()) {
+            $filter->filterable($this->resource->createTrashedFilterable());
+        }
+
+        return $filter;
     }
 
     /**

@@ -11,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Insight\Inertia\View\Component;
 use Insight\Tables\View\Components\DataTable;
 use Insight\Tables\View\Components\Header;
+use Insight\View\Components\Filter;
 
 class EloquentDataTable
 {
@@ -64,6 +65,13 @@ class EloquentDataTable
     protected string $defaultSortDirection = 'desc';
 
     /**
+     * The filter applied on the table.
+     *
+     * @var \Insight\View\Components\Filter|null
+     */
+    protected ?Filter $filter = null;
+
+    /**
      * Resolved models.
      *
      * @var \Illuminate\Pagination\LengthAwarePaginator|null
@@ -75,6 +83,13 @@ class EloquentDataTable
         protected Request $request,
         protected string $title
     ) {}
+
+    public function withFilter(Filter $filter): static
+    {
+        $this->filter = $filter;
+
+        return $this;
+    }
 
     public function defaultSortAs(string $column, string $direction = 'desc'): static
     {
@@ -119,6 +134,8 @@ class EloquentDataTable
     public function fetchModels(): LengthAwarePaginator
     {
         $builder = $this->builder->clone();
+
+        $this->applyFilter($builder);
 
         $this->applySearch($builder);
 
@@ -176,6 +193,13 @@ class EloquentDataTable
 
         if ($this->searchUsing instanceof \Closure && $term != null) {
             call_user_func($this->searchUsing, $builder, $term);
+        }
+    }
+
+    protected function applyFilter(Builder $builder): void
+    {
+        if ($this->filter instanceof Filter) {
+            $this->filter->applyOnEloquentBuilder($builder);
         }
     }
 

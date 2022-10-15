@@ -4,11 +4,12 @@
 namespace Insight\View\Components;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Insight\Filter\Filterable;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
-use Insight\View\Components\Filterables\Filterable;
 
 class Filter extends Component
 {
@@ -26,6 +27,12 @@ class Filter extends Component
      */
     protected array $value = [];
 
+    /**
+     * Add filterable to the filter.
+     *
+     * @param \Insight\Filter\Filterable $filterable
+     * @return $this
+     */
     public function filterable(Filterable $filterable): static
     {
         $this->filterables[] = $filterable;
@@ -33,6 +40,12 @@ class Filter extends Component
         return $this;
     }
 
+    /**
+     * Fills values of Filterables from request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return $this
+     */
     public function fillValueFromRequest(Request $request): static
     {
         collect($this->filterables)->each(function (Filterable $filterable) use ($request) {
@@ -44,6 +57,12 @@ class Filter extends Component
         return $this;
     }
 
+    /**
+     * Retrieve value of the Filterable.
+     *
+     * @param \Insight\Filter\Filterable $filterable
+     * @return mixed
+     */
     public function getValueOfFilterable(Filterable $filterable): mixed
     {
         if (Arr::has($this->value, $filterable->id)) {
@@ -66,5 +85,34 @@ class Filter extends Component
                 ]
             ];
         })->all();
+    }
+
+    /**
+     * Determine if the filter is empty.
+     *
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->filterables);
+    }
+
+    /**
+     * Applies filter on the Eloquent query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return void
+     */
+    public function applyOnEloquentBuilder(Builder $builder): void
+    {
+        collect($this->filterables)->each(function (Filterable $filterable) use ($builder) {
+            $value = $this->getValueOfFilterable($filterable);
+
+            if ($filterable->isValueConsideredEmpty($value)) {
+                return;
+            }
+
+            $filterable->applyOnEloquentBuilder($builder, $value, $this);
+        });
     }
 }

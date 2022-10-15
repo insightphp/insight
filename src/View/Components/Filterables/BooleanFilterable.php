@@ -6,17 +6,17 @@ namespace Insight\View\Components\Filterables;
 
 use Insight\Filter\Filterable;
 
-class SelectFilterable extends Filterable
+class BooleanFilterable extends Filterable
 {
     /**
-     * The options of the filterable.
+     * Available boolean options.
      *
      * @var array
      */
     public array $options = [];
 
     /**
-     * Add option to the select.
+     * Add boolean option.
      *
      * @param string $id
      * @param string $title
@@ -27,5 +27,15 @@ class SelectFilterable extends Filterable
         $this->options[] = ['id' => $id, 'title' => $title];
 
         return $this;
+    }
+
+    public function getEmptyValue(): mixed
+    {
+        return [];
+    }
+
+    public function isValueConsideredEmpty(mixed $value): bool
+    {
+        return is_array($value) && empty($value);
     }
 }

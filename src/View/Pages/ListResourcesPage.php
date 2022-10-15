@@ -52,6 +52,12 @@ class ListResourcesPage extends InsightPage
 
         $tableBudiler = $tableFactory->getDataTableBuilder();
 
+        $filter = $tableFactory->buildFilter();
+
+        $filter->fillValueFromRequest($this->request);
+
+        $tableBudiler->withFilter($filter);
+
         $this->bulkActions = $tableFactory->getBulkActions($tableBudiler->getModelCollection());
 
         $this->resources = $tableBudiler->toDataTable();
@@ -61,6 +67,10 @@ class ListResourcesPage extends InsightPage
         }
 
         $this->isSearchable = $this->resource->isSearchable();
+
+        if (! $filter->isEmpty()) {
+            $this->filter = $filter;
+        }
 
         $this->dialog('destroy-resources', function (array $data) {
             $selectedResources = collect(Arr::get($data, 'resources', []))

@@ -6,6 +6,7 @@ namespace Insight\Resources\Concerns;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Insight\Elements\View\Components\Link;
 use Insight\View\Components\Dialogs\ConfirmableDialog;
 use Insight\View\Components\Dialogs\Dialog;
@@ -14,7 +15,7 @@ use Insight\View\Components\Heroicon;
 /**
  * @mixin \Insight\Resources\Resource
  */
-trait CanBeDestroyedFromDialog
+trait Trashable
 {
     /**
      * Creates dialog for resource deletion.
@@ -44,5 +45,15 @@ trait CanBeDestroyedFromDialog
             'message' => $message,
             'icon' => Heroicon::outline('trash'),
         ])->danger()->confirmUsing($action->asButton('danger'));
+    }
+
+    /**
+     * Determine if resource supports soft deletes.
+     *
+     * @return bool
+     */
+    public function supportsSoftDeletes(): bool
+    {
+        return in_array(SoftDeletes::class, class_uses($this->getModelClass()));
     }
 }
