@@ -4,6 +4,7 @@
 namespace Insight\Http\Controllers;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Insight\Facades\Insight;
 use Insight\View\Pages\EditResourcePage;
@@ -77,11 +78,59 @@ class ResourceController
 
     public function destroy(Request $request)
     {
+        $resource = Insight::resolveResourceFromRequest($request);
 
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        $model = $resource->newIndexQuery()->findOrFail($request->route('id'));
+
+        if (! $resource->canDeleteResource($model)) {
+            abort(403, "You are not authorized to delete this resource.");
+        }
+
+        if (! $model->delete()) {
+            // TODO: Show that model could not be deleted.
+        }
+
+        // TODO: Flash success
+
+        return back();
     }
 
     public function destroyMany(Request $request)
     {
+        $resource = Insight::resolveResourceFromRequest($request);
 
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        $ids = collect($request->input('resources'))
+            ->filter(fn ($id) => is_string($id) || is_numeric($id));
+
+        if ($ids->isEmpty()) {
+            abort(400, "No resources to delete.");
+        }
+
+        $model = $resource->newModel();
+
+        $models = $resource->newIndexQuery()
+            ->whereIn($model->getKeyName(), $ids->all())
+            ->get()
+            ->filter(fn (Model $model) => $resource->canDeleteResource($model));
+
+        if ($models->isEmpty()) {
+            abort(400, "No resources to delete.");
+        }
+
+        $models->each(function (Model $model) {
+            $model->delete();
+        });
+
+        // TODO: Flash success
+
+        return back();
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <DialogScreen :visible="isVisible" @close="close" @closed="showNextDialog">
-    <Portal v-if="dialog" :component="dialog" />
+    <Portal v-if="dialog" :component="dialog" :close="close" />
   </DialogScreen>
 </template>
 

@@ -7,7 +7,6 @@ namespace Insight\View\Components;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
 use Insight\Support\Heroicons;
-use mysql_xdevapi\Table;
 
 class Heroicon extends Component
 {
@@ -72,7 +71,7 @@ class Heroicon extends Component
      */
     public static function for(string $name, int $size = 24, string $style = 'solid'): static
     {
-        return static::make(['name' => $name, 'size' => $size, 'style' => $style]);
+        return static::make(['name' => $name, 'size' => $size, 'style' => $style])->ensureUsed();
     }
 
     /**
@@ -98,9 +97,16 @@ class Heroicon extends Component
         return static::for($name, 24, 'outline');
     }
 
-    public function toInertia(): array|\Closure|null
+    protected function ensureUsed(): static
     {
         app(Heroicons::class)->use($this->name, $this->size, $this->style);
+
+        return $this;
+    }
+
+    public function toInertia(): array|\Closure|null
+    {
+        $this->ensureUsed();
 
         return parent::toInertia();
     }

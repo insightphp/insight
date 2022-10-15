@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Insight\Resources\Concerns\AuthorizesActions;
+use Insight\Resources\Concerns\CanBeDestroyedFromDialog;
 use Insight\Resources\Concerns\CanBeListed;
 use Insight\Resources\Concerns\CreatesLinks;
 use Insight\Resources\Concerns\Searchable;
@@ -19,6 +20,7 @@ class Resource
     use AuthorizesActions;
     use CreatesLinks;
     use CanBeListed;
+    use CanBeDestroyedFromDialog;
 
     /**
      * The underlying Eloquent model for the resource.

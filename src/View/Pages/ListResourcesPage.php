@@ -4,6 +4,7 @@
 namespace Insight\View\Pages;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Insight\Resources\Resource;
@@ -62,13 +63,25 @@ class ListResourcesPage extends InsightPage
         $this->isSearchable = $this->resource->isSearchable();
 
         $this->dialog('destroy-resources', function (array $data) {
-            $resources = Arr::get($data, 'resources', []);
+            $selectedResources = collect(Arr::get($data, 'resources', []))
+                ->filter(fn ($id) => is_numeric($id));
 
-            if (empty($resources)) {
+            if ($selectedResources->isEmpty()) {
                 return null;
             }
 
-            return DestroyResourcesDialog::make();
+            $model = $this->resource->newModel();
+
+            $resources = $this->resource->newIndexQuery()
+                ->whereIn($model->getRouteKeyName(), $selectedResources)
+                ->get()
+                ->filter(fn (Model $model) => $this->resource->canDeleteResource($model));
+
+            if ($resources->isEmpty()) {
+                return null;
+            }
+
+            return $this->resource->createDestroyDialog($resources);
         });
     }
 }

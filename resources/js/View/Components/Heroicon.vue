@@ -15,7 +15,7 @@ export default defineComponent({
     const source = page.props.value._heroicons ? page.props.value._heroicons[props.fullName] : undefined
 
     if (! source) {
-      throw new Error("The Heroicon could not be rendered. Source is missing.")
+      throw new Error(`The Heroicon [${props.fullName}] could not be rendered. Source is missing.`)
     }
 
     const template = document.createElement('template')
