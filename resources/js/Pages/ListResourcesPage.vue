@@ -27,11 +27,21 @@
           <span class="font-medium text-primary-700 text-sm">Selected {{ selection.length }} of {{ total }}</span>
         </div>
 
-        <div class="inline-flex flex-row gap-3">
-          <button class="btn primary gap-2">
-            <PlayIcon class="w-4 h-4" />
-            Run Action
-          </button>
+        <div class="inline-flex flex-row gap-3" v-if="page.props.value.bulkActions.length > 0">
+          <Menu class="w-48" placement="bottom-right">
+            <template #toggle>
+              <button class="btn primary gap-2">
+                <PlayIcon class="w-4 h-4" />
+                Run Action
+              </button>
+            </template>
+
+            <template v-for="item in page.props.value.bulkActions">
+              <MenuItem as="template" v-slot="{ active, close }">
+                <Portal @click="close" class="menu-item flex w-full" :component="item" :additional-data="{ resources: selection }" />
+              </MenuItem>
+            </template>
+          </Menu>
         </div>
       </div>
     </template>
@@ -46,6 +56,7 @@ import type { Pages } from "../models";
 import { Portal } from "@insightphp/inertia-view";
 import { computed } from "vue";
 import { useDataTable } from "../../../packages/tables/resources/js/Composables/use-data-table";
+import { Menu, MenuItem } from "@insightphp/elements";
 
 const page = usePage<Pages.ListResourcesPage>()
 

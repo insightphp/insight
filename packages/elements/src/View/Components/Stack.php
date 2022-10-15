@@ -156,6 +156,16 @@ class Stack extends Component
     }
 
     /**
+     * Determines if the stack is empty.
+     *
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
+
+    /**
      * Create stack of items.
      *
      * @param array $items

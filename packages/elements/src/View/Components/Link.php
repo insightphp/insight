@@ -323,7 +323,7 @@ class Link extends Component
      */
     public static function toDialog(string $title, string $dialog, array $data = []): static
     {
-        return static::toLocation($title, request()->fullUrl())
+        return static::toRoute($title, 'insight.dialog', ['dialog' => $dialog])
             ->withData(array_merge(['dialog' => $dialog], $data))
             ->method('POST')
             ->as('button')

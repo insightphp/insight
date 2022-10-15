@@ -19,6 +19,10 @@ class ResourceController
             abort(404, "The resource could not be found.");
         }
 
+        if (! $resource->canViewAnyResources()) {
+            abort(403, "You dont't have permissions to list resources.");
+        }
+
         return $resource->toIndexPage($request);
         // $filter = Filter::make()
         //     ->filterable(
@@ -51,8 +55,33 @@ class ResourceController
         return ShowResourcePage::make();
     }
 
+    public function create(Request $request)
+    {
+
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
     public function edit(Request $request)
     {
         return EditResourcePage::make();
+    }
+
+    public function update(Request $request)
+    {
+
+    }
+
+    public function destroy(Request $request)
+    {
+
+    }
+
+    public function destroyMany(Request $request)
+    {
+
     }
 }

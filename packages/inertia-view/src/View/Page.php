@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Session;
 use Inertia\ResponseFactory;
 use Insight\Inertia\Exceptions\ViewException;
 use Insight\Inertia\Support\Computed;
@@ -140,10 +141,12 @@ class Page extends Model implements Responsable
     {
         $dialog = $this->resolveDialogFromRequest($request);
 
+        $data = $this->resolveDialogDataFromRequest($request);
+
         if (is_string($dialog)) {
             $factory = $this->dialogs[$dialog];
 
-            return app()->call($factory);
+            return value($factory, $data);
         }
 
         return null;
@@ -171,13 +174,40 @@ class Page extends Model implements Responsable
      */
     protected function resolveDialogFromRequest(Request $request): ?string
     {
-        $dialog = $request->input('dialog');
+        $sessionDialog = Session::get('showInsightDialog');
+
+        if (is_array($sessionDialog)) {
+            $dialog = Arr::get($sessionDialog, 'dialog');
+        } else {
+            $dialog = $request->input('dialog');
+        }
 
         if (is_string($dialog) && Arr::has($this->dialogs, $dialog)) {
             return $dialog;
         }
 
         return null;
+    }
+
+    /**
+     * Resolve dialog data from request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    protected function resolveDialogDataFromRequest(Request $request): array
+    {
+        $sessionDialog = Session::get('showInsightDialog');
+
+        if (is_array($sessionDialog)) {
+            $params = Arr::get($sessionDialog, 'params');
+
+            if (is_array($params)) {
+                return $params;
+            }
+        }
+
+        return [];
     }
 
     /**

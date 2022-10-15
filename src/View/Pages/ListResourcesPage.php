@@ -5,8 +5,10 @@ namespace Insight\View\Pages;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Insight\Resources\Resource;
 use Insight\Tables\View\Components\DataTable;
+use Insight\View\Components\Dialogs\DestroyResourcesDialog;
 use Insight\View\Components\Filter;
 
 class ListResourcesPage extends InsightPage
@@ -34,14 +36,39 @@ class ListResourcesPage extends InsightPage
      */
     public bool $isSearchable = false;
 
+    /**
+     * Available bulk actions for models.
+     *
+     * @var array
+     */
+    public array $bulkActions = [];
+
     public function __construct(
         protected Request $request,
         protected Resource $resource
     ) {
         $tableFactory = $resource->newTable($request);
 
-        $this->resources = $tableFactory->createDataTable();
+        $tableBudiler = $tableFactory->getDataTableBuilder();
+
+        $this->bulkActions = $tableFactory->getBulkActions($tableBudiler->getModelCollection());
+
+        $this->resources = $tableBudiler->toDataTable();
+
+        if (! empty($this->bulkActions)) {
+            $this->resources->withBulkSelection();
+        }
 
         $this->isSearchable = $this->resource->isSearchable();
+
+        $this->dialog('destroy-resources', function (array $data) {
+            $resources = Arr::get($data, 'resources', []);
+
+            if (empty($resources)) {
+                return null;
+            }
+
+            return DestroyResourcesDialog::make();
+        });
     }
 }

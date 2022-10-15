@@ -5,6 +5,7 @@ namespace Insight\Tables;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Insight\Inertia\View\Component;
@@ -62,6 +63,13 @@ class EloquentDataTable
      */
     protected string $defaultSortDirection = 'desc';
 
+    /**
+     * Resolved models.
+     *
+     * @var \Illuminate\Pagination\LengthAwarePaginator|null
+     */
+    protected ?LengthAwarePaginator $models = null;
+
     public function __construct(
         protected Builder $builder,
         protected Request $request,
@@ -108,7 +116,7 @@ class EloquentDataTable
         return 25;
     }
 
-    public function getModels(): LengthAwarePaginator
+    public function fetchModels(): LengthAwarePaginator
     {
         $builder = $this->builder->clone();
 
@@ -119,6 +127,20 @@ class EloquentDataTable
         return $builder->paginate(
             $this->perPage()
         )->onEachSide(1)->withQueryString();
+    }
+
+    public function getModelCollection(): Collection
+    {
+        return Collection::make($this->getModels()->items());
+    }
+
+    public function getModels(): LengthAwarePaginator
+    {
+        if ($this->models instanceof LengthAwarePaginator) {
+            return $this->models;
+        }
+
+        return $this->models = $this->fetchModels();
     }
 
     protected function createRows(array $items): array
@@ -205,6 +227,6 @@ class EloquentDataTable
             $table->defaultSortAs($this->defaultSortAs, $this->defaultSortDirection);
         }
 
-        return $table;
+        return $table->withBulkSelection(false);
     }
 }
