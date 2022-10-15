@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Insight\Facades\Insight;
 use Insight\View\Pages\CreateResourcePage;
 use Insight\View\Pages\EditResourcePage;
-use Insight\View\Pages\ShowResourcePage;
 
 class ResourceController
 {
@@ -26,22 +25,21 @@ class ResourceController
         }
 
         return $resource->toIndexPage($request);
-        //     return (new EloquentDataTable(\App\Models\User::query(), $request, 'Users'))
-        //         ->withHeaderActions(
-        //             Stack::of([
-        //                 Menu::withNavigation(
-        //                     Navigation::make()
-        //                         ->link(Link::toNowhere('Active Users'))
-        //                         ->link(Link::toNowhere('Disabled Users'))
-        //                 )->withToggle(Button::withText('Insights', 'document-magnifying-glass')),
-        //                 Link::toNowhere('Add User')->asButton('primary', 'plus'),
-        //             ])->gap(3)
-        //         )
     }
 
     public function show(Request $request)
     {
-        return ShowResourcePage::make();
+        $resource = Insight::resolveResourceFromRequest($request);
+
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        $model = $resource->newQuery()
+            ->when($resource->supportsSoftDeletes(), fn ($q) => $q->withTrashed())
+            ->findOrFail($request->route('id'));
+
+        return $resource->toDetailPage($model);
     }
 
     public function create(Request $request)
@@ -76,7 +74,7 @@ class ResourceController
             abort(400, "The model is not restorable.");
         }
 
-        $model = $resource->newIndexQuery()->withTrashed()->findOrFail($request->route('id'));
+        $model = $resource->newQuery()->withTrashed()->findOrFail($request->route('id'));
 
         if ($model->trashed() && $resource->canRestoreResource($model)) {
             $model->restore();
@@ -95,7 +93,7 @@ class ResourceController
 
         $force = $request->boolean('force');
 
-        $model = $resource->newIndexQuery()
+        $model = $resource->newQuery()
             ->when($resource->supportsSoftDeletes() && $force, fn ($q) => $q->withTrashed())
             ->findOrFail($request->route('id'));
 
@@ -139,7 +137,7 @@ class ResourceController
 
         $model = $resource->newModel();
 
-        $models = $resource->newIndexQuery()
+        $models = $resource->newQuery()
             ->whereIn($model->getKeyName(), $ids->all())
             ->get()
             ->filter(fn (Model $model) => $resource->canDeleteResource($model));

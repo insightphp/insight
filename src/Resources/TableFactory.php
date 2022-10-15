@@ -205,7 +205,7 @@ class TableFactory
     public function getDataTableBuilder(): EloquentDataTable
     {
         $builder = new EloquentDataTable(
-            builder: $this->resource->newIndexQuery(),
+            builder: $this->resource->newQuery(),
             request: $this->request,
             title: $this->resource->getTitleForTable()
         );

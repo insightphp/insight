@@ -84,7 +84,7 @@ class ListResourcesPage extends InsightPage
 
             $model = $this->resource->newModel();
 
-            $resources = $this->resource->newIndexQuery()
+            $resources = $this->resource->newQuery()
                 ->when($this->resource->supportsSoftDeletes() && $force, fn ($query) => $query->withTrashed())
                 ->whereIn($model->getRouteKeyName(), $selectedResources)
                 ->get()
@@ -105,7 +105,7 @@ class ListResourcesPage extends InsightPage
             $id = Arr::get($data, 'resource');
 
             if (is_string($id) || is_numeric($id)) {
-                $model = $this->resource->newIndexQuery()->withTrashed()->findOrFail($id);
+                $model = $this->resource->newQuery()->withTrashed()->findOrFail($id);
 
                 if ($this->resource->canRestoreResource($model)) {
                     return $this->resource->createRestoreDialog($model);

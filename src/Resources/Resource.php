@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Insight\Resources\Concerns\AuthorizesActions;
+use Insight\Resources\Concerns\CanBeViewed;
 use Insight\Resources\Concerns\Trashable;
 use Insight\Resources\Concerns\CanBeListed;
 use Insight\Resources\Concerns\CreatesLinks;
@@ -22,6 +23,7 @@ class Resource
     use AuthorizesActions;
     use CreatesLinks;
     use CanBeListed;
+    use CanBeViewed;
     use Trashable;
 
     /**

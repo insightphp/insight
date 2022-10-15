@@ -4,7 +4,6 @@
 namespace Insight\Resources\Concerns;
 
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Insight\Resources\Field;
@@ -17,16 +16,6 @@ use Insight\View\Pages\ListResourcesPage;
  */
 trait CanBeListed
 {
-    /**
-     * Create new Eloquent query for index.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function newIndexQuery(): Builder
-    {
-        return $this->newQuery();
-    }
-
     /**
      * Creates new table factory for the resource.
      *
