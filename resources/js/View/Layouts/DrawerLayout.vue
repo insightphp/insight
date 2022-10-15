@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-25 min-h-full">
+  <div class="bg-white min-h-full">
     <slot name="header">
       <div class="fixed z-20 w-full">
         <Portal :component="header" :mobile-open="mobileOpen" @toggle-drawer="mobileOpen = !mobileOpen" />

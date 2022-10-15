@@ -21,6 +21,7 @@ export default defineConfig({
         '@insightphp/inertia-view',
         '@insightphp/elements',
         '@insightphp/tables',
+        '@insightphp/panels',
       ],
       output: {
         globals: {
@@ -30,6 +31,7 @@ export default defineConfig({
           '@insightphp/inertia-view': 'InertiaView',
           '@insightphp/elements': 'Elements',
           '@insightphp/tables': 'Tables',
+          '@insightphp/panels': 'Panels',
         }
       }
     }

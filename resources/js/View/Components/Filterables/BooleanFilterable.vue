@@ -12,7 +12,7 @@ import { reactive, watch } from "vue";
 
 const emit = defineEmits(['update:modelValue'])
 
-interface Option {
+type Option = {
   id: string
   title: string
 }

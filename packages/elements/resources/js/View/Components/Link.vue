@@ -44,12 +44,13 @@ const props = withDefaults(defineProps<{
   asButton?: boolean
   buttonType?: string
   data?: Record<string, any>|null
-  preserveScroll: boolean
+  preserveScroll?: boolean
   additionalData?: Record<string, any>|null
 }>(), {
   external: false,
   isActive: false,
-  buttonType: 'primary'
+  buttonType: 'primary',
+  preserveScroll: false,
 })
 
 const linkData = computed(() => {
