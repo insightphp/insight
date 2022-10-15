@@ -25,6 +25,7 @@ Route::post('/resources/{resource}/create', [\Insight\Http\Controllers\ResourceC
 Route::post('/resources/{resource}/destroy-many', [\Insight\Http\Controllers\ResourceController::class, 'destroyMany'])->name('insight.resources.destroy-many');
 Route::get('/resources/{resource}/{id}/edit', [\Insight\Http\Controllers\ResourceController::class, 'edit'])->name('insight.resources.edit');
 Route::patch('/resources/{resource}/{id}/edit', [\Insight\Http\Controllers\ResourceController::class, 'update'])->name('insight.resources.update');
+Route::post('/resources/{resource}/{id}/restore', [\Insight\Http\Controllers\ResourceController::class, 'restore'])->name('insight.resources.restore');
 Route::delete('/resources/{resource}/{id}', [\Insight\Http\Controllers\ResourceController::class, 'destroy'])->name('insight.resources.destroy');
 Route::get('/resources/{resource}/{id}', [\Insight\Http\Controllers\ResourceController::class, 'show'])->name('insight.resources.show');
 Route::get('/resources/{resource}', [\Insight\Http\Controllers\ResourceController::class, 'index'])->name('insight.resources.index');

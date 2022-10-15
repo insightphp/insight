@@ -109,6 +109,18 @@ class ConfirmableDialog extends Dialog
     }
 
     /**
+     * Set success look of the dialog.
+     *
+     * @return $this
+     */
+    public function success(): static
+    {
+        $this->look = 'success';
+
+        return $this;
+    }
+
+    /**
      * Set the custom link for confirming the dialog.
      *
      * @param \Insight\Elements\View\Components\Link $link

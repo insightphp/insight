@@ -150,17 +150,6 @@ class Resource
     }
 
     /**
-     * Retrieve the model identifier.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return mixed
-     */
-    public function getIdentifier(Model $model): mixed
-    {
-        return $model->getKey();
-    }
-
-    /**
      * Retrieve the routing key for the resource.
      *
      * @return string
@@ -168,16 +157,5 @@ class Resource
     public function routingKey(): string
     {
         return Str::kebab(Str::plural($this->getResourceShortName()));
-    }
-
-    /**
-     * Retrieve the routing identifier for the model.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return mixed
-     */
-    public function getRoutingIdentifier(Model $model): mixed
-    {
-        return $model->getRouteKey();
     }
 }

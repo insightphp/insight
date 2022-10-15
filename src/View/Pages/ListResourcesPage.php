@@ -80,9 +80,12 @@ class ListResourcesPage extends InsightPage
                 return null;
             }
 
+            $force = Arr::get($data, 'force', false) === true;
+
             $model = $this->resource->newModel();
 
             $resources = $this->resource->newIndexQuery()
+                ->when($this->resource->supportsSoftDeletes() && $force, fn ($query) => $query->withTrashed())
                 ->whereIn($model->getRouteKeyName(), $selectedResources)
                 ->get()
                 ->filter(fn (Model $model) => $this->resource->canDeleteResource($model));
@@ -91,7 +94,25 @@ class ListResourcesPage extends InsightPage
                 return null;
             }
 
-            return $this->resource->createDestroyDialog($resources);
+            return $this->resource->createDestroyDialog($resources, $force);
+        });
+
+        $this->dialog('restore-resource', function (array $data) {
+            if (! $this->resource->supportsSoftDeletes()) {
+                return null;
+            }
+
+            $id = Arr::get($data, 'resource');
+
+            if (is_string($id) || is_numeric($id)) {
+                $model = $this->resource->newIndexQuery()->withTrashed()->findOrFail($id);
+
+                if ($this->resource->canRestoreResource($model)) {
+                    return $this->resource->createRestoreDialog($model);
+                }
+            }
+
+            return null;
         });
     }
 }

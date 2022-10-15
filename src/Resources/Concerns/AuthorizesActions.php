@@ -104,4 +104,34 @@ trait AuthorizesActions
 
         return value($this->authorizeByDefault, 'delete', $this, $model);
     }
+
+    /**
+     * Determine if user is authorized to force delete resource.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return bool
+     */
+    public function canForceDeleteResource(Model $model): bool
+    {
+        if (Gate::getPolicyFor($this->getModelClass())) {
+            return Gate::allows('forceDelete', $model);
+        }
+
+        return value($this->authorizeByDefault, 'forceDelete', $this, $model);
+    }
+
+    /**
+     * Determine if user is authoirzed to restore resource.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return bool
+     */
+    public function canRestoreResource(Model $model): bool
+    {
+        if (Gate::getPolicyFor($this->getModelClass())) {
+            return Gate::allows('restore', $model);
+        }
+
+        return value($this->authorizeByDefault, 'restore', $this, $model);
+    }
 }

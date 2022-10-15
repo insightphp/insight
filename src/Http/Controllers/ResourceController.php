@@ -76,6 +76,27 @@ class ResourceController
 
     }
 
+    public function restore(Request $request)
+    {
+        $resource = Insight::resolveResourceFromRequest($request);
+
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        if (! $resource->supportsSoftDeletes()) {
+            abort(400, "The model is not restorable.");
+        }
+
+        $model = $resource->newIndexQuery()->withTrashed()->findOrFail($request->route('id'));
+
+        if ($model->trashed() && $resource->canRestoreResource($model)) {
+            $model->restore();
+        }
+
+        return back();
+    }
+
     public function destroy(Request $request)
     {
         $resource = Insight::resolveResourceFromRequest($request);
@@ -84,14 +105,28 @@ class ResourceController
             abort(404, "The resource could not be found.");
         }
 
-        $model = $resource->newIndexQuery()->findOrFail($request->route('id'));
+        $force = $request->boolean('force');
 
-        if (! $resource->canDeleteResource($model)) {
-            abort(403, "You are not authorized to delete this resource.");
-        }
+        $model = $resource->newIndexQuery()
+            ->when($resource->supportsSoftDeletes() && $force, fn ($q) => $q->withTrashed())
+            ->findOrFail($request->route('id'));
 
-        if (! $model->delete()) {
-            // TODO: Show that model could not be deleted.
+        if ($force) {
+            if (! $resource->canForceDeleteResource($model)) {
+                abort(403, "You are not authorized to permanently delete this resource.");
+            }
+
+            if (! $model->forceDelete()) {
+                // TODO: SHow that model coult not be deleted.
+            }
+        } else {
+            if (! $resource->canDeleteResource($model)) {
+                abort(403, "You are not authorized to delete this resource.");
+            }
+
+            if (! $model->delete()) {
+                // TODO: Show that model could not be deleted.
+            }
         }
 
         // TODO: Flash success

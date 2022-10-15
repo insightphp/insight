@@ -109,10 +109,28 @@ class TableFactory
 
         $actions = Stack::make();
 
-        if ($this->resource->canDeleteResource($model)) {
+        // If the model supports SoftDeletes and is currently deleted.
+        if ($this->resource->supportsSoftDeletes() && $model->trashed()) {
+            if ($this->resource->canForceDeleteResource($model)) {
+                $actions->add(
+                    Link::toDialog('Force Delete', 'destroy-resources', [
+                        'resources' => [$model->getRouteKey()],
+                        'force' => true,
+                    ])->withContent(Pressable::for(Heroicon::solid('trash'))->danger())
+                );
+            }
+
+            if ($this->resource->canRestoreResource($model)) {
+                $actions->add(
+                    Link::toDialog('Restore', 'restore-resource', [
+                        'resource' => $model->getRouteKey(),
+                    ])->withPressableContent(Heroicon::solid('arrow-uturn-left'))
+                );
+            }
+        } else if ($this->resource->canDeleteResource($model)) { // The model does not support soft deletes or is not deleted
             $actions->add(
                 Link::toDialog('Delete', 'destroy-resources', [
-                    'resources' => [$this->resource->getRoutingIdentifier($model)]
+                    'resources' => $model->getRouteKey(),
                 ])->withContent(Pressable::for(Heroicon::solid('trash'))->danger())
             );
         }

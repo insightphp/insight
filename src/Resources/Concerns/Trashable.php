@@ -21,23 +21,25 @@ trait Trashable
      * Creates dialog for resource deletion.
      *
      * @param \Illuminate\Database\Eloquent\Collection $resources
+     * @param bool $force
      * @return \Insight\View\Components\Dialogs\Dialog|null
      */
-    public function createDestroyDialog(Collection $resources): ?Dialog
+    public function createDestroyDialog(Collection $resources, bool $force = false): ?Dialog
     {
-        $title = 'Delete ' . ($resources->count() > 1 ? $resources->count() . ' ' . $this->getDisplayPluralName() : $this->getDisplayName());
-        $message = ($resources->count() > 1 ? 'Are you sure you want to delete ' . $resources->count() . '  resources?' : 'Are you sure you want to delete this resource?') . ' This action cannot be undone.';
+        $title = ($force ? 'Permanently delete ' : 'Delete ') . ($resources->count() > 1 ? $resources->count() . ' ' . $this->getDisplayPluralName() : $this->getDisplayName());
+        $message = ($resources->count() > 1 ? 'Are you sure you want to ' . ($force ? 'permanently delete ' : 'delete ') . $resources->count() . '  resources?' : 'Are you sure you want to ' . ($force ? 'permanently delete' : 'delete') . ' this resource?') . ' This action cannot be undone.';
 
+        $actionTitle = $force ? 'Permanently delete' : 'Delete';
 
         if ($resources->count() == 1) {
             $resourceLinks = $this->createLinks($resources->first());
-            $action = Link::toLocation('Delete', $resourceLinks->destroy())->method('DELETE')->as('button');
+            $action = Link::toLocation($actionTitle, $resourceLinks->destroy($force ? ['force' => '1'] : []))->method('DELETE')->as('button');
         } else {
             $resourceLinks = $this->createLinks();
-            $action = Link::toLocation('Delete', $resourceLinks->destroyMany())
-                ->method('POST')->as('button')->withData([
+            $action = Link::toLocation($actionTitle, $resourceLinks->destroyMany())
+                ->method('POST')->as('button')->withData(array_merge([
                     'resources' => $resources->map(fn (Model $model) => $model->getKey())->all()
-                ]);
+                ], $force ? ['force' => true] : []));
         }
 
         return ConfirmableDialog::make([
@@ -45,6 +47,25 @@ trait Trashable
             'message' => $message,
             'icon' => Heroicon::outline('trash'),
         ])->danger()->confirmUsing($action->asButton('danger'));
+    }
+
+    /**
+     * Creates dialog for resource restoration.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $resource
+     * @return \Insight\View\Components\Dialogs\Dialog|null
+     */
+    public function createRestoreDialog(Model $resource): ?Dialog
+    {
+        $links = $this->createLinks($resource);
+
+        return ConfirmableDialog::make([
+            'title' => 'Restore ' . $this->getDisplayName(),
+            'message' => 'Do you want to restore this resource?',
+            'icon' => Heroicon::outline('arrow-uturn-left'),
+        ])->success()->confirmUsing(
+            Link::toLocation('Restore', $links->restore())->method('POST')->as('button')->asButton('success')
+        );
     }
 
     /**
@@ -56,4 +77,5 @@ trait Trashable
     {
         return in_array(SoftDeletes::class, class_uses($this->getModelClass()));
     }
+
 }

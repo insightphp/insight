@@ -47,7 +47,7 @@ class ResourceLinks
 
         return route('insight.resources.show', [
             'resource' => $this->resource->routingKey(),
-            'id' => $this->resource->getRoutingIdentifier($this->model),
+            'id' => $this->model->getRouteKey(),
         ]);
     }
 
@@ -82,7 +82,7 @@ class ResourceLinks
 
         return route('insight.resources.edit', [
             'resource' => $this->resource->routingKey(),
-            'id' => $this->resource->getRoutingIdentifier($this->model),
+            'id' => $this->model->getRouteKey(),
         ]);
     }
 
@@ -97,23 +97,24 @@ class ResourceLinks
 
         return route('insight.resources.update', [
             'resource' => $this->resource->routingKey(),
-            'id' => $this->resource->getRoutingIdentifier($this->model),
+            'id' => $this->model->getRouteKey(),
         ]);
     }
 
     /**
      * Retrieve URL for resource deletion.
      *
+     * @param array $params
      * @return string
      */
-    public function destroy(): string
+    public function destroy(array $params = []): string
     {
         $this->ensureModelProvided('destroy');
 
-        return route('insight.resources.destroy', [
+        return route('insight.resources.destroy', array_merge([
             'resource' => $this->resource->routingKey(),
-            'id' => $this->resource->getRoutingIdentifier($this->model),
-        ]);
+            'id' => $this->model->getRouteKey(),
+        ], $params));
     }
 
     /**
@@ -124,6 +125,22 @@ class ResourceLinks
     public function destroyMany(): string
     {
         return route('insight.resources.destroy-many', $this->resource->routingKey());
+    }
+
+    /**
+     * Retrieve URL for resource restoration.
+     *
+     * @param array $params
+     * @return string
+     */
+    public function restore(array $params = []): string
+    {
+        $this->ensureModelProvided('restore');
+
+        return route('insight.resources.restore', array_merge([
+            'resource' => $this->resource->routingKey(),
+            'id' => $this->model->getRouteKey(),
+        ], $params));
     }
 
     /**
@@ -152,19 +169,23 @@ class ResourceLinks
             $routes = array_merge($routes, [
                 'insight.resources.show' => [
                     'resource' => $this->resource->routingKey(),
-                    'id' => $this->resource->getRoutingIdentifier($this->model),
+                    'id' => $this->model->getRouteKey(),
                 ],
                 'insight.resources.edit' => [
                     'resource' => $this->resource->routingKey(),
-                    'id' => $this->resource->getRoutingIdentifier($this->model),
+                    'id' => $this->model->getRouteKey(),
                 ],
                 'insight.resources.update' => [
                     'resource' => $this->resource->routingKey(),
-                    'id' => $this->resource->getRoutingIdentifier($this->model),
+                    'id' => $this->model->getRouteKey(),
                 ],
                 'insight.resources.destroy' => [
                     'resource' => $this->resource->routingKey(),
-                    'id' => $this->resource->getRoutingIdentifier($this->model),
+                    'id' => $this->model->getRouteKey(),
+                ],
+                'insight.resources.restore' => [
+                    'resource' => $this->resource->routingKey(),
+                    'id' => $this->model->getRouteKey(),
                 ],
             ]);
         }
