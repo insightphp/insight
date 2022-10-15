@@ -7,7 +7,6 @@ namespace Insight\Resources;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Insight\Elements\View\Components\Link;
 use Insight\Elements\View\Components\Pressable;
@@ -16,7 +15,6 @@ use Insight\Elements\View\Components\Text;
 use Insight\Inertia\View\Component;
 use Insight\Tables\EloquentDataTable;
 use Insight\Tables\View\Components\Cell;
-use Insight\Tables\View\Components\DataTable;
 use Insight\Tables\View\Components\Header;
 use Insight\Tables\View\Components\Row;
 use Insight\View\Components\Filter;
@@ -58,6 +56,28 @@ class TableFactory
                 Cell::make()->displayAsHeader()->right(),
             ]
         ]);
+    }
+
+    /**
+     * Creates header actions.
+     *
+     * @param \Illuminate\Support\Collection $fields
+     * @return \Insight\Inertia\View\Component|null
+     */
+    protected function createHeaderActions(Collection $fields): ?Component
+    {
+        $actions = Stack::make()->gap(3);
+
+        $links = $this->resource->createLinks();
+
+        if ($this->resource->canCreateResource()) {
+            $actions->add(
+                Link::toLocation('Add ' . $this->resource->getDisplayName(), $links->create())
+                    ->asButton('primary', 'plus')
+            );
+        }
+
+        return $actions->isEmpty() ? null : $actions;
     }
 
     /**
@@ -124,7 +144,7 @@ class TableFactory
                 $actions->add(
                     Link::toDialog('Restore', 'restore-resource', [
                         'resource' => $model->getRouteKey(),
-                    ])->withPressableContent(Heroicon::solid('arrow-uturn-left'))
+                    ])->withContent(Pressable::for(Heroicon::solid('arrow-uturn-left'))->success())
                 );
             }
         } else if ($this->resource->canDeleteResource($model)) { // The model does not support soft deletes or is not deleted
@@ -202,6 +222,12 @@ class TableFactory
 
         // Table header
         $builder->withHeader($this->createHeader($fields));
+
+        // Table header Actions
+        $headerActions = $this->createHeaderActions($fields);
+        if ($headerActions != null) {
+            $builder->withHeaderActions($headerActions);
+        }
 
         // Rows
         $builder->createRowUsing(function (Model $model) use ($fields) {

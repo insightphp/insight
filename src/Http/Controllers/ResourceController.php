@@ -7,6 +7,7 @@ namespace Insight\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Insight\Facades\Insight;
+use Insight\View\Pages\CreateResourcePage;
 use Insight\View\Pages\EditResourcePage;
 use Insight\View\Pages\ShowResourcePage;
 
@@ -25,19 +26,6 @@ class ResourceController
         }
 
         return $resource->toIndexPage($request);
-        // $filter = Filter::make()
-        //     ->filterable(
-        //         SelectFilterable::make(['id' => 'account-type', 'title' => 'Account type'])
-        //             ->option('premium', 'Premium')
-        //             ->option('regular', 'Regular')
-        //     )
-        //     ->filterable(
-        //         SelectFilterable::make(['id' => 'status', 'title' => 'Status'])
-        //             ->option('active', 'Active')
-        //             ->option('inactive', 'Inactive')
-        //     )
-        //     ->fillValueFromRequest($request)
-
         //     return (new EloquentDataTable(\App\Models\User::query(), $request, 'Users'))
         //         ->withHeaderActions(
         //             Stack::of([
@@ -58,7 +46,7 @@ class ResourceController
 
     public function create(Request $request)
     {
-
+        return CreateResourcePage::make();
     }
 
     public function store(Request $request)

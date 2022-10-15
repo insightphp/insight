@@ -64,7 +64,7 @@ trait Trashable
             'message' => 'Do you want to restore this resource?',
             'icon' => Heroicon::outline('arrow-uturn-left'),
         ])->success()->confirmUsing(
-            Link::toLocation('Restore', $links->restore())->method('POST')->as('button')->asButton('success')
+            Link::toLocation('Restore', $links->restore())->preserveScroll()->method('POST')->as('button')->asButton('success')
         );
     }
 
