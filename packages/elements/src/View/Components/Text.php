@@ -37,6 +37,25 @@ class Text extends Component
     public ?string $color = null;
 
     /**
+     * The size of the text.
+     *
+     * @var string|null
+     */
+    public ?string $size = null;
+
+    /**
+     * Set the size of the text.
+     *
+     * @return $this
+     */
+    public function small(): static
+    {
+        $this->size = 'small';
+
+        return $this;
+    }
+
+    /**
      * The color of the text.
      *
      * @param string $color

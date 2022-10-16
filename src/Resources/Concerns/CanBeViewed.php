@@ -5,7 +5,9 @@ namespace Insight\Resources\Concerns;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Insight\Inertia\View\Component;
 use Insight\Resources\PanelFactory;
+use Insight\View\Layouts\ResourceDetailLayout;
 use Insight\View\Pages\ShowResourcePage;
 
 /**
@@ -25,6 +27,17 @@ trait CanBeViewed
     }
 
     /**
+     * Retrieve the title for detail panel.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return string|null
+     */
+    public function getTitleForDetailPanel(Model $model): ?string
+    {
+        return 'Details';
+    }
+
+    /**
      * Creates new detail page for the resource.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
@@ -33,5 +46,16 @@ trait CanBeViewed
     public function toDetailPage(Model $model): ShowResourcePage
     {
         return new ShowResourcePage($this, $model);
+    }
+
+    /**
+     * Creates new detail page layout for the resource.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return \Insight\Inertia\View\Component|null
+     */
+    public function createDetailLayout(Model $model): ?Component
+    {
+        return new ResourceDetailLayout($this, $model);
     }
 }

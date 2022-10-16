@@ -58,6 +58,21 @@ class Page extends Model implements Responsable
     }
 
     /**
+     * Add dialogs to the page from array.
+     *
+     * @param array $dialogs
+     * @return $this
+     */
+    public function dialogs(array $dialogs): static
+    {
+        foreach ($dialogs as $name => $factory) {
+            $this->dialog($name, $factory);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add attribute to the page.
      *
      * @param string|array $key

@@ -7,11 +7,12 @@ export default defineComponent({
     as: { type: String, default: 'span'},
     value: { type: String, required: false },
     asHtml: { type: Boolean, required: false, default: false },
-    color: { type: String as PropType<'primary' | 'secondary'>,  required: false }
+    color: { type: String as PropType<'primary' | 'secondary'>,  required: false },
+    size: { type: String as PropType<'small' | null>, required: false }
   },
   setup(props, { slots }) {
     return () => {
-      let { as: renderAs, asHtml, value, color, ...otherProps } = props
+      let { as: renderAs, asHtml, value, color, size, ...otherProps } = props
 
       const resolveColorClass = () => {
         if (color == 'primary') {
@@ -23,8 +24,16 @@ export default defineComponent({
         return {}
       }
 
+      const resolveSizeClass = () => {
+        if (size === 'small') {
+          return 'text-sm';
+        }
+
+        return {}
+      }
+
       const finalProps = mergeProps(otherProps, {
-        class: [ resolveColorClass() ]
+        class: [ resolveColorClass(), resolveSizeClass() ]
       })
 
       if (value) {

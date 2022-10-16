@@ -54,7 +54,7 @@ trait CanBeListed
      */
     public function getTableFields(): Collection
     {
-        return $this->getFields()->filter(function (Field $field) {
+        return $this->getFieldCollection()->filter(function (Field $field) {
             return $field->hasTableField();
         });
     }

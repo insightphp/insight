@@ -28,6 +28,16 @@ trait DisplaysInPanels
     }
 
     /**
+     * Retrieve the label for the panel.
+     *
+     * @return string|null
+     */
+    public function getPanelLabel(): ?string
+    {
+        return $this->getTitle();
+    }
+
+    /**
      * Create new panel field.
      *
      * @param \Insight\Resources\Resource $resource

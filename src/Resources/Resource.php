@@ -6,11 +6,12 @@ namespace Insight\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Insight\Resources\Concerns\AuthorizesActions;
 use Insight\Resources\Concerns\CanBeViewed;
-use Insight\Resources\Concerns\Trashable;
+use Insight\Resources\Concerns\CreatesDialogs;
 use Insight\Resources\Concerns\CanBeListed;
 use Insight\Resources\Concerns\CreatesLinks;
 use Insight\Resources\Concerns\Searchable;
@@ -24,7 +25,7 @@ class Resource
     use CreatesLinks;
     use CanBeListed;
     use CanBeViewed;
-    use Trashable;
+    use CreatesDialogs;
 
     /**
      * The underlying Eloquent model for the resource.
@@ -136,7 +137,7 @@ class Resource
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getFields(): Collection
+    public function getFieldCollection(): Collection
     {
         if (! method_exists($this, 'fields')) {
             return collect();
@@ -159,5 +160,15 @@ class Resource
     public function routingKey(): string
     {
         return Str::kebab(Str::plural($this->getResourceShortName()));
+    }
+
+    /**
+     * Determine if resource supports soft deletes.
+     *
+     * @return bool
+     */
+    public function supportsSoftDeletes(): bool
+    {
+        return in_array(SoftDeletes::class, class_uses($this->getModelClass()));
     }
 }
