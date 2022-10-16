@@ -16,7 +16,7 @@
 import type { Component } from "@insightphp/inertia-view";
 import { Portal } from "@insightphp/inertia-view";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { Method } from "@inertiajs/inertia";
+import type { Method } from "@inertiajs/inertia";
 
 const props = defineProps<{
   // TODO: ADD FORM CONTROL TYPE
