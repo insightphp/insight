@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/panels",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Panels component of Insight.",
     "repository": {
         "type": "git",

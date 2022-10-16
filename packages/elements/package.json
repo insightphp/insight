@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/elements",
-    "version": "0.3.10",
+    "version": "0.3.11",
     "description": "Collection of UI components for Insight.",
     "repository": {
         "type": "git",

@@ -19,6 +19,13 @@
         "url": "https://github.com/insightphp/insight/issues"
     },
     "homepage": "https://github.com/insightphp/insight#readme",
+    "scripts": {
+        "dev": "vite build --watch",
+        "build": "run-p types build-only",
+        "types": "vue-tsc --declaration --emitDeclarationOnly",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --noEmit"
+    },
     "main": "./dist/forms.umd.js",
     "module": "./dist/forms.es.js",
     "files": [
@@ -34,8 +41,8 @@
         }
     },
     "dependencies": {
-        "@insightphp/elements": "^0.2",
-        "@insightphp/inertia-view": "^0.2",
+        "@insightphp/elements": "^0.3.11",
+        "@insightphp/inertia-view": "^0.4.6",
         "vue": "^3.2"
     }
 }
