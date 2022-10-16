@@ -6,48 +6,64 @@ namespace Insight\View\Layouts;
 
 use Illuminate\Database\Eloquent\Model;
 use Insight\Elements\View\Components\Link;
+use Insight\Elements\View\Components\Text;
+use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Component;
 use Insight\Resources\Resource;
+use Insight\View\Components\Heroicon;
 
 class ResourceDetailLayout extends Component
 {
-    /**
-     * The title of the resource.
-     *
-     * @var string
-     */
-    public string $title;
-
-    /**
-     * The link to the list of resources.
-     *
-     * @var \Insight\Elements\View\Components\Link|null
-     */
-    public ?Link $listResourcesLink = null;
+    public function __construct(
+        protected Resource $resource,
+        protected Model    $model
+    ) {}
 
     /**
      * Determine if the resource is deleted.
      *
-     * @var bool
+     * @return bool
      */
-    public bool $trashed = false;
-
-    public function __construct(
-        protected Resource $resource,
-        protected Model $model
-    )
+    #[Computed]
+    public function trashed(): bool
     {
-        $this->title = $this->resource->title($this->model);
+        return $this->resource->supportsSoftDeletes() && $this->model->trashed();
+    }
+
+    /**
+     * The title of the resource.
+     *
+     * @return string
+     */
+    #[Computed]
+    public function title(): string
+    {
+        return $this->resource->title($this->model);
+    }
+
+    /**
+     * Items of the breadcrumb navigation.
+     *
+     * @return array
+     */
+    #[Computed]
+    public function breadcrumbItems(): array
+    {
+        $items = [
+            Heroicon::outline('home'),
+        ];
 
         if ($this->resource->canViewAnyResources()) {
             $links = $this->resource->createLinks($this->model);
 
-            $this->listResourcesLink = Link::toLocation(
+            $items[] = Link::toLocation(
                 $this->resource->getDisplayPluralName(),
                 $links->index()
             );
         }
 
-        $this->trashed = $this->resource->supportsSoftDeletes() && $this->model->trashed();
+        $items[] = Text::of($this->resource->title($this->model));
+
+        return $items;
     }
 }

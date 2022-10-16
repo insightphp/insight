@@ -30,6 +30,7 @@ export namespace Pages {
     filter: Component<Components.Filter>|null
     isSearchable: boolean
     bulkActions: Array<Component<ElementComponents.Link>>
+    breadcrumbItems?: Array<Component>
   }
 
   export interface ShowResourcePage {

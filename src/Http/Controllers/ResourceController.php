@@ -7,8 +7,6 @@ namespace Insight\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Insight\Facades\Insight;
-use Insight\View\Pages\CreateResourcePage;
-use Insight\View\Pages\EditResourcePage;
 
 class ResourceController
 {
@@ -39,12 +37,26 @@ class ResourceController
             ->when($resource->supportsSoftDeletes(), fn ($q) => $q->withTrashed())
             ->findOrFail($request->route('id'));
 
+        if (! $resource->canViewResource($model)) {
+            abort(403, "You are not authorized to view this resource.");
+        }
+
         return $resource->toDetailPage($model);
     }
 
     public function create(Request $request)
     {
-        return CreateResourcePage::make();
+        $resource = Insight::resolveResourceFromRequest($request);
+
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        if (! $resource->canCreateResource()) {
+            abort(403, "You are not authorized to create new resource.");
+        }
+
+        return $resource->toCreatePage();
     }
 
     public function store(Request $request)
@@ -54,7 +66,21 @@ class ResourceController
 
     public function edit(Request $request)
     {
-        return EditResourcePage::make();
+        $resource = Insight::resolveResourceFromRequest($request);
+
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        $model = $resource->newQuery()
+            ->when($resource->supportsSoftDeletes(), fn ($q) => $q->withTrashed())
+            ->findOrFail($request->route('id'));
+
+        if (! $resource->canUpdateResource($model)) {
+            abort(403, "You are not authorized to update the resource.");
+        }
+
+        return $resource->toEditPage($model);
     }
 
     public function update(Request $request)

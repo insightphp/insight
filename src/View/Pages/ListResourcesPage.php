@@ -7,10 +7,13 @@ namespace Insight\View\Pages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Insight\Elements\View\Components\Text;
+use Insight\Inertia\Support\Computed;
 use Insight\Resources\Resource;
 use Insight\Tables\View\Components\DataTable;
 use Insight\View\Components\Dialogs\DestroyResourcesDialog;
 use Insight\View\Components\Filter;
+use Insight\View\Components\Heroicon;
 
 class ListResourcesPage extends InsightPage
 {
@@ -73,5 +76,14 @@ class ListResourcesPage extends InsightPage
         }
 
         $this->dialogs($this->resource->getDialogsForIndex());
+    }
+
+    #[Computed]
+    public function breadcrumbItems(): array
+    {
+        return [
+            Heroicon::outline('home'),
+            Text::of($this->resource->getDisplayPluralName()),
+        ];
     }
 }

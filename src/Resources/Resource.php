@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Insight\Resources\Concerns\AuthorizesActions;
+use Insight\Resources\Concerns\CanBeEdited;
 use Insight\Resources\Concerns\CanBeViewed;
 use Insight\Resources\Concerns\CreatesDialogs;
 use Insight\Resources\Concerns\CanBeListed;
@@ -25,6 +26,7 @@ class Resource
     use CreatesLinks;
     use CanBeListed;
     use CanBeViewed;
+    use CanBeEdited;
     use CreatesDialogs;
 
     /**

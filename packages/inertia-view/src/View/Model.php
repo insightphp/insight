@@ -58,7 +58,7 @@ abstract class Model implements HasInertiaProps, Arrayable
                 /** @var Computed $computed */
                 $computed = Arr::first($method->getAttributes(Computed::class))->newInstance();
 
-                $model[$computed->name ?: $method->getName()] = app()->call([$this, $method->getName()]);
+                $model[$computed->name ?: $method->getName()] = $this->prepareForInertia(app()->call([$this, $method->getName()]));
 
                 return $model;
             }, $model);

@@ -103,11 +103,4 @@ class Heroicon extends Component
 
         return $this;
     }
-
-    public function toInertia(): array|\Closure|null
-    {
-        $this->ensureUsed();
-
-        return parent::toInertia();
-    }
 }

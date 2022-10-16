@@ -1,5 +1,13 @@
 <template>
 <div class="w-full max-w-7xl mx-auto px-4 pt-12 pb-16">
+  <template v-if="page.props.value.breadcrumbItems">
+    <Breadcrumbs :items="page.props.value.breadcrumbItems" class="mb-4">
+      <template #separator>
+        <ChevronRightIcon class="w-4 h-4 mx-2 text-gray-300" />
+      </template>
+    </Breadcrumbs>
+  </template>
+
   <Portal class="w-full" v-if="resourcesTable" :component="resourcesTable" :handler="dataTable">
     <template v-if="shouldShowActions" #actions="{ handler }">
       <div class="w-full flex flex-row items-center justify-between">
@@ -50,13 +58,14 @@
 </template>
 
 <script setup lang="ts">
-import { MagnifyingGlassIcon, PlayIcon } from '@heroicons/vue/24/outline'
+import { MagnifyingGlassIcon, PlayIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
 import { usePage } from "@inertiajs/inertia-vue3";
 import type { Pages } from "../models";
 import { Portal } from "@insightphp/inertia-view";
 import { computed } from "vue";
 import { useDataTable } from "../../../packages/tables/resources/js/Composables/use-data-table";
 import { Menu, MenuItem } from "@insightphp/elements";
+import { Breadcrumbs } from "@insightphp/elements";
 
 const page = usePage<Pages.ListResourcesPage>()
 

@@ -6,7 +6,6 @@ namespace Insight\Support;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Inertia\Inertia;
 
 class Heroicons
 {
@@ -26,21 +25,19 @@ class Heroicons
 
         if (! Arr::has($this->icons, $fullName)) {
             $this->icons[$fullName] = $this->resolveIcon($icon, $size, $style);
-
-            $this->ensureIconsAreShared();
         }
 
         return $this;
     }
 
     /**
-     * Add icons to the Inertia response.
+     * Retrieve list of used icons within the request.
      *
-     * @return void
+     * @return array
      */
-    protected function ensureIconsAreShared(): void
+    public function used(): array
     {
-        Inertia::share('_heroicons', $this->icons);
+        return $this->icons;
     }
 
     protected function resolveIcon(string $name, int $size, string $style): string

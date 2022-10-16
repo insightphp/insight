@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full">
-    <Portal class="mt-6" v-if="page.props.value.details" :component="page.props.value.details" />
+    <Portal v-if="page.props.value.details" :component="page.props.value.details" />
   </div>
 </template>
 

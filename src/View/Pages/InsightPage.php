@@ -7,6 +7,7 @@ namespace Insight\View\Pages;
 use Insight\Facades\Insight;
 use Insight\Inertia\Support\Computed;
 use Insight\Inertia\View\Page;
+use Insight\Support\Heroicons;
 
 class InsightPage extends Page
 {
@@ -27,4 +28,12 @@ class InsightPage extends Page
         return $layouts->getLayouts();
     }
 
+    public function resolvePageData(): array
+    {
+        $render = parent::resolvePageData();
+
+        return array_merge($render, [
+            '_heroicons' => app(Heroicons::class)->used(),
+        ]);
+    }
 }
