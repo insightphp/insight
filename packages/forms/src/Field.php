@@ -6,39 +6,18 @@ namespace Insight\Forms;
 
 use Closure;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Insight\Inertia\Contracts\Viewable;
-use Insight\Inertia\ViewComponent;
+use Insight\Inertia\View\Component;
 
-class Field implements Viewable
+class Field
 {
     use ForwardsCalls;
 
     /**
-     * Array of pending configurations on the view.
+     * The view component used to render the field.
      *
-     * @var array
+     * @var \Insight\Inertia\View\Component|\Closure|null
      */
-    protected array $pendingConfigurations = [];
-
-    /**
-     * Add pending configuration on the view.
-     *
-     * @param \Closure $closure
-     * @return $this
-     */
-    protected function apply(Closure $closure): static
-    {
-        $this->pendingConfigurations[] = $closure;
-
-        return $this;
-    }
-
-    /**
-     * The view component which is rendered for the field.
-     *
-     * @var \Insight\Inertia\ViewComponent|\Closure|null
-     */
-    protected ViewComponent|Closure|null $component = null;
+    protected Component|Closure|null $component = null;
 
     /**
      * Retrieves empty value of the field.
@@ -53,10 +32,10 @@ class Field implements Viewable
     /**
      * Set the view component for the field.
      *
-     * @param \Closure|\Insight\Inertia\ViewComponent $component
+     * @param \Insight\Inertia\View\Component|\Closure $component
      * @return $this
      */
-    public function useViewComponent(Closure|ViewComponent $component): static
+    public function withComponent(Component|Closure $component): static
     {
         $this->component = $component;
 
@@ -66,11 +45,11 @@ class Field implements Viewable
     /**
      * Resolves view component that is going to be rendered for the field.
      *
-     * @return \Insight\Inertia\ViewComponent
+     * @return \Insight\Inertia\View\Component
      */
-    public function resolveViewComponent(): ViewComponent
+    public function resolveViewComponent(): Component
     {
-        if ($this->component instanceof ViewComponent) {
+        if ($this->component instanceof Component) {
             return $this->component;
         }
 
@@ -78,48 +57,29 @@ class Field implements Viewable
             return call_user_func($this->component, $this);
         }
 
-        throw new \RuntimeException("View Component is not defined for the form field " . get_class($this));
-    }
-
-    /**
-     * Configures view component with pending configurations.
-     *
-     * @param \Insight\Inertia\ViewComponent $component
-     * @return \Insight\Inertia\ViewComponent
-     */
-    protected function withConfigurationsOn(ViewComponent $component): ViewComponent
-    {
-        foreach ($this->pendingConfigurations as $configuration) {
-            call_user_func($configuration, $component);
-        }
-
-        return $component;
-    }
-
-    public function toView(): ViewComponent
-    {
-        return $this->resolveViewComponent();
+        throw new \RuntimeException("Component is not defined for the form field " . get_class($this));
     }
 
     public function __call(string $name, array $arguments)
     {
-        // If the method does not exist on the field
-        // we'll forward it to the view component.
+        // If the method does not exist on the field we'll forward it to the view component.
         if (! method_exists($this, $name)) {
-            return $this->apply(fn ($field) => $this->forwardCallTo($field, $name, $arguments));
+            $this->forwardCallTo($this->component, $name, $arguments);
+
+            return $this;
         }
 
         return $this->forwardCallTo($this, $name, $arguments);
     }
 
     /**
-     * Creates new instance of the field.
+     * Creates new field for given control.
      *
-     * @param mixed ...$args
+     * @param \Insight\Inertia\View\Component $component
      * @return static
      */
-    public static function make(...$args): static
+    public static function for(Component $component): static
     {
-        return new static(...$args);
+        return (new static())->withComponent($component);
     }
 }

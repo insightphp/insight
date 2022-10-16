@@ -30,6 +30,13 @@ class TextInput extends Component
     public ?string $step = null;
 
     /**
+     * Determine if the text input will be stretched to full width.
+     *
+     * @var bool
+     */
+    public bool $fullWidth = false;
+
+    /**
      * Set the step attribute of the text input.
      *
      * @param string|null $step
@@ -38,6 +45,19 @@ class TextInput extends Component
     public function step(?string $step): static
     {
         $this->step = $step;
+
+        return $this;
+    }
+
+    /**
+     * Set the width of text input to full.
+     *
+     * @param bool $fullWidth
+     * @return $this
+     */
+    public function fullWidth(bool $fullWidth = true): static
+    {
+        $this->fullWidth = $fullWidth;
 
         return $this;
     }

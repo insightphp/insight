@@ -45,6 +45,16 @@ trait HasValidationRules
     }
 
     /**
+     * Retrieve rules used for creation.
+     *
+     * @return array|string|\Closure|null
+     */
+    public function getCreationRules(): array|string|\Closure|null
+    {
+        return $this->creationRules;
+    }
+
+    /**
      * Set the rules for update.
      *
      * @param \Closure|string|array|null $rules
@@ -55,5 +65,15 @@ trait HasValidationRules
         $this->updateRules = $rules;
 
         return $this;
+    }
+
+    /**
+     * Retrieve rules used for update.
+     *
+     * @return array|string|\Closure|null
+     */
+    public function getUpdateRules(): array|string|\Closure|null
+    {
+        return $this->updateRules;
     }
 }

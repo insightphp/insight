@@ -31,6 +31,16 @@ class PendingValue
     }
 
     /**
+     * Retrieve priority of the setter.
+     *
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
      * Save scheduled model value.
      *
      * @return null

@@ -49,7 +49,7 @@ class PreviousControls
     }
 
     /**
-     * Check if there wasnt any previous controls.
+     * Check if there wasn't any previous controls.
      *
      * @return bool
      */
@@ -74,7 +74,7 @@ class PreviousControls
         return implode($glue, $this->names);
     }
 
-    protected function ensureAttributesInSync()
+    protected function ensureAttributesInSync(): void
     {
         if ((count($this->names) == count($this->nullables)) && (count($this->nullables) == count($this->filled))) {
             return;

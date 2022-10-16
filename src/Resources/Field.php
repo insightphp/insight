@@ -146,7 +146,7 @@ class Field
      * @param mixed $value
      * @return \Insight\Resources\PendingValue|null
      */
-    protected function setValue(Resource $resource, Model $model, mixed $value): PendingValue|null
+    public function setValue(Resource $resource, Model $model, mixed $value): PendingValue|null
     {
         $attribute = $this->getAttributeName();
 

@@ -56,12 +56,32 @@ class ResourceController
             abort(403, "You are not authorized to create new resource.");
         }
 
-        return $resource->toCreatePage();
+        return $resource->toCreatePage($request);
     }
 
     public function store(Request $request)
     {
+        $resource = Insight::resolveResourceFromRequest($request);
 
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        if (! $resource->canCreateResource()) {
+            abort(403, "You are not authorized to create new resource.");
+        }
+
+        $formFactory = $resource->newForm($request);
+
+        $form = $formFactory->createForm();
+        $form->fillFromRequest($request);
+        $form->validate();
+
+        $creator = $resource->newCreator();
+
+        $model = $creator->createFromForm($form);
+
+        return redirect()->to($resource->createLinks($model)->show());
     }
 
     public function edit(Request $request)
@@ -80,12 +100,34 @@ class ResourceController
             abort(403, "You are not authorized to update the resource.");
         }
 
-        return $resource->toEditPage($model);
+        return $resource->toEditPage($request, $model);
     }
 
     public function update(Request $request)
     {
+        $resource = Insight::resolveResourceFromRequest($request);
 
+        if (is_null($resource)) {
+            abort(404, "The resource could not be found.");
+        }
+
+        $model = $resource->newQuery()
+            ->when($resource->supportsSoftDeletes(), fn ($q) => $q->withTrashed())
+            ->findOrFail($request->route('id'));
+
+        if (! $resource->canUpdateResource($model)) {
+            abort(403, "You are not authorized to update the resource.");
+        }
+
+        $formFactory = $resource->newForm($request, $model);
+
+        $form = $formFactory->createForm();
+        $form->fillFromRequest($request);
+        $form->validate();
+
+        $resource->newUpdater($model)->updateFromForm($form);
+
+        return redirect()->to($resource->createLinks($model)->show());
     }
 
     public function restore(Request $request)

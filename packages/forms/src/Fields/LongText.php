@@ -9,7 +9,7 @@ use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 
 /**
- * @mixin TextArea
+ * @deprecated
  */
 class LongText extends Field
 {

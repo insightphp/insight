@@ -10,7 +10,9 @@
       <h4 class="font-semibold text-gray-900 text-xl">{{ title }}</h4>
     </div>
 
-    <slot />
+    <template v-if="form">
+      <Portal class="mt-4" :component="form" />
+    </template>
   </div>
 </template>
 
@@ -18,10 +20,13 @@
 import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 import { Breadcrumbs } from "@insightphp/elements";
 import type { Component } from "@insightphp/inertia-view";
+import { Portal } from "@insightphp/inertia-view";
+import { usePage } from "@inertiajs/inertia-vue3";
 
 defineProps<{
   edit: boolean
   title: string
   breadcrumbItems: Array<Component>
+  form: Component|null
 }>()
 </script>

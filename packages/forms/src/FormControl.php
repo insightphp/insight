@@ -171,14 +171,16 @@ class FormControl
     /**
      * Sets the validation rules for the control.
      *
-     * @param \Closure|string|array $rules
+     * @param \Closure|string|array|null $rules
      * @return $this
      */
-    public function rules(Closure|string|array $rules): static
+    public function rules(Closure|string|array|null $rules): static
     {
         $this->rules = $rules;
 
-        $this->required($this->guessRequired());
+        if (! is_null($rules)) {
+            $this->required($this->guessRequired());
+        }
 
         return $this;
     }

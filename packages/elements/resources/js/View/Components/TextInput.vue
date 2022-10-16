@@ -3,7 +3,7 @@
       :value="modelValue"
       @input="onChange"
       class="form-input"
-      :class="{ 'has-error': hasError }"
+      :class="{ 'has-error': hasError, 'max-w-md': !fullWidth }"
       :type="type"
       :placeholder="placeholder || undefined"
       :name="name"
@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<{
   error?: string|null
   type?: string
   placeholder?: string|null
+  fullWidth?: boolean
 }>(), {
   type: 'text'
 })

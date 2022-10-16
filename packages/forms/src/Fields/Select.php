@@ -11,6 +11,9 @@ use Insight\Elements\View\Option;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 
+/**
+ * @deprecated
+ */
 class Select extends Field
 {
     /**

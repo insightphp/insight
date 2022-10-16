@@ -4,50 +4,31 @@
 namespace Insight\Forms\View\Components;
 
 
-use Insight\Forms\Form;
+use Insight\Forms\Form as FormBlueprint;
 use Insight\Forms\FormControl;
-use Insight\Inertia\View\Component;
 
-class StackedForm extends Component
+class StackedForm extends Form
 {
     /**
-     * The form controls of the form.
+     * List of form controls.
      *
      * @var array
      */
-    public array $items = [];
+    public array $controls = [];
 
-    /**
-     * Adds control to the form.
-     *
-     * @param \Insight\Forms\FormControl $control
-     * @return $this
-     */
-    public function addControl(FormControl $control): static
+    public function __construct(
+        FormBlueprint $form
+    )
     {
-        $this->items[] = [
-            'label' => $control->getLabel(),
-            'name' => $control->name(),
-            'hint' => $control->getHint(),
-            'isRequired' => $control->isRequired(),
-            'fieldView' => $control->field()->toView(),
-        ];
+        parent::__construct($form);
 
-        return $this;
-    }
-
-    /**
-     * Creates new stacked form.
-     *
-     * @param \Insight\Forms\Form $form
-     * @return \Insight\Forms\View\Components\StackedForm
-     */
-    public static function for(Form $form): StackedForm
-    {
-        $stackedForm = static::make();
-
-        $form->controls()->each(fn (FormControl $control) => $stackedForm->addControl($control));
-
-        return $stackedForm;
+        $this->form->controls()->each(function (FormControl $control) {
+            $this->controls[] = StackedFormControl::make([
+                'name' => $control->name(),
+                'label' => $control->getLabel(),
+                'control' => $control->field()->resolveViewComponent(),
+                'isRequired' => $control->isRequired(),
+            ]);
+        });
     }
 }

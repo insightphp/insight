@@ -5,8 +5,10 @@ namespace Insight\View\Pages;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Insight\Elements\View\Components\Link;
 use Insight\Elements\View\Components\Text;
+use Insight\Forms\View\Components\StackedForm;
 use Insight\Inertia\Support\Computed;
 use Insight\Resources\Resource;
 use Insight\View\Components\Heroicon;
@@ -15,12 +17,24 @@ class ResourceFormPage extends InsightPage
 {
     protected ?string $page = 'insight:ResourceFormPage';
 
+    /**
+     * The form component for creating/editing resource.
+     *
+     * @var \Insight\Forms\View\Components\StackedForm|null
+     */
+    public ?StackedForm $form = null;
+
     public function __construct(
+        protected Request $request,
         protected Resource $resource,
         protected ?Model $model = null
     )
     {
-        //
+        $formFactrory = $this->resource->newForm($this->request, $this->model);
+
+        $form = $formFactrory->createForm();
+
+        $this->form = new StackedForm($form);
     }
 
     /**

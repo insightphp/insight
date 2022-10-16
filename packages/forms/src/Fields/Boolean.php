@@ -8,6 +8,9 @@ use Insight\Elements\View\Components\Checkbox;
 use Insight\Forms\Field;
 use Insight\Inertia\ViewComponent;
 
+/**
+ * @deprecated
+ */
 class Boolean extends Field
 {
     public function __construct(

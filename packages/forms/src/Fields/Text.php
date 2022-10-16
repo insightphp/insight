@@ -6,15 +6,14 @@ namespace Insight\Forms\Fields;
 
 use Insight\Elements\View\Components\TextInput;
 use Insight\Forms\Field;
-use Insight\Inertia\ViewComponent;
 
 /**
- * @mixin \Insight\Elements\View\Components\TextInput
+ * @deprecated
  */
 class Text extends Field
 {
-    public function resolveViewComponent(): ViewComponent
+    public function __construct()
     {
-        return $this->withConfigurationsOn(TextInput::make());
+        $this->component = TextInput::make();
     }
 }

@@ -4,15 +4,13 @@
 namespace Insight\Forms;
 
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Insight\Forms\Concerns\ValidatesFormValue;
 use Insight\Forms\Contracts\FormContext;
-use Insight\Forms\View\Components\StackedForm;
 
-class Form implements Arrayable, \JsonSerializable
+class Form
 {
     use ValidatesFormValue;
 
@@ -38,7 +36,7 @@ class Form implements Arrayable, \JsonSerializable
     protected string $method = 'post';
 
     /**
-     * Determine if the form should submitted as form data.
+     * Determine if the form should submited as form data.
      * This will force Inertia Form to be submitted with forceFormData: true.
      * https://inertiajs.com/file-uploads#form-data-conversion
      *
@@ -191,11 +189,7 @@ class Form implements Arrayable, \JsonSerializable
      */
     public function get(string $field, $default = null): mixed
     {
-        if ($this->has($field)) {
-            return Arr::get($this->value, $field, $default);
-        }
-
-        return $default;
+        return Arr::get($this->value, $field, $default);
     }
 
     /**
@@ -207,11 +201,7 @@ class Form implements Arrayable, \JsonSerializable
      */
     public function boolean(string $field, bool $default = false): bool
     {
-        if ($this->has($field)) {
-            return $this->get($field) === true;
-        }
-
-        return $default;
+        return filter_var($this->get($field, $default), FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
@@ -322,31 +312,6 @@ class Form implements Arrayable, \JsonSerializable
     public function postTo(string $action): static
     {
         return $this->method('post')->action($action);
-    }
-
-    /**
-     * Retrieve data for Inertia.
-     *
-     * @return array
-     */
-    public function toInertia(): array
-    {
-        return [
-            'initialValue' => $this->getInertiaFormValue(),
-            'method' => $this->getMethod(),
-            'action' => $this->getAction(),
-            'renderAs' => StackedForm::for($this),
-        ];
-    }
-
-    public function toArray()
-    {
-        return $this->toInertia();
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return $this->toArray();
     }
 
     /**
