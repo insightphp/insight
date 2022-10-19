@@ -60,11 +60,11 @@
         }
     },
     "replace": {
-        "insightphp/elements": "0.5.2",
-        "insightphp/forms": "0.5.2",
-        "insightphp/inertia-view": "0.5.2",
-        "insightphp/panels": "0.5.2",
-        "insightphp/tables": "0.5.2"
+        "insightphp/elements": "0.5.3",
+        "insightphp/forms": "0.5.3",
+        "insightphp/inertia-view": "0.5.3",
+        "insightphp/panels": "0.5.3",
+        "insightphp/tables": "0.5.3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

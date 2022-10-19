@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/inertia-view",
-    "version": "0.5.2",
+    "version": "0.5.3",
     "description": "View abstraction layer for building architectured Inertia applications.",
     "repository": {
         "type": "git",
