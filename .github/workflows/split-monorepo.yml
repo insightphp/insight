@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       -
         if: "!startsWith(github.ref, 'refs/tags/')"
-        name: Monorepo Split of ${{ matrix.package }}
+        name: Monorepo Branch Split of ${{ matrix.package }}
         uses: symplify/github-action-monorepo-split@2.1
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -36,7 +36,7 @@ jobs:
           branch: main
       -
         if: "startsWith(github.ref, 'refs/tags/')"
-        name: Monorepo Split of ${{ matrix.package }}
+        name: Monorepo Tag Split of ${{ matrix.package }}
         uses: symplify/github-action-monorepo-split@2.0
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
