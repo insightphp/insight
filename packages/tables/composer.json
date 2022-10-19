@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.1",
         "illuminate/support": "^9.0",
-        "insightphp/inertia-view": "^0.6"
+        "insightphp/inertia-view": "^0.5.1"
     },
     "autoload": {
         "psr-4": {

@@ -1,6 +1,6 @@
 {
     "name": "@insightphp/tables",
-    "version": "0.2.0",
+    "version": "0.5.1",
     "description": "Tables component of Insight.",
     "repository": {
         "type": "git",
@@ -40,8 +40,8 @@
         }
     },
     "dependencies": {
-        "@insightphp/elements": "^0.3",
-        "@insightphp/inertia-view": "^0.4",
+        "@insightphp/elements": "0.5.1",
+        "@insightphp/inertia-view": "0.5.1",
         "@types/qs": "^6.9.7",
         "qs": "^6.11.0",
         "vue": "^3.2"
