@@ -36,9 +36,18 @@ final class NpmPackageUtils
 
     public static function setPackageVersion(string $file, string $version): void
     {
-        $contents = json_decode(file_get_contents($file), true);
-        Arr::set($contents, 'version', $version);
-        file_put_contents($file, json_encode($contents, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL);
+        static::setPackageJsonValue('version', $version, $file);
     }
 
+    public static function getPackageJson(string $file): array
+    {
+        return json_decode(file_get_contents($file), true);
+    }
+
+    public static function setPackageJsonValue(string $key, string $value, string $file): void
+    {
+        $contents = static::getPackageJson($file);
+        Arr::set($contents, $key, $value);
+        file_put_contents($file, json_encode($contents, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL);
+    }
 }
