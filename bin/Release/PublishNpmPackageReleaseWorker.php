@@ -40,13 +40,13 @@ class PublishNpmPackageReleaseWorker implements ReleaseWorkerInterface
 
                 $this->symfonyStyle->info("Building {$package['name']}");
 
-                $out = $this->processRunner->run("npm run pack", $dir);
+                $out = $this->processRunner->run("npm pack", $dir);
 
                 if ($this->symfonyStyle->isVerbose()) {
                     $this->symfonyStyle->note($out);
                 }
 
-                $out = $this->processRunner->run("npm run publish --access public", $dir);
+                $out = $this->processRunner->run("npm publish --access public", $dir);
 
                 if ($this->symfonyStyle->isVerbose()) {
                     $this->symfonyStyle->note($out);
