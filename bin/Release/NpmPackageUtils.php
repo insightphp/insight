@@ -44,10 +44,15 @@ final class NpmPackageUtils
         return json_decode(file_get_contents($file), true);
     }
 
+    public static function savePackageJson(array $contents, string $file): void
+    {
+        file_put_contents($file, json_encode($contents, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL);
+    }
+
     public static function setPackageJsonValue(string $key, string $value, string $file): void
     {
-        $contents = static::getPackageJson($file);
+        $contents = NpmPackageUtils::getPackageJson($file);
         Arr::set($contents, $key, $value);
-        file_put_contents($file, json_encode($contents, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL);
+        NpmPackageUtils::savePackageJson($contents, $file);
     }
 }
