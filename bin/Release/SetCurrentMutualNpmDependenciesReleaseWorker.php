@@ -26,15 +26,15 @@ class SetCurrentMutualNpmDependenciesReleaseWorker implements ReleaseWorkerInter
 
             $json = NpmPackageUtils::getPackageJson($package['file']);
 
-            foreach ($otherPackages as $package) {
+            foreach ($otherPackages as $dependency) {
                 // Dependency
-                if (Arr::has($json, "dependencies.{$package['name']}")) {
-                    Arr::set($json, "dependencies.{$package['name']}", $version->getVersionString());
+                if (Arr::has($json, "dependencies.{$dependency['name']}")) {
+                    Arr::set($json, "dependencies.{$dependency['name']}", $version->getVersionString());
                 }
 
                 // Dev dependency
-                if (Arr::has($json, "devDependencies.{$package['name']}")) {
-                    Arr::set($json, "devDependencies.{$package['name']}", $version->getVersionString());
+                if (Arr::has($json, "devDependencies.{$dependency['name']}")) {
+                    Arr::set($json, "devDependencies.{$dependency['name']}", $version->getVersionString());
                 }
             }
 
