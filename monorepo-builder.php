@@ -23,13 +23,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->parameters()->set(Option::DEFAULT_BRANCH_NAME, 'main');
     $containerConfigurator->parameters()->set(Option::PACKAGE_ALIAS_FORMAT, '<major>.<minor>.x-dev');
 
-    $services->set(UpdateReplaceReleaseWorker::class);
-    $services->set(SetCurrentMutualDependenciesReleaseWorker::class);
-    $services->set(AddTagToChangelogReleaseWorker::class);
-    $services->set(TagVersionReleaseWorker::class);
+    // $services->set(UpdateReplaceReleaseWorker::class);
+    // $services->set(SetCurrentMutualDependenciesReleaseWorker::class);
+    // $services->set(AddTagToChangelogReleaseWorker::class);
+    // $services->set(TagVersionReleaseWorker::class);
     $services->set(\Insight\Release\UpdateNpmPackageReleaseWorker::class);
-    $services->set(PushTagReleaseWorker::class);
-    $services->set(SetNextMutualDependenciesReleaseWorker::class);
-    $services->set(UpdateBranchAliasReleaseWorker::class);
-    $services->set(PushNextDevReleaseWorker::class);
+    // $services->set(PushTagReleaseWorker::class);
+    // $services->set(SetNextMutualDependenciesReleaseWorker::class);
+    // $services->set(UpdateBranchAliasReleaseWorker::class);
+    // $services->set(PushNextDevReleaseWorker::class);
 };

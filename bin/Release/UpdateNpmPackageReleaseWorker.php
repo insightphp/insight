@@ -2,16 +2,22 @@
 
 namespace Insight\Release;
 
-class UpdateNpmPackageReleaseWorker implements \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface
+use PharIo\Version\Version;
+use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
+
+class UpdateNpmPackageReleaseWorker implements ReleaseWorkerInterface
 {
 
-    public function getDescription(\PharIo\Version\Version $version): string
+    public function getDescription(Version $version): string
     {
-        return "test";
+        return "Update NPM package versions to {$version->getVersionString()}";
     }
 
-    public function work(\PharIo\Version\Version $version): void
+    public function work(Version $version): void
     {
-        // TODO: Implement work() method.
+        collect(NpmPackageUtils::collectPackages())->each(function ($package) use ($version) {
+            NpmPackageUtils::setPackageVersion($package['file'], $version->getVersionString());
+        });
     }
+
 }
