@@ -30,6 +30,11 @@
             "Insight\\Tables\\": "packages/tables/src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Insight\\Release\\": "bin/Release/"
+        }
+    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
