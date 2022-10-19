@@ -49,6 +49,9 @@
                 "Insight\\Tables\\Providers\\TablesServiceProvider",
                 "Insight\\Providers\\InsightServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "0.6.x-dev"
         }
     },
     "replace": {
